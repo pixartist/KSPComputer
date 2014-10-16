@@ -1,0 +1,8 @@
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\model.mu
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\model000.mbm
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\FPComputer.cfg
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\KSPFlightPlanner.dll
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\KSPFlightPlanner.pdb
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Release\KSPFlightPlanner.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Release\KSPFlightPlanner.pdb
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Release\KSPFlightPlanner.csprojResolveAssemblyReference.cache

@@ -1,0 +1,16 @@
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\KSPFlightPlanner.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\KSPFlightPlanner.pdb
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\Assembly-CSharp.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\UnityEngine.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\TDx.TDxInput.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\Mono.Cecil.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\Assembly-CSharp-firstpass.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\bin\Debug\Mono.Security.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Debug\KSPFlightPlanner.csprojResolveAssemblyReference.cache
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Debug\KSPFlightPlanner.dll
+D:\Coding\WIP\KSPFlightPlanner\KSPFlightPlanner\obj\Debug\KSPFlightPlanner.pdb
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\model.mu
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\model000.mbm
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\Parts\FPComputer\FPComputer.cfg
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\KSPFlightPlanner.dll
+D:\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\KSPFlightPlanner.pdb

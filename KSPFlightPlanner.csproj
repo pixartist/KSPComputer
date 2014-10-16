@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25FFD8AC-2F94-44F6-832E-B80EA1F9BA52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KSPFlightPlanner</RootNamespace>
+    <AssemblyName>KSPFlightPlanner</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FPComputer.cs" />
+    <Compile Include="GUIHelper.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="NodeInfo.cs" />
+    <Compile Include="ProgramDrawer.cs" />
+    <Compile Include="Program\ExecutableNode.cs" />
+    <Compile Include="Program\NodeConnectionIn.cs" />
+    <Compile Include="Program\FlightProgram.cs" />
+    <Compile Include="Program\Node.cs" />
+    <Compile Include="Program\NodeConnectionOut.cs" />
+    <Compile Include="Program\NodeDataTypes\NCBoolIn.cs" />
+    <Compile Include="Program\NodeDataTypes\NCBoolOut.cs" />
+    <Compile Include="Program\NodeDataTypes\NCVector3In.cs" />
+    <Compile Include="Program\NodeDataTypes\NCVector3Out.cs" />
+    <Compile Include="Program\NodeDataTypes\NCFloatOut.cs" />
+    <Compile Include="Program\NodeDataTypes\NCFloatIn.cs" />
+    <Compile Include="Program\NodeDataTypes\NCDoubleOut.cs" />
+    <Compile Include="Program\NodeDataTypes\NCActionIn.cs" />
+    <Compile Include="Program\NodeDataTypes\NCActionOut.cs" />
+    <Compile Include="Program\NodeDataTypes\NCDoubleIn.cs" />
+    <Compile Include="Program\Nodes\NodeBreakVector3.cs" />
+    <Compile Include="Program\Nodes\NodeMakeVector3.cs" />
+    <Compile Include="Program\Nodes\NodeAltitudeReached.cs" />
+    <Compile Include="Program\Nodes\NodeAltitude.cs" />
+    <Compile Include="Program\Nodes\NodePreLaunch.cs" />
+    <Compile Include="Program\Nodes\NodeTick.cs" />
+    <Compile Include="Program\Nodes\NodeDelay.cs" />
+    <Compile Include="Program\Nodes\NodeSetHeading.cs" />
+    <Compile Include="Program\Nodes\NodeTriggerStage.cs" />
+    <Compile Include="Program\Nodes\NodeSetThrottle.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SVector3.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Parts\FPComputer\model.mu">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Parts\FPComputer\model000.mbm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Parts\FPComputer\FPComputer.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo on
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
