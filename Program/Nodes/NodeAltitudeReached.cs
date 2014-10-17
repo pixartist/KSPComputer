@@ -2,54 +2,55 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
-using KSPFlightPlanner.Program;
-using KSPFlightPlanner.Program.NodeDataTypes;
+using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
-	[Serializable]
-    public class NodeAltitudeReached : Node
+    [Serializable]
+    public class NodeAltitudeReached : RootNode
     {
-		private double lastHeight;
-        public override void OnCreate()
+        public new static string Name = "Altitude reached";
+        public new static string Description = "Called when the specified altitude is reached";
+        public new static SVector3 Color = new SVector3(0.2f, 0.2f, 1f);
+        public new static SVector2 Size = new SVector2(170, 130);
+        private double lastAltitude;
+        protected override void OnCreate()
         {
-            Inputs.Add("Altitude", new NCDoubleIn(this));
-			Inputs.Add("Down", new NCBoolIn(this));
-			lastHeight = double.MinValue;
-			Outputs.Add(DefaultExecName, new NCActionOut(this));
+            AddConnectorIn("Altitude", new DoubleConnectorIn());
+            AddConnectorIn("Down", new BoolConnectorIn());
             Program.OnTick += Program_OnTick;
+            lastAltitude = double.MinValue;
         }
 
-        void Program_OnTick(FlightProgram.FlightEvent e)
+        void Program_OnTick()
         {
-			double v = Inputs["Altitude"].GetBufferAsDouble();
-			bool down = Inputs["Down"].GetBufferAsBool();
-			double alt = Program.Vessel.altitude;
-			if (down)
-			{
-				if (lastHeight > v)
-				{
-					if (alt <= v)
-					{
-						Execute();
-					}
-				}
-			}
-			else
-			{
-				if (lastHeight < v)
-				{
-					if (alt >= v)
-					{
-						Execute();
-					}
-				}
-			}
-			lastHeight = alt;
+            Execute();
         }
-		protected override void OnExecute()
-		{
-			TriggerOutput();
-		}
+        protected override void OnExecute()
+        {
+            double v = GetConnectorIn("Altitude").GetBufferAsDouble();
+            bool down = GetConnectorIn("Down").GetBufferAsBool();
+            double alt = Program.Vessel.altitude;
+            if (down)
+            {
+                if (lastAltitude > v)
+                {
+                    if (alt <= v)
+                    {
+                        ExecuteNext();
+                    }
+                }
+            }
+            else
+            {
+                if (lastAltitude < v)
+                {
+                    if (alt >= v)
+                    {
+                        ExecuteNext();
+                    }
+                }
+            }
+            lastAltitude = alt;
+        }
     }
 }

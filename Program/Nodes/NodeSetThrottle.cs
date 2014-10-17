@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KSPFlightPlanner.Program;
-using KSPFlightPlanner.Program.NodeDataTypes;
+using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
-
-	[Serializable]
-    public class NodeSetThrottle : Node
+    [Serializable]
+    public class NodeSetThrottle : ExecutableNode
     {
-        public override void OnCreate()
+        public new static string Name = "Set throttle";
+        public new static string Description = "Sets the throttle to the given amount";
+        public new static SVector3 Color = new SVector3(1, 1, 0.2f);
+        public new static SVector2 Size = new SVector2(150, 100);
+        protected override void OnCreate()
         {
-			Inputs.Add(DefaultExecName, new NCActionIn(this));
-			Inputs.Add("Throttle", new NCFloatIn(this));
-			Outputs.Add(DefaultExecName, new NCActionOut(this));
+            AddConnectorIn("Throttle", new FloatConnectorIn());
         }
         protected override void OnExecute()
-		{
-			FlightInputHandler.state.mainThrottle = Inputs["Throttle"].GetBufferAsFloat();
-			TriggerOutput();
+        {
+            FlightInputHandler.state.mainThrottle = GetConnectorIn("Throttle").GetBufferAsFloat();
+            ExecuteNext();
         }
     }
 }

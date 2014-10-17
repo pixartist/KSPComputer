@@ -2,26 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
     [Serializable]
-    public class NodeBreakVector3 : Node
+    public class NodeQuaternionToEuler : Node
     {
-        public new static string Name = "Break Vector3";
-        public new static string Description = "Returns the float components of a Vector3";
+        public new static string Name = "Quaternion to euler";
+        public new static string Description = "Returns the euler-angles for a quaternion";
         public new static SVector3 Color = new SVector3(0.2f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 150);
+        public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
-            AddConnectorIn("Vector3", new Vector3ConnectorIn());
+            AddConnectorIn("Quaternion", new QuaternionConnectorIn());
             AddConnectorOut("X", new FloatConnectorOut());
             AddConnectorOut("Y", new FloatConnectorOut());
             AddConnectorOut("Z", new FloatConnectorOut());
+            
         }
         protected override void OnUpdateOutputData()
         {
-            var v = GetConnectorIn("Vector3").GetBufferAsVector3();
+            var v = GetConnectorIn("Quaternion").GetBufferAsQuaternion().GetQuaternion().eulerAngles;
             var x = GetConnectorOut("X");
             if(x != null)
                 x.SendData(v.x);

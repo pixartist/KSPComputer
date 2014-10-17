@@ -6,15 +6,18 @@ using System.Reflection;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-
+using KSPFlightPlanner.Program.Connectors;
+using KSPFlightPlanner.Program.Nodes;
 namespace KSPFlightPlanner.Program
 {
-	[Serializable]
+    [Serializable]
     public class FlightProgram
     {
-		[NonSerialized]
-        private PartModule module;
-        public Vessel Vessel 
+        [NonSerialized]
+        private FPComputer module;
+        [NonSerialized]
+        public SASController SASController;
+        public Vessel Vessel
         {
             get
             {
@@ -23,56 +26,52 @@ namespace KSPFlightPlanner.Program
                 return module.vessel;
             }
         }
-        public enum FlightEvent
-        {
-            Tick,
-			PreLaunch
-        }
-        public delegate void FlightEventHandler(FlightEvent e);
+        public delegate void FlightEventHandler();
         public event FlightEventHandler OnTick;
-		public event FlightEventHandler OnLoad;
+        public event FlightEventHandler OnLaunch;
         public List<Node> Nodes { get; private set; }
         public FlightProgram()
         {
             Nodes = new List<Node>();
         }
-		public void Init(PartModule module, PartModule.StartState state)
+        public void Init(FPComputer module)
         {
             this.module = module;
-			if (OnLoad != null)
-			{
-				switch(state)
-				{ 
-					case PartModule.StartState.PreLaunch:
-						OnLoad(FlightEvent.PreLaunch);
-						break;
-					default:
-						break;
-				}
-			}
+            SASController = new SASController(this);
+        }
+        public void Launch()
+        {
+            if (OnLaunch != null)
+                OnLaunch();
         }
         public Node AddNode(Type nodeType, Vector2 position)
         {
             if (nodeType.IsSubclassOf(typeof(Node)))
             {
                 Node n = Activator.CreateInstance(nodeType) as Node;
-				n.Init(this);
-				n.Position = new float[] { position.x, position.y };
+                n.Init(this);
+                n.Position = new SVector2(position.x, position.y);
                 Nodes.Add(n);
-                
                 return n;
-                
             }
             else
             {
                 throw (new Exception("Type " + nodeType + " is not a valid node type"));
             }
         }
-		
+        public void RemoveNode(Node node)
+        {
+            foreach (var i in node.Inputs)
+                i.Value.DisconnectAll();
+            foreach (var i in node.Outputs)
+                i.Value.DisconnectAll();
+            Nodes.Remove(node);
+        }
         public void Update()
         {
+            SASController.Update();
             if (OnTick != null)
-                OnTick(FlightEvent.Tick);
+                OnTick();
         }
     }
 }
