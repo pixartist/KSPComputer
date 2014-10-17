@@ -49,7 +49,6 @@
     <Compile Include="FPComputer.cs" />
     <Compile Include="GUIHelper.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="NodeInfo.cs" />
     <Compile Include="ProgramDrawer.cs" />
     <Compile Include="Program\Connectors\Connector.cs" />
     <Compile Include="Program\Connectors\ConnectorIn.cs" />
