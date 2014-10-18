@@ -14,11 +14,11 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(150, 100);
         protected override void OnCreate()
         {
-            AddConnectorIn("Throttle", new FloatConnectorIn());
+            In<float>("Throttle");
         }
         protected override void OnExecute()
         {
-            FlightInputHandler.state.mainThrottle = GetConnectorIn("Throttle").GetBufferAsFloat();
+            FlightInputHandler.state.mainThrottle = In("Throttle").AsFloat();
             ExecuteNext();
         }
     }

@@ -6,11 +6,11 @@ using KSPFlightPlanner.Program.Nodes;
 namespace KSPFlightPlanner.Program.Connectors
 {
     [Serializable]
-    public abstract class ConnectorIn : Connector
+    public class ConnectorIn : Connector
     {
         internal bool FreshData { get; set; }
         private Object buffer;
-        public ConnectorIn(Type dataType, bool allowMultipleConnections = false)
+        internal ConnectorIn(Type dataType, bool allowMultipleConnections = false)
             : base(dataType, allowMultipleConnections)
         {
 
@@ -25,18 +25,18 @@ namespace KSPFlightPlanner.Program.Connectors
                     i.Node.UpdateOutputData();
             }
         }
-        public void SetData(Object data)
+        public void Set(Object data)
         {
             buffer = data;
             FreshData = true;
         }
-        public string GetBufferAsString()
+        public string AsString()
         {
             if (buffer == null)
                 return "";
             return buffer.ToString();
         }
-        public double GetBufferAsDouble()
+        public double AsDouble()
         {
             if (buffer is double)
                 return (double)buffer;
@@ -48,7 +48,7 @@ namespace KSPFlightPlanner.Program.Connectors
                 return (double)valf;
             return 0.0;
         }
-        public float GetBufferAsFloat()
+        public float AsFloat()
         {
             if (buffer is float)
                 return (float)buffer;
@@ -60,7 +60,7 @@ namespace KSPFlightPlanner.Program.Connectors
                 return (float)vald;
             return 0.0f;
         }
-        public bool GetBufferAsBool()
+        public bool AsBool()
         {
             if (buffer is bool)
                 return (bool)buffer;
@@ -69,13 +69,13 @@ namespace KSPFlightPlanner.Program.Connectors
                 return val;
             return false;
         }
-        public SVector3 GetBufferAsVector3()
+        public SVector3 AsVector3()
         {
             if (buffer is SVector3)
                 return (SVector3)buffer;
             return new SVector3();
         }
-        public SQuaternion GetBufferAsQuaternion()
+        public SQuaternion AsQuaternion()
         {
             if (buffer is SQuaternion)
                 return (SQuaternion)buffer;

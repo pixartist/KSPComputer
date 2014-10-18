@@ -41,6 +41,7 @@ namespace KSPFlightPlanner.Program
         }
         public void Launch()
         {
+            SASController.SASTarget = Vessel.ReferenceTransform.rotation;
             if (OnLaunch != null)
                 OnLaunch();
         }

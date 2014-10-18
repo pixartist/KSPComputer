@@ -43,29 +43,42 @@ namespace KSPFlightPlanner.Program.Nodes
             Program = program;
             OnCreate();
         }
-        protected void AddConnectorIn(string name, ConnectorIn connector)
+        protected void In<T>(string name, bool allowMultipleConnections = false)
         {
+            var connector = new ConnectorIn(typeof(T), allowMultipleConnections);
+            connector.Init(this);
             inputs.Add(name, connector);
-            connector.Init(this);
         }
-        protected void AddConnectorOut(string name, ConnectorOut connector)
+        protected void Out<T>(string name, bool allowMultipleConnections = true)
         {
-            outputs.Add(name, connector);
+            var connector = new ConnectorOut(typeof(T), allowMultipleConnections);
             connector.Init(this);
+            outputs.Add(name, connector);
         }
-        protected ConnectorOut GetConnectorOut(string name, bool connected = true)
+        protected void Out(string name, object value)
         {
             ConnectorOut o;
             if (outputs.TryGetValue(name, out o))
             {
-                if (!connected || o.Connected)
+                if (o.Connected)
+                {
+                    o.SendData(value);
+                }
+            }
+        }
+        protected ConnectorOut GetOuput(string name, bool connected = true)
+        {
+            ConnectorOut o;
+            if (outputs.TryGetValue(name, out o))
+            {
+                if (o.Connected || !connected)
                 {
                     return o;
                 }
             }
             return null;
         }
-        protected ConnectorIn GetConnectorIn(string name)
+        protected ConnectorIn In(string name)
         {
             ConnectorIn o;
             if (inputs.TryGetValue(name, out o))

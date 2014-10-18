@@ -15,8 +15,8 @@ namespace KSPFlightPlanner.Program.Nodes
         private double lastAltitude;
         protected override void OnCreate()
         {
-            AddConnectorIn("Altitude", new DoubleConnectorIn());
-            AddConnectorIn("Down", new BoolConnectorIn());
+            In<double>("Altitude");
+            In<bool>("Down");
             Program.OnTick += Program_OnTick;
             lastAltitude = double.MinValue;
         }
@@ -27,8 +27,8 @@ namespace KSPFlightPlanner.Program.Nodes
         }
         protected override void OnExecute()
         {
-            double v = GetConnectorIn("Altitude").GetBufferAsDouble();
-            bool down = GetConnectorIn("Down").GetBufferAsBool();
+            double v = In("Altitude").AsDouble();
+            bool down = In("Down").AsBool();
             double alt = Program.Vessel.altitude;
             if (down)
             {

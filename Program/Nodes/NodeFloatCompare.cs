@@ -14,20 +14,20 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
-            AddConnectorIn("A", new FloatConnectorIn());
-            AddConnectorIn("B", new FloatConnectorIn());
-            AddConnectorOut("<", new ExecConnectorOut());
-            AddConnectorOut("<=", new ExecConnectorOut());
-            AddConnectorOut("==", new ExecConnectorOut());
-            AddConnectorOut(">=", new ExecConnectorOut());
-            AddConnectorOut(">", new ExecConnectorOut());
+            In<float>("A");
+            In<float>("B");
+            Out<Connector.Exec>("<", false);
+            Out<Connector.Exec>("<=", false);
+            Out<Connector.Exec>("==", false);
+            Out<Connector.Exec>(">=", false);
+            Out<Connector.Exec>(">", false);
         }
         protected override void OnExecute()
         {
             ExecuteNext();
 
-            var a = GetConnectorIn("A").GetBufferAsFloat();
-            var b = GetConnectorIn("B").GetBufferAsFloat();
+            var a = In("A").AsFloat();
+            var b = In("B").AsFloat();
             if (a < b)
                 ExecuteNext("<");
             if (a <= b)

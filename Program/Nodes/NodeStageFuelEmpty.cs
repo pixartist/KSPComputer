@@ -14,7 +14,7 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(210, 130);
         protected override void OnCreate()
         {
-            AddConnectorIn("IgnoreLanded", new BoolConnectorIn());
+            In<bool>("IgnoreLanded");
             Program.OnTick += Program_OnTick;
         }
 
@@ -24,13 +24,19 @@ namespace KSPFlightPlanner.Program.Nodes
         }
         protected override void OnExecute()
         {
-            if (!Program.Vessel.Landed || GetConnectorIn("IgnoreLanded").GetBufferAsBool())
+            if (!Program.Vessel.Landed || In("IgnoreLanded").AsBool())
             {
-               // Log.Write("Checking for empty fuel");
-                if (Program.Vessel.CanSavelySeperateCurrentStage())
+                double maxFuelInStage = Program.Vessel.CurrentStageFuelMax(DefaultResources.LiquidFuel, DefaultResources.Oxidizer, DefaultResources.SolidFuel);
+                //Log.Write("Max fuel in stage: " + maxFuelInStage);
+                if (maxFuelInStage > 0)
                 {
-                    //Log.Write("Fuel is empty");
-                    ExecuteNext();
+                    double currentFuelInStage = Program.Vessel.CurrentStageFuelRemaining(DefaultResources.LiquidFuel, DefaultResources.Oxidizer, DefaultResources.SolidFuel);
+                    // Log.Write("Checking for empty fuel");
+                    if (currentFuelInStage <= 0)
+                    {
+                        //Log.Write("Fuel is empty");
+                        ExecuteNext();
+                    }
                 }
             }
         }

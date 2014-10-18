@@ -14,12 +14,12 @@ namespace KSPFlightPlanner.Program.Nodes
             : base()
         {
 
-            AddConnectorOut(DefaultExecName, new ExecConnectorOut());
+            Out<Connector.Exec>(DefaultExecName, false);
         }
         public void Execute()
         {
 
-            //Log.Write(this.GetType() + " executing");
+            Log.Write(this.GetType() + " executing");
             RequestInputUpdates();
             OnExecute();
         }
@@ -29,9 +29,18 @@ namespace KSPFlightPlanner.Program.Nodes
         }
         protected void ExecuteNext(string name = DefaultExecName)
         {
-            var c = GetConnectorOut(name);
+            
+           // Log.Write("Trying to execute next node: " + name);
+            var c = GetOuput(name);
             if (c != null)
+            {
+                //Log.Write("Executing next node");
                 c.Execute();
+            }
+            /*else
+            {
+                Log.Write("Next node is null!");
+            }*/
         }
     }
 }

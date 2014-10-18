@@ -12,7 +12,7 @@ namespace KSPFlightPlanner.Program.Nodes
         public ExecutableNode()
             : base()
         {
-            AddConnectorIn(DefaultExecName, new ExecConnectorIn());
+            In<Connector.Exec>(DefaultExecName, true);
         }
     }
 }

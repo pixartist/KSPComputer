@@ -15,21 +15,17 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
-            AddConnectorOut("Quaternion", new QuaternionConnectorOut());
-            AddConnectorIn("X", new FloatConnectorIn());
-            AddConnectorIn("Y", new FloatConnectorIn());
-            AddConnectorIn("Z", new FloatConnectorIn());
+            Out<SQuaternion>("Quaternion");
+            In<float>("X");
+            In<float>("Y");
+            In<float>("Z");
         }
         protected override void OnUpdateOutputData()
         {
-            var v = GetConnectorOut("Quaternion");
-            if (v != null)
-            {
-                var x = GetConnectorIn("X").GetBufferAsFloat();
-                var y = GetConnectorIn("Y").GetBufferAsFloat();
-                var z = GetConnectorIn("Z").GetBufferAsFloat();
-                v.SendData(new SQuaternion(Quaternion.Euler(x,y,z)));
-            }
+            var x = In("X").AsFloat();
+            var y = In("Y").AsFloat();
+            var z = In("Z").AsFloat();
+            Out("Quaternion", new SQuaternion(Quaternion.Euler(x, y, z)));
         }
     }
 }

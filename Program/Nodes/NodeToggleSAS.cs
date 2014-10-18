@@ -14,11 +14,11 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(150, 100);
         protected override void OnCreate()
         {
-            AddConnectorIn("On", new BoolConnectorIn());
+            In<bool>("On");
         }
         protected override void OnExecute()
         {
-            var on = GetConnectorIn("On").GetBufferAsBool();
+            var on = In("On").AsBool();
             Program.SASController.SASEnabled = on;
             ExecuteNext();
         }

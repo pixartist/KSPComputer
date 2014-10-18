@@ -7,52 +7,36 @@ namespace KSPFlightPlanner.Program
 {
     public static class VesselHelper
     {
-        public static float FuelRemaining(this Vessel v)
+
+        public static double CurrentStageFuelRemaining(this Vessel v, params DefaultResources[] resources)
         {
-            float fuel = 0;
-            var parts = v.rootPart.FindChildParts<FuelTank>(true);
-            foreach(var tank in parts)
+            double fuel = 0;
+            foreach (var part in v.Parts)
             {
-                fuel += tank.fuel;
-            }
-            return fuel;
-        }
-        public static bool CanSavelySeperateCurrentStage(this Vessel v)
-        {
-           // Log.Write("Checking currentStage: " + v.currentStage);
-            if(v.currentStage < 1)
-                return false;
-            var activeResources = v.GetActiveResourceIDs();
-            //Log.Write("Active resource count: " + activeResources.Count);
-            foreach(var part in v.Parts)
-            {
-                if (part.inverseStage == v.currentStage - 1)
+                if (part.inverseStage == v.currentStage-1)
                 {
-                    //Log.Write("Found part in next stage: " + part);
-                    if(part.IsUnfiredDecoupler())
+                    if (part.IsUnfiredDecoupler())
                     {
-                        //Log.Write("Part is not a decoupler: " + part);
-                        if (!part.CanBeSavelySeperated(activeResources))
-                            return false;
+                        fuel += part.CountRemainingResourcesInChildren(resources);
                     }
                 }
             }
-            return true;
+            return fuel;
         }
-        public static List<int> GetActiveResourceIDs(this Vessel v)
+        public static double CurrentStageFuelMax(this Vessel v, params DefaultResources[] resources)
         {
-            var activeEngines = from p in v.Parts where p.inverseStage >= v.currentStage && p.IsEngine() select p;
-            HashSet<Propellant> activePropellants = new HashSet<Propellant>();
-            foreach(var e in activeEngines)
+            double maxFuel = 0;
+            foreach(var part in v.Parts)
             {
-                foreach (ModuleEngines m in e.Modules.OfType<ModuleEngines>())
-                    if (!m.getFlameoutState)
-                        activePropellants.UnionWith(m.propellants);
-                foreach (ModuleEnginesFX m in e.Modules.OfType<ModuleEnginesFX>())
-                    if (m.isEnabled && !m.getFlameoutState)
-                        activePropellants.UnionWith(m.propellants);     
+                if(part.inverseStage == v.currentStage - 1)
+                {
+                    if (part.IsUnfiredDecoupler())
+                    {
+                        maxFuel += part.CountMaxResourcesInChildren(resources);
+                    }
+                }
             }
-            return activePropellants.Select(prop => prop.id).ToList();
+            return maxFuel;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(150, 100);
         protected override void OnCreate()
         {
-            AddConnectorIn("Quaternion", new QuaternionConnectorIn());
+            In<SQuaternion>("Quaternion");
         }
         protected override void OnExecute()
         {
-            SQuaternion h = GetConnectorIn("Quaternion").GetBufferAsQuaternion();
+            SQuaternion h = In("Quaternion").AsQuaternion();
             Program.SASController.SASTarget = h.GetQuaternion();
             ExecuteNext();
         }

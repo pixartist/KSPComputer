@@ -49,10 +49,8 @@ namespace KSPFlightPlanner
         }
         public void Draw()
         {
-
             if (Show)
             {
-
                 mousePos = new Vector2(Input.mousePosition.x, (Screen.height - Input.mousePosition.y));
                 mouseReleased = false;
                 mousePressed = false;
@@ -121,6 +119,7 @@ namespace KSPFlightPlanner
             var types = FindAllDerivedTypes<Node>();
             foreach (var n in types)
             {
+                Log.Write(n.ToString());
                 Color color = GetStaticFieldValue<SVector3>(n, "Color").GetColor();
                 GUI.backgroundColor = color;
                 if (GUI.Button(new Rect(smallGap, smallGap + cy, 140, h), GetStaticFieldValue<string>(n, "Name")))
@@ -179,7 +178,7 @@ namespace KSPFlightPlanner
                                     Vector2 a = connections[c.Value];
                                     Vector2 b = connections[c2];
                                     if (windowRect.Contains(a) || windowRect.Contains(b))
-                                        GUIHelper.DrawLine(GUIUtility.ScreenToGUIPoint(a), GUIUtility.ScreenToGUIPoint(b), Color.white, 4);
+                                        GUIHelper.DrawLine(GUIUtility.ScreenToGUIPoint(a), GUIUtility.ScreenToGUIPoint(b), ConnectionColor(c.Value), 4);
 
                                 }
                             }
@@ -218,24 +217,24 @@ namespace KSPFlightPlanner
             {
                 
                 bool wasConnected = inp.Value.Connected;
-                GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : 0.8f);
+                GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : 0.5f);
                 bool buttonPressed = GUI.Button(new Rect(smallGap, y, size.x / 2, baseSize), inp.Key);
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(smallGap, y, 0));
                 connections.Add(inp.Value, anchor);
                 if (inp.Value.DataType == typeof(double))
                 {
-                    inp.Value.SetData(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.GetBufferAsString()));
+                    inp.Value.Set(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.AsString()));
                     y += baseSize + smallGap;
                 }
                 else if (inp.Value.DataType == typeof(float))
                 {
 
-                    inp.Value.SetData(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.GetBufferAsString()));
+                    inp.Value.Set(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.AsString()));
                     y += baseSize + smallGap;
                 }
                 else if (inp.Value.DataType == typeof(bool))
                 {
-                    inp.Value.SetData(GUI.Toggle(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), (bool)inp.Value.GetBufferAsBool(), inp.Value.GetBufferAsBool().ToString()));
+                    inp.Value.Set(GUI.Toggle(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), (bool)inp.Value.AsBool(), inp.Value.AsBool().ToString()));
                     y += baseSize + smallGap;
                 }
                 y += baseSize + smallGap;
@@ -257,7 +256,7 @@ namespace KSPFlightPlanner
                     }
                     else if (wasConnected)
                     {
-                        if (Input.GetMouseButtonDown(1))
+                        if (Event.current.button == 1)
                         {
                             inp.Value.DisconnectAll();
                         }
@@ -289,7 +288,7 @@ namespace KSPFlightPlanner
             {
                 
                 bool wasConnected = outp.Value.Connected;
-                GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : 0.8f);
+                GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : 0.5f);
                 bool buttonPressed = GUI.Button(new Rect(size.x / 2, y, size.x / 2, baseSize), outp.Key);
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(size.x / 2, y, size.x/2));
                 connections.Add(outp.Value, anchor);
@@ -302,7 +301,7 @@ namespace KSPFlightPlanner
                     }
                     else if (wasConnected)
                     {
-                        if (Input.GetMouseButtonDown(1))
+                        if (Event.current.button == 1)
                         {
                             outp.Value.DisconnectAll();
                         }

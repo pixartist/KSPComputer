@@ -14,13 +14,11 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(190, 50);
         protected override void OnCreate()
         {
-            AddConnectorOut("Altitude", new DoubleConnectorOut());
+            Out<double>("Altitude");
         }
         protected override void OnUpdateOutputData()
         {
-            var c = GetConnectorOut("Altitude");
-            if (c != null)
-                c.SendData(Program.Vessel.altitude);
+            Out("Altitude", Program.Vessel.altitude);
         }
     }
 }

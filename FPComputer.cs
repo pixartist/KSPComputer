@@ -27,7 +27,9 @@ namespace KSPFlightPlanner
                 drawer = new ProgramDrawer(activeProgram);
             }
             if ((startState & StartState.PreLaunch) == StartState.PreLaunch)
+            {
                 activeProgram.Launch();
+            }
             
         }
         public override void OnAwake()

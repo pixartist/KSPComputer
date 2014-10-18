@@ -14,21 +14,17 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
-            AddConnectorOut("Vector3", new Vector3ConnectorOut());
-            AddConnectorIn("X", new FloatConnectorIn());
-            AddConnectorIn("Y", new FloatConnectorIn());
-            AddConnectorIn("Z", new FloatConnectorIn());
+            Out<SVector3>("Vector3");
+            In<float>("X");
+            In<float>("Y");
+            In<float>("Z");
         }
         protected override void OnUpdateOutputData()
         {
-            var v = GetConnectorOut("Vector3");
-            if (v != null)
-            {
-                var x = GetConnectorIn("X").GetBufferAsFloat();
-                var y = GetConnectorIn("Y").GetBufferAsFloat();
-                var z = GetConnectorIn("Z").GetBufferAsFloat();
-                v.SendData(new SVector3(x,y,z));
-            }
+            var x = In("X").AsFloat();
+            var y = In("Y").AsFloat();
+            var z = In("Z").AsFloat();
+            Out("Vector3", new SVector3(x, y, z));
         }
     }
 }

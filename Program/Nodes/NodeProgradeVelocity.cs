@@ -15,15 +15,11 @@ namespace KSPFlightPlanner.Program.Nodes
         public new static SVector2 Size = new SVector2(190, 50);
         protected override void OnCreate()
         {
-            AddConnectorOut("Velocity", new FloatConnectorOut());
+            Out<float>("Velocity");
         }
         protected override void OnUpdateOutputData()
         {
-            var c = GetConnectorOut("Velocity");
-            if (c != null)
-            {
-                c.SendData(Vector3.Dot(Program.Vessel.ReferenceTransform.up, Program.Vessel.obt_velocity));
-            }
+            Out("Velocity", Vector3.Dot(Program.Vessel.ReferenceTransform.up, Program.Vessel.obt_velocity));
         }
     }
 }

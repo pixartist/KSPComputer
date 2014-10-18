@@ -7,72 +7,23 @@ namespace KSPFlightPlanner.Program
 {
     public static class PartHelper
     {
-        /*
-         * TODO
-         * Most of this is deprecated
-         * Use Part.resources
-         * 
-         * */
-        public static bool CanBeSavelySeperated(this Part part, List<int> activeResources)
+        public static double CountMaxResources(this Part part, params DefaultResources[] resources)
         {
-            if(!part.IsSepratron())
-            {
-            if(part.State == PartStates.ACTIVE || part.State == PartStates.IDLE)
-            {
-                if(part.IsEngine())
-                {
-                    if (part.EngineHasFuel())
-                        return false;
-                }
-            }
-            if(part is FuelTank)
-            {
-                if((part as FuelTank).fuel > 0)
-                {
-                    return false;
-                }
-            }
-            if (!part.IsSepratron())
-            {
-                foreach (PartResource r in part.Resources)
-                {
-                    if (r.amount > 0 && r.info.name != "ElectricCharge" && activeResources.Contains(r.info.id))
-                    {
-                        return false;
-                    }
-                }
-            }
-            }
-            foreach(var c in part.children)
-            {
-                if (!c.CanBeSavelySeperated(activeResources))
-                    return false;
-            }
-            return true;
+            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.maxAmount).Sum();
         }
-        public static bool IsEngine(this Part part)
+        public static double CountRemainingResources(this Part part, params DefaultResources[] resources)
         {
-            foreach (PartModule m in part.Modules)
-            {
-                if (m is ModuleEngines || m is ModuleEnginesFX)
-                    return true;
-            }
-            return false;
+            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.amount).Sum();
         }
-        public static bool EngineHasFuel(this Part part)
+        public static double CountMaxResourcesInChildren(this Part part, params DefaultResources[] resources)
         {
-            foreach (PartModule m in part.Modules)
-            {
-                ModuleEngines engines = m as ModuleEngines;
-                if (engines != null) 
-                    return !engines.getFlameoutState;
-
-                ModuleEnginesFX engineFX = m as ModuleEnginesFX;
-                if (engineFX != null)
-                    return !engineFX.getFlameoutState;
-            }
-            return false;
+            return CountMaxResources(part, resources) + (from Part p in part.children select p.CountMaxResourcesInChildren(resources)).Sum();
         }
+        public static double CountRemainingResourcesInChildren(this Part part, params DefaultResources[] resources)
+        {
+            return CountRemainingResources(part, resources) + (from Part p in part.children select p.CountRemainingResourcesInChildren(resources)).Sum();
+        }
+        
         public static bool IsUnfiredDecoupler(this Part part)
         {
             foreach (PartModule m in part.Modules)
@@ -91,30 +42,6 @@ namespace KSPFlightPlanner.Program
                         return true;
                     break;
                 }
-            }
-            return false;
-        }
-        public static bool IsSepratron(this Part part)
-        {
-            return part.ActivatesEvenIfDisconnected
-                && part.IsEngine()
-                && part.IsDecoupledInStage(part.inverseStage)
-                && !part.isControlSource;
-        }
-        public static bool IsDecoupledInStage(this Part part, int stage)
-        {
-            if ((part.IsUnfiredDecoupler() || part.IsLaunchClamp()) && part.inverseStage == stage)
-                return true;
-            if (part.parent == null) 
-                return false;
-            return part.parent.IsDecoupledInStage(stage);
-        }
-        public static bool IsLaunchClamp(this Part part)
-        {
-            foreach (PartModule m in part.Modules)
-            {
-                if (m is LaunchClamp) 
-                    return true;
             }
             return false;
         }

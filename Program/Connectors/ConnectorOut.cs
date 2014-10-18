@@ -6,24 +6,27 @@ using KSPFlightPlanner.Program.Nodes;
 namespace KSPFlightPlanner.Program.Connectors
 {
     [Serializable]
-    public abstract class ConnectorOut : Connector
+    public class ConnectorOut : Connector
     {
-        public ConnectorOut(Type dataType, bool allowMultipleConnections = true)
+        internal ConnectorOut(Type dataType, bool allowMultipleConnections = true)
             : base(dataType, allowMultipleConnections)
         {
 
         }
-        public void SendData(Object data)
+        internal void SendData(Object data)
         {
             foreach (var c in connections)
             {
-                (c as ConnectorIn).SetData(data);
+                (c as ConnectorIn).Set(data);
             }
         }
         internal void Execute()
         {
+            //Log.Write("Trying to execute next node from connector");
+            //Log.Write("Connection count: " + connections.Count);
             foreach (var c in (from cn in connections where cn.Node is ExecutableNode select cn.Node as ExecutableNode))
             {
+                //Log.Write("Executing next node from connector");
                 c.Execute();
             }
         }

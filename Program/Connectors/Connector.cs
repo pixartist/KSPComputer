@@ -8,6 +8,9 @@ namespace KSPFlightPlanner.Program.Connectors
     [Serializable]
     public abstract class Connector
     {
+        public struct Exec
+        {
+        }
         protected List<Connector> connections;
         public bool Connected
         {
