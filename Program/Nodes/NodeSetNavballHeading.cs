@@ -9,16 +9,12 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeSetNavballHeading : ExecutableNode
     {
-        public new static string Name = "Set navball heading";
-        public new static string Description = "Sets the heading relative to the orbited body";
-        public new static SVector3 Color = new SVector3(1, 1, 0.2f);
-        public new static SVector2 Size = new SVector2(150,300);
         protected override void OnCreate()
         {
-            In<float>("N/S");
-            In<float>("E/W");
-            In<float>("U/D");
-            In<float>("Roll");
+            In<double>("N/S");
+            In<double>("E/W");
+            In<double>("U/D");
+            In<double>("Roll");
         }
         protected override void OnExecute(ConnectorIn input)
         {

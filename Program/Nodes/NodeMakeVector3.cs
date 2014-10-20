@@ -8,16 +8,12 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeMakeVector3 : Node
     {
-        public new static string Name = "Make Vector3";
-        public new static string Description = "Creates a Vector3 from three floats";
-        public new static SVector3 Color = new SVector3(0.2f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
             Out<SVector3>("Vector3");
-            In<float>("X");
-            In<float>("Y");
-            In<float>("Z");
+            In<double>("X");
+            In<double>("Y");
+            In<double>("Z");
         }
         protected override void OnUpdateOutputData()
         {

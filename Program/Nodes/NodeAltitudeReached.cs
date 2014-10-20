@@ -8,10 +8,6 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeAltitudeReached : RootNode
     {
-        public new static string Name = "Altitude reached";
-        public new static string Description = "Called when the specified altitude is reached";
-        public new static SVector3 Color = new SVector3(0.2f, 0.2f, 1f);
-        public new static SVector2 Size = new SVector2(170, 130);
         private double lastAltitude;
         protected override void OnCreate()
         {

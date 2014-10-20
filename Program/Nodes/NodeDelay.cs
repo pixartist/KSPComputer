@@ -11,14 +11,10 @@ namespace KSPFlightPlanner.Program.Nodes
     public class NodeDelay : ExecutableNode
     {
         private List<float> triggerTimes;
-        public new static string Name = "Delay (s)";
-        public new static string Description = "Delays incoming executions";
-        public new static SVector3 Color = new SVector3(1, 1, 1);
-        public new static SVector2 Size = new SVector2(150, 100);
         const int maxEntries = 32;
         protected override void OnCreate()
         {
-            In<float>("Delay");
+            In<double>("Delay");
             Out<bool>("Active");
             triggerTimes = new List<float>();
             Program.OnTick += Program_OnTick;
@@ -52,8 +48,8 @@ namespace KSPFlightPlanner.Program.Nodes
         {
             if (triggerTimes.Count < maxEntries)
             {
-                float d = In("Delay").AsFloat();
-                triggerTimes.Add(Time.time + d);
+                double d = In("Delay").AsDouble();
+                triggerTimes.Add((float)(Time.time + d));
                 Out("Active", true);
             }
             else

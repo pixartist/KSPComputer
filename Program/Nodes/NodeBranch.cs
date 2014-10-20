@@ -8,10 +8,6 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeBranch : ExecutableNode
     {
-        public new static string Name = "Branch";
-        public new static string Description = "If/Else";
-        public new static SVector3 Color = new SVector3(1f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
             In<bool>("Input");

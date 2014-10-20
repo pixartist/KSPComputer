@@ -8,14 +8,10 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeCompare : ExecutableNode
     {
-        public new static string Name = "Compare (Float)";
-        public new static string Description = "Compares two floats";
-        public new static SVector3 Color = new SVector3(1f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
-            In<float>("A");
-            In<float>("B");
+            In<double>("A");
+            In<double>("B");
             Out<Connector.Exec>("<", false);
             Out<Connector.Exec>("<=", false);
             Out<Connector.Exec>("==", false);
@@ -26,8 +22,8 @@ namespace KSPFlightPlanner.Program.Nodes
         {
             ExecuteNext();
 
-            var a = In("A").AsFloat();
-            var b = In("B").AsFloat();
+            var a = In("A").AsDouble();
+            var b = In("B").AsDouble();
             if (a < b)
                 ExecuteNext("<");
             if (a <= b)

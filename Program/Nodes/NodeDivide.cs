@@ -8,24 +8,20 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeDivide : Node
     {
-        public new static string Name = "Divide (Float)";
-        public new static string Description = "Divides two floats";
-        public new static SVector3 Color = new SVector3(0.2f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 150);
         protected override void OnCreate()
         {
-            In<float>("A");
-            In<float>("B");
-            Out<float>("Out");
+            In<double>("A");
+            In<double>("B");
+            Out<double>("Out");
         }
         protected override void OnUpdateOutputData()
         {
-            var a = In("A").AsFloat();
-            var b = In("B").AsFloat();
+            var a = In("A").AsDouble();
+            var b = In("B").AsDouble();
             if (b != 0)
                 Out("Out", a / b);
             else
-               Out("Out", 0f);
+               Out("Out", 0);
         }
     }
 }

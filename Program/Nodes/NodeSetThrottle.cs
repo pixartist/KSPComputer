@@ -8,13 +8,9 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeSetThrottle : ExecutableNode
     {
-        public new static string Name = "Set throttle";
-        public new static string Description = "Sets the throttle to the given amount";
-        public new static SVector3 Color = new SVector3(1, 1, 0.2f);
-        public new static SVector2 Size = new SVector2(150, 100);
         protected override void OnCreate()
         {
-            In<float>("Throttle");
+            In<double>("Throttle");
         }
         protected override void OnExecute(ConnectorIn input)
         {

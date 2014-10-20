@@ -11,10 +11,6 @@ namespace KSPFlightPlanner.Program.Nodes
     public class NodeToggle : ExecutableNode
     {
         private bool enabled;
-        public new static string Name = "Toggle";
-        public new static string Description = "Can be switched on and off";
-        public new static SVector3 Color = new SVector3(1, 1, 1);
-        public new static SVector2 Size = new SVector2(150, 100);
         protected override void OnCreate()
         {
             enabled = false;

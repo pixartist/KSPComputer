@@ -265,7 +265,7 @@ namespace KSPFlightPlanner
                 {
 
                     inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
-                   y += baseElementHeight;
+                    y += baseElementHeight;
                 }
                 else if (inp.Value.DataType == typeof(bool))
                 {

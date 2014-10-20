@@ -8,10 +8,6 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeSequence : ExecutableNode
     {
-        public new static string Name = "Sequence";
-        public new static string Description = "Executes multiple outputs";
-        public new static SVector3 Color = new SVector3(1f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 200);
         protected override void OnCreate()
         {
             Out<Connector.Exec>(DefaultExecName + "2", false);

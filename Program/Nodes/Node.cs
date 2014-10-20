@@ -10,10 +10,6 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public abstract class Node
     {
-        public static string Name = "Base node";
-        public static string Description = "Abstract base node";
-        public static SVector3 Color;
-        public static SVector2 Size;
         public SVector2 Position;
         public int InputCount
         {

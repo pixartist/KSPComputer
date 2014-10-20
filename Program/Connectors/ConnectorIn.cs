@@ -40,6 +40,10 @@ namespace KSPFlightPlanner.Program.Connectors
         {
             if (buffer is double)
                 return (double)buffer;
+            if (buffer is float)
+                return (double)(float)buffer;
+            if (buffer is int)
+                return (double)(int)buffer;
             double val;
             if (double.TryParse(buffer as string, out val))
                 return val;
@@ -52,6 +56,10 @@ namespace KSPFlightPlanner.Program.Connectors
         {
             if (buffer is float)
                 return (float)buffer;
+            if (buffer is double)
+                return (float)(double)buffer;
+            if (buffer is int)
+                return (float)(int)buffer;
             float val;
             if (float.TryParse(buffer as string, out val))
                 return val;

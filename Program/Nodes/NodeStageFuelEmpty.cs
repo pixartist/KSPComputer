@@ -8,10 +8,6 @@ namespace KSPFlightPlanner.Program.Nodes
     [Serializable]
     public class NodeStageFuelEmpty : RootNode
     {
-        public new static string Name = "Stage Fuel empty";
-        public new static string Description = "Called when the current stage is burned out";
-        public new static SVector3 Color = new SVector3(0.2f, 0.2f, 1f);
-        public new static SVector2 Size = new SVector2(210, 130);
         protected override void OnCreate()
         {
             In<bool>("IgnoreLanded");

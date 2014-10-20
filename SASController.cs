@@ -42,6 +42,7 @@ namespace KSPFlightPlanner
         {
             if(SASControlEnabled && SASEnabled)
             {
+                
                 Quaternion at = program.Vessel.transform.rotation;
                 float angle = Quaternion.Angle(at, SASTarget);
                 if (angle > 10)
