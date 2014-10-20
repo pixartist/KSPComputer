@@ -9,11 +9,7 @@ namespace KSPFlightPlanner
     class GUIHelper
     {
 
-        // The texture used by DrawLine(Color)
-        private static Texture2D _coloredLineTexture;
-
-        // The color used by DrawLine(Color)
-        private static Color _coloredLineColor;
+        private static Dictionary<Color, Texture2D> colorTextures = new Dictionary<Color, Texture2D>();
 
         /// <summary>
         /// Draw a line between two points with the specified color and a thickness of 1
@@ -37,15 +33,16 @@ namespace KSPFlightPlanner
         /// <param name="thickness">The thickness of the line</param>
         public static void DrawLine(Vector2 lineStart, Vector2 lineEnd, Color color, int thickness)
         {
-            if (_coloredLineTexture == null || _coloredLineColor != color)
+            Texture2D tex = null;
+            if(!colorTextures.TryGetValue(color, out tex))
             {
-                _coloredLineColor = color;
-                _coloredLineTexture = new Texture2D(1, 1);
-                _coloredLineTexture.SetPixel(0, 0, _coloredLineColor);
-                _coloredLineTexture.wrapMode = TextureWrapMode.Repeat;
-                _coloredLineTexture.Apply();
+                tex = new Texture2D(1, 1);
+                tex.SetPixel(0, 0, color);
+                tex.wrapMode = TextureWrapMode.Repeat;
+                tex.Apply();
+                colorTextures.Add(color, tex);
             }
-            DrawLineStretched(lineStart, lineEnd, _coloredLineTexture, thickness);
+            DrawLineStretched(lineStart, lineEnd, tex, thickness);
         }
 
         /// <summary>

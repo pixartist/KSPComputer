@@ -1,5 +1,0 @@
-<node>
-	<name>Vertical velocity</name>
-	<description>Returns the vertical velocity in reference to the ground</description>
-	<width>120</width>
-</node>

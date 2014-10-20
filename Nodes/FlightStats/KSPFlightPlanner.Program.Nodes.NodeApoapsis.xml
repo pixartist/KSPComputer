@@ -1,5 +1,0 @@
-<node>
-	<name>Apoapsis</name>
-	<description>Returns the altitude of the apoapsis</description>
-	<width>120</width>
-</node>

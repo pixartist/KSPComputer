@@ -1,5 +1,0 @@
-<node>
-	<name>Set navball heading</name>
-	<description>Set the heading and roll of the SAS in reference to the navball. Heading is from -1 to 1, roll is from -180 to 180.</description>
-	<width>160</width>
-</node>

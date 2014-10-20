@@ -1,5 +1,0 @@
-<node>
-	<name>Branch</name>
-	<description>Branches the program flow according to a boolean input.</description>
-	<width>140</width>
-</node>

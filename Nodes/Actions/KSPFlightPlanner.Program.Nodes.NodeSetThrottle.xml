@@ -1,5 +1,0 @@
-<node>
-	<name>Set throttle</name>
-	<description>Set the throttle amount (0-1).</description>
-	<width>120</width>
-</node>

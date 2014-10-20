@@ -1,5 +1,0 @@
-<node>
-	<name>Stage fuel empty</name>
-	<description>Triggers when no fuel is left in the current stage. Only triggers for stages that have fuel.</description>
-	<width>160</width>
-</node>

@@ -5,28 +5,27 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using KSP;
 using UnityEngine;
-using KSPFlightPlanner.Program.Nodes;
+using KSPComputer;
 using System.IO;
+using KSPComputer;
 namespace KSPFlightPlanner
 {
     public class FPComputer : PartModule
     {
-        private KSPFlightPlanner.Program.FlightProgram activeProgram;
+        private FlightProgram activeProgram;
         private ProgramDrawer drawer;
         public PartModule.StartState LastStartState { get; private set; }
-        public VesselInformation VesselInfo { get; private set; }
+        
         public override void OnStart(PartModule.StartState state)
         {
-            if (VesselInfo == null)
-                VesselInfo = new VesselInformation();
             LastStartState = state;
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
             Log.Write("Starting " + state);
             if (activeProgram == null)
             {
-                activeProgram = new Program.FlightProgram();
-                activeProgram.Init(this);
-                drawer = new ProgramDrawer(activeProgram);
+                activeProgram = new FlightProgram();
+                activeProgram.Init(vessel);
+                drawer = new ProgramDrawer(this, activeProgram);
             }
             if ((LastStartState & StartState.PreLaunch) == StartState.PreLaunch)
             {
@@ -45,8 +44,7 @@ namespace KSPFlightPlanner
         {
             if (LastStartState != StartState.Editor && activeProgram != null)
                 activeProgram.Update();
-            if (VesselInfo != null)
-                VesselInfo.Update(vessel);
+            
 
         }
         public void OnGUI()
@@ -71,17 +69,17 @@ namespace KSPFlightPlanner
                     BinaryFormatter f = new BinaryFormatter();
                     using (MemoryStream fs = new MemoryStream(Convert.FromBase64String(v)))
                     {
-                        activeProgram = (Program.FlightProgram)f.Deserialize(fs);
+                        activeProgram = (FlightProgram)f.Deserialize(fs);
                         
                     }
                 }
                 catch (Exception e)
                 {
                     Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
-                    activeProgram = new Program.FlightProgram();
+                    activeProgram = new FlightProgram();
                 }
-                activeProgram.Init(this);
-                drawer = new ProgramDrawer(activeProgram);
+                activeProgram.Init(vessel);
+                drawer = new ProgramDrawer(this, activeProgram);
             }
         }
         public override void OnSave(ConfigNode node)

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using System.Reflection;
-using KSPFlightPlanner.Program;
-using KSPFlightPlanner.Program.Connectors;
-using KSPFlightPlanner.Program.Nodes;
+using KSPComputer;
+using KSPComputer.Types;
+using KSPComputer.Connectors;
+using KSPComputer.Nodes;
 namespace KSPFlightPlanner
 {
     public class ProgramDrawer
@@ -16,6 +17,7 @@ namespace KSPFlightPlanner
         private Vector2 nodeViewScrollPos;
         private Dictionary<Connector, Vector2> connections;
         private FlightProgram program;
+        private FPComputer computer;
         private Rect windowRect;
         private float baseElementHeight = 26;
         private float toolbarWidth = 150;
@@ -26,7 +28,7 @@ namespace KSPFlightPlanner
         private bool mouseDown = false;
         private bool mousePressed = false;
         private bool mouseReleased = false;
-
+        private const float inactiveCol = 0.7f;
         private bool PointerAvailable
         {
             get
@@ -43,8 +45,9 @@ namespace KSPFlightPlanner
                 return windowRect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y));
             }
         }
-        public ProgramDrawer(FlightProgram program)
+        public ProgramDrawer(FPComputer computer, FlightProgram program)
         {
+            this.computer = computer;
             this.program = program;
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
@@ -92,7 +95,7 @@ namespace KSPFlightPlanner
                 GUI.skin = null;
                 if (inputLocked)
                 {
-                    if (program.Module.LastStartState == PartModule.StartState.Editor)
+                    if (computer.LastStartState == PartModule.StartState.Editor)
                     {
                         EditorLogic.fetch.Unlock("FlightControl_noclick");
                         inputLocked = false;
@@ -120,7 +123,7 @@ namespace KSPFlightPlanner
             DrawNodeToolbar();
             DrawNodes(new Rect(toolbarWidth, 0, windowRect.width - toolbarWidth, windowRect.height));
 
-            if (program.Module.LastStartState == PartModule.StartState.Editor)
+            if (computer.LastStartState == PartModule.StartState.Editor)
                 PreventEditorClickthrough();
             else
                 PreventInFlightClickthrough();
@@ -254,7 +257,7 @@ namespace KSPFlightPlanner
             {
                 
                 bool wasConnected = inp.Value.Connected;
-                GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : 0.5f);
+                GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : inactiveCol);
                 bool buttonPressed = GUI.Button(new Rect(0, y, width / 2, baseElementHeight), inp.Key);
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(0, y, 0));
                 connections.Add(inp.Value, anchor);
@@ -327,7 +330,7 @@ namespace KSPFlightPlanner
             {
                 
                 bool wasConnected = outp.Value.Connected;
-                GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : 0.5f);
+                GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : inactiveCol);
                 bool buttonPressed = GUI.Button(new Rect(width/2, y, width / 2, baseElementHeight), outp.Key);
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width/2));
                 connections.Add(outp.Value, anchor);
@@ -397,11 +400,11 @@ namespace KSPFlightPlanner
         {
             var t = c.DataType;
             if (t == typeof(float))
-                return new Color(0.2f, 1.0f, 0.2f);
+                return new Color(0.2f, 1f, 0.3f);
             if (t == typeof(double))
-                return new Color(0.2f, 0.0f, 1.0f);
+                return new Color(0.2f, 1f, 0.0f);
             if (t == typeof(bool))
-                return new Color(0.2f, 0.7f, 0.3f);
+                return new Color(0.2f, 0.2f, 1f);
             if (t == typeof(Quaternion))
                 return new Color(0.2f, 1.0f, 1.0f);
             if (t == typeof(SVector3))

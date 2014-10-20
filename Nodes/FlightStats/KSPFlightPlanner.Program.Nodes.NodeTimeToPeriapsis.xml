@@ -1,5 +1,0 @@
-<node>
-	<name>Time to periapsis</name>
-	<description>Returns the time to the apoapsis in seconds.</description>
-	<width>120</width>
-</node>

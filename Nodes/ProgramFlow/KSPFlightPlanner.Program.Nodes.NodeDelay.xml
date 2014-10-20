@@ -1,5 +1,0 @@
-<node>
-	<name>Delay</name>
-	<description>Delays the execution by a given value.</description>
-	<width>120</width>
-</node>

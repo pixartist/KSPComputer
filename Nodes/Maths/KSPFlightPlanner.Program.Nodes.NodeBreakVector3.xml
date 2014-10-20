@@ -1,5 +1,0 @@
-<node>
-	<name>Break Vector3</name>
-	<description>Returns the components of a Vector3</description>
-	<width>120</width>
-</node>

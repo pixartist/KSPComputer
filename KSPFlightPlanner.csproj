@@ -46,58 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugHelper.cs" />
     <Compile Include="FPComputer.cs" />
     <Compile Include="GUIHelper.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="NodeCategories.cs" />
     <Compile Include="ProgramDrawer.cs" />
-    <Compile Include="Program\Connectors\Connector.cs" />
-    <Compile Include="Program\Connectors\ConnectorIn.cs" />
-    <Compile Include="Program\Connectors\ConnectorOut.cs" />
-    <Compile Include="Program\Nodes\NodeDelta.cs" />
-    <Compile Include="Program\Nodes\NodeTimeToPeriapsis.cs" />
-    <Compile Include="Program\Nodes\NodeTimeToApoapsis.cs" />
-    <Compile Include="Program\Nodes\NodeSequence.cs" />
-    <Compile Include="Program\Nodes\NodeToggle.cs" />
-    <Compile Include="Program\Nodes\NodePeriapsis.cs" />
-    <Compile Include="Program\Nodes\NodeApoapsis.cs" />
-    <Compile Include="Program\Nodes\NodeNavballHeading.cs" />
-    <Compile Include="Program\Nodes\NodeBranch.cs" />
-    <Compile Include="ResourceHelper.cs" />
-    <Compile Include="Program\Nodes\NodeVerticalVelocity.cs" />
-    <Compile Include="Program\Nodes\NodeProgradeVelocity.cs" />
-    <Compile Include="Program\Nodes\NodeDivide.cs" />
-    <Compile Include="Program\Nodes\NodeMultiply.cs" />
-    <Compile Include="Program\Nodes\NodeCompare.cs" />
-    <Compile Include="Program\Nodes\NodeSubtract.cs" />
-    <Compile Include="Program\Nodes\NodeAdd.cs" />
-    <Compile Include="Program\Nodes\NodeStageFuelEmpty.cs" />
-    <Compile Include="Program\Nodes\NodeEulerToQuaternion.cs" />
-    <Compile Include="Program\Nodes\NodeQuaternionToEuler.cs" />
-    <Compile Include="Program\Nodes\NodeBreakVector3.cs" />
-    <Compile Include="Program\Nodes\NodeMakeVector3.cs" />
-    <Compile Include="Program\Nodes\NodeAltitude.cs" />
-    <Compile Include="Program\Nodes\NodeAltitudeReached.cs" />
-    <Compile Include="Program\Nodes\NodePreLaunch.cs" />
-    <Compile Include="Program\Nodes\NodeSetNavballHeading.cs" />
-    <Compile Include="Program\Nodes\NodeTick.cs" />
-    <Compile Include="Program\Nodes\NodeDelay.cs" />
-    <Compile Include="Program\Nodes\NodeSetThrottle.cs" />
-    <Compile Include="Program\Nodes\NodeToggleSAS.cs" />
-    <Compile Include="Program\Nodes\NodeTriggerNextStage.cs" />
-    <Compile Include="Program\Nodes\RootNode.cs" />
-    <Compile Include="Program\Nodes\ExecutableNode.cs" />
-    <Compile Include="Program\FlightProgram.cs" />
-    <Compile Include="Program\Nodes\Node.cs" />
-    <Compile Include="PartHelper.cs" />
-    <Compile Include="SASController.cs" />
-    <Compile Include="SVector2.cs" />
-    <Compile Include="SQuaternion.cs" />
-    <Compile Include="VesselHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SVector3.cs" />
-    <Compile Include="VesselInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Parts\FPComputer\model.mu">
@@ -112,6 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DefaultNodes\DefaultNodes.csproj">
+      <Project>{db500499-a3f5-4213-88a0-bd499fd0bc00}</Project>
+      <Name>DefaultNodes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KSPComputer\KSPComputer.csproj">
+      <Project>{03cf1096-6d0e-4cb5-93fe-40c63f65023f}</Project>
+      <Name>KSPComputer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,5 +1,0 @@
-<node>
-	<name>Periapsis</name>
-	<description>Returns the altitude of the periapsis</description>
-	<width>120</width>
-</node>

@@ -1,5 +1,0 @@
-<node>
-	<name>Altitude reached</name>
-	<description>Triggers when the given altitude is reached.</description>
-	<width>120</width>
-</node>
