@@ -72,7 +72,7 @@ namespace KSPFlightPlanner
                     using (MemoryStream fs = new MemoryStream(Convert.FromBase64String(v)))
                     {
                         activeProgram = (Program.FlightProgram)f.Deserialize(fs);
-                        activeProgram.Init(this);
+                        
                     }
                 }
                 catch (Exception e)
@@ -80,6 +80,7 @@ namespace KSPFlightPlanner
                     Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                     activeProgram = new Program.FlightProgram();
                 }
+                activeProgram.Init(this);
                 drawer = new ProgramDrawer(activeProgram);
             }
         }

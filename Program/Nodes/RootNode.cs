@@ -19,7 +19,7 @@ namespace KSPFlightPlanner.Program.Nodes
         public void Execute(ConnectorIn input)
         {
 
-            Log.Write(this.GetType() + " executing");
+            //Log.Write(this.GetType() + " executing");
             RequestInputUpdates();
             OnExecute(input);
         }

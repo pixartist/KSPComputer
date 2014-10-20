@@ -17,7 +17,7 @@ namespace KSPFlightPlanner.Program.Nodes
         protected override void OnExecute(ConnectorIn input)
         {
             bool isTrue = In("Input").AsBool();
-            Log.Write("Checking branch: " + isTrue);
+            //Log.Write("Checking branch: " + isTrue);
             ExecuteNext();
             if(In("Input").AsBool())
                 ExecuteNext("True");

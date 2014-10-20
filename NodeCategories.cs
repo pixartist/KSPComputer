@@ -43,7 +43,7 @@ namespace KSPFlightPlanner
                 }
                 if(element.Element("width") != null)
                 {
-                    Log.Write("FOUND WIDTH: " + element.Element("width").Value);
+                    //Log.Write("FOUND WIDTH: " + element.Element("width").Value);
                     float.TryParse(element.Element("width").Value, out this.width);
                     if (this.width <= 0)
                     {
@@ -52,7 +52,7 @@ namespace KSPFlightPlanner
                         if (w > 0)
                             this.width = (float)w;
                     }
-                    Log.Write("PARSED WIDTH: " + this.width);
+                   // Log.Write("PARSED WIDTH: " + this.width);
                 }
                 
             }
