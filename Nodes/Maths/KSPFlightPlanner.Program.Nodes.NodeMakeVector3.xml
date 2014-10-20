@@ -1,0 +1,5 @@
+<node>
+	<name>Make Vector3</name>
+	<description>Constructs a Vector3 from three floats</description>
+	<width>120</width>
+</node>

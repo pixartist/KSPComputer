@@ -16,7 +16,7 @@ namespace KSPFlightPlanner.Program.Nodes
         {
             In<bool>("On");
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             var on = In("On").AsBool();
             Program.SASController.SASEnabled = on;

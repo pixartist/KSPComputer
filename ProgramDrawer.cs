@@ -11,12 +11,14 @@ namespace KSPFlightPlanner
 {
     public class ProgramDrawer
     {
+        private NodeCategories nodeCats;
         private bool inputLocked = false;
         private Vector2 nodeViewScrollPos;
         private Dictionary<Connector, Vector2> connections;
         private FlightProgram program;
         private Rect windowRect;
-        private float smallGap = 2;
+        private float baseElementHeight = 26;
+        private float toolbarWidth = 150;
         private Color defaultColor = Color.white;
         private Node draggedNode;
         private Connector draggedConnection;
@@ -24,6 +26,7 @@ namespace KSPFlightPlanner
         private bool mouseDown = false;
         private bool mousePressed = false;
         private bool mouseReleased = false;
+
         private bool PointerAvailable
         {
             get
@@ -46,6 +49,7 @@ namespace KSPFlightPlanner
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
+            nodeCats = new NodeCategories(Environment.CurrentDirectory + "\\GameData\\FlightPlanner\\Nodes\\");
         }
         public void Draw()
         {
@@ -88,8 +92,17 @@ namespace KSPFlightPlanner
                 GUI.skin = null;
                 if (inputLocked)
                 {
-                    EditorLogic.fetch.Unlock("FlightControl_noclick");
-                    inputLocked = false;
+                    if (program.Module.LastStartState == PartModule.StartState.Editor)
+                    {
+                        EditorLogic.fetch.Unlock("FlightControl_noclick");
+                        inputLocked = false;
+                    }
+                    else
+                    {
+                        InputLockManager.RemoveControlLock("FlightControl_noclick");
+                        ManeuverGizmo.HasMouseFocus = false;
+                        inputLocked = false;
+                    }
                 }
             }
         }
@@ -102,32 +115,52 @@ namespace KSPFlightPlanner
             }
             // GUI.Label(new Rect(200, 0, 100, 50), mousePos.ToString());
 
-            DrawNodeToolbar(smallGap, smallGap);
-            DrawNodes(new Rect(smallGap * 2 + 150, smallGap, windowRect.width - (smallGap * 3 + 150), windowRect.height - smallGap * 2));
-            PreventEditorClickthrough();
+            DrawNodeToolbar();
+            DrawNodes(new Rect(toolbarWidth, 0, windowRect.width - toolbarWidth, windowRect.height));
+            if (program.Module.LastStartState == PartModule.StartState.Editor)
+                PreventEditorClickthrough();
+            else
+                PreventInFlightClickthrough();
 
             if (GUI.Button(new Rect(windowRect.width - 50, 10, 30, 30), "X"))
             {
                 Show = false;
             }
         }
-        private void DrawNodeToolbar(float x, float y)
+        private void DrawNodeToolbar()
         {
-            float cy = smallGap + 30;
-            float h = 30;
-            GUI.BeginGroup(new Rect(x + smallGap, y + smallGap, 150, windowRect.height), "Nodes");
-            var types = FindAllDerivedTypes<Node>();
-            foreach (var n in types)
+            float cy = baseElementHeight;
+            GUI.BeginGroup(new Rect(0, 0, toolbarWidth, windowRect.height), "Nodes");
+            if (GUI.Button(new Rect(0, 0 + cy, toolbarWidth, baseElementHeight), "Back"))
             {
-                Log.Write(n.ToString());
-                Color color = GetStaticFieldValue<SVector3>(n, "Color").GetColor();
-                GUI.backgroundColor = color;
-                if (GUI.Button(new Rect(smallGap, smallGap + cy, 140, h), GetStaticFieldValue<string>(n, "Name")))
+                nodeCats.CategoryUp();
+                return;
+            }
+            cy += baseElementHeight * 2;
+            var cats = nodeCats.ListSubCategories();
+            foreach(var cat in cats)
+            {
+                GUI.backgroundColor = cat.color;
+                if (GUI.Button(new Rect(0, 0 + cy, toolbarWidth, baseElementHeight), cat.name))
                 {
-                    draggedNode = program.AddNode(n, GUIUtility.GUIToScreenPoint(mousePos));
+                    nodeCats.SelectSubCategory(cat.name);
+                    return;
+                }
+                cy += baseElementHeight;
+            }
+            Log.Write("Drawing nodes");
+            cy += baseElementHeight;
+            var nodes = nodeCats.ListNodes();
+            foreach (var node in nodes)
+            {
+                GUI.backgroundColor = node.color;
+                if (GUI.Button(new Rect(0, cy, toolbarWidth, baseElementHeight), node.name))
+                {
+                    Log.Write("Button pressed: " + node.name);
+                    draggedNode = program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
                     dragInfo = new Vector2(0, 0);
                 }
-                cy += h;
+                cy += baseElementHeight;
             }
             GUI.EndGroup();
             GUI.backgroundColor = defaultColor;
@@ -141,7 +174,7 @@ namespace KSPFlightPlanner
                 if (mouseReleased)
                 {
                     
-                    if(GUIUtility.ScreenToGUIPoint(mousePos).x < 140)
+                    if(mousePos.x < 140)
                     {
                         program.RemoveNode(draggedNode);
                     }
@@ -189,55 +222,57 @@ namespace KSPFlightPlanner
         }
         private void DrawNode(Node node)
         {
-            float baseSize = 25;
-            Vector2 size = GetStaticFieldValue<SVector2>(node.GetType(), "Size").GetVec2();
-            Color color = GetStaticFieldValue<SVector3>(node.GetType(), "Color").GetColor();
-            string name = GetStaticFieldValue<string>(node.GetType(), "Name");
-            GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, size.x, size.y));
-            GUI.backgroundColor = color;
-            GUI.Box(new Rect(0, 0, size.x, size.y), name);
+            
+            var info = nodeCats.GetNodeInfo(node.GetType());
+            Log.Write("Drawing node " + node + " width: " + info.width);
+            float height = Math.Max(node.InputCount * 2, node.OutputCount) * baseElementHeight + baseElementHeight; 
+            GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
+            GUI.backgroundColor = info.color;
+            GUI.Box(new Rect(0, 0, info.width, height), info.name);
             if (PointerAvailable && mousePressed)
             {
-                if (new Rect(0, 0, size.x, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
+                if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
                 {
                     draggedNode = node;
                     dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
                 }
             }
-            DrawNodeInputs(node.Inputs, baseSize, size);
-            DrawNodeOutputs(node.Outputs, baseSize, size);
+            DrawNodeInputs(node.Inputs, info.width);
+            DrawNodeOutputs(node.Outputs, info.width);
             GUI.backgroundColor = defaultColor;
             GUI.EndGroup();
 
         }
-        void DrawNodeInputs(KeyValuePair<string, ConnectorIn>[] inputs, float baseSize, Vector2 size)
+        void DrawNodeInputs(KeyValuePair<string, ConnectorIn>[] inputs, float width)
         {
-            float y = 15;
+            float y = baseElementHeight;
             foreach (var inp in inputs)
             {
                 
                 bool wasConnected = inp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : 0.5f);
-                bool buttonPressed = GUI.Button(new Rect(smallGap, y, size.x / 2, baseSize), inp.Key);
-                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(smallGap, y, 0));
+                bool buttonPressed = GUI.Button(new Rect(0, y, width / 2, baseElementHeight), inp.Key);
+                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(0, y, 0));
                 connections.Add(inp.Value, anchor);
+                y += baseElementHeight;
+                var infoRect = new Rect(0, y, width / 2, baseElementHeight);
                 if (inp.Value.DataType == typeof(double))
                 {
-                    inp.Value.Set(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.AsString()));
-                    y += baseSize + smallGap;
+                    inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
+                    y += baseElementHeight;
                 }
                 else if (inp.Value.DataType == typeof(float))
                 {
 
-                    inp.Value.Set(GUI.TextField(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), inp.Value.AsString()));
-                    y += baseSize + smallGap;
+                    inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
+                   y += baseElementHeight;
                 }
                 else if (inp.Value.DataType == typeof(bool))
                 {
-                    inp.Value.Set(GUI.Toggle(new Rect(smallGap, y + baseSize + smallGap, size.x / 2, baseSize), (bool)inp.Value.AsBool(), inp.Value.AsBool().ToString()));
-                    y += baseSize + smallGap;
+                    inp.Value.Set(GUI.Toggle(infoRect, (bool)inp.Value.AsBool(), inp.Value.AsBool().ToString()));
+                    y += baseElementHeight;
                 }
-                y += baseSize + smallGap;
+                
                 if (buttonPressed)
                 {
                     if (!wasConnected)
@@ -281,16 +316,16 @@ namespace KSPFlightPlanner
 
             }
         }
-        void DrawNodeOutputs(KeyValuePair<string, ConnectorOut>[] outputs, float baseSize, Vector2 size)
+        void DrawNodeOutputs(KeyValuePair<string, ConnectorOut>[] outputs, float width)
         {
-            float y = 15;
+            float y = baseElementHeight;
             foreach (var outp in outputs)
             {
                 
                 bool wasConnected = outp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : 0.5f);
-                bool buttonPressed = GUI.Button(new Rect(size.x / 2, y, size.x / 2, baseSize), outp.Key);
-                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(size.x / 2, y, size.x/2));
+                bool buttonPressed = GUI.Button(new Rect(width/2, y, width / 2, baseElementHeight), outp.Key);
+                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width/2));
                 connections.Add(outp.Value, anchor);
                 if (buttonPressed && PointerAvailable)
                 {
@@ -309,13 +344,13 @@ namespace KSPFlightPlanner
                         {
                             if (!outp.Value.AllowMultipleConnections)
                                 outp.Value.DisconnectAll();
-                            dragInfo = GUIUtility.GUIToScreenPoint(GetNodeAnchor(size.x / 2, y, size.x/2));
+                            dragInfo = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width/2));
                             draggedConnection = outp.Value;
                             
                         }
                     }
                 }
-                y += baseSize + smallGap;
+                y += baseElementHeight;
             }
         }
         void PreventEditorClickthrough()
@@ -371,21 +406,7 @@ namespace KSPFlightPlanner
                 return new Color(0.8f, 0.5f, 0.2f);
             return Color.white;
         }
-        public static List<Type> FindAllDerivedTypes<T>()
-        {
-            return FindAllDerivedTypes<T>(Assembly.GetAssembly(typeof(T)));
-        }
-
-        public static List<Type> FindAllDerivedTypes<T>(Assembly assembly)
-        {
-            var derivedType = typeof(T);
-            return assembly
-                .GetTypes()
-                .Where(t =>
-                    derivedType.IsAssignableFrom(t) && !t.IsAbstract
-                    ).ToList();
-
-        }
+        
         public static T GetStaticFieldValue<T>(Type t, string fieldName)
         {
             FieldInfo field = t.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);

@@ -14,16 +14,16 @@ namespace KSPFlightPlanner.Program
     public class FlightProgram
     {
         [NonSerialized]
-        private FPComputer module;
+        public FPComputer Module;
         [NonSerialized]
         public SASController SASController;
         public Vessel Vessel
         {
             get
             {
-                if (module == null)
+                if (Module == null)
                     return null;
-                return module.vessel;
+                return Module.vessel;
             }
         }
         public delegate void FlightEventHandler();
@@ -36,7 +36,7 @@ namespace KSPFlightPlanner.Program
         }
         public void Init(FPComputer module)
         {
-            this.module = module;
+            this.Module = module;
             SASController = new SASController(this);
         }
         public void Launch()

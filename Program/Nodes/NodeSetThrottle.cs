@@ -16,7 +16,7 @@ namespace KSPFlightPlanner.Program.Nodes
         {
             In<float>("Throttle");
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             FlightInputHandler.state.mainThrottle = In("Throttle").AsFloat();
             ExecuteNext();

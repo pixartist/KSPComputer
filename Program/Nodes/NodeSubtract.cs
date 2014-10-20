@@ -6,7 +6,7 @@ using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
     [Serializable]
-    public class NodeFloatSubtract : Node
+    public class NodeSubtract : Node
     {
         public new static string Name = "Subtract (Float)";
         public new static string Description = "Subtracts two floats";

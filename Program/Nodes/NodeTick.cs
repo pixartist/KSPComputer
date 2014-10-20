@@ -19,7 +19,7 @@ namespace KSPFlightPlanner.Program.Nodes
 
         void Program_OnTick()
         {
-            Execute();
+            Execute(null);
         }
     }
 }

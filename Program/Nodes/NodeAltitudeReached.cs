@@ -23,9 +23,9 @@ namespace KSPFlightPlanner.Program.Nodes
 
         void Program_OnTick()
         {
-            Execute();
+            Execute(null);
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             double v = In("Altitude").AsDouble();
             bool down = In("Down").AsBool();

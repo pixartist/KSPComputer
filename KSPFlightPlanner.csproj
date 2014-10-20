@@ -46,18 +46,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugHelper.cs" />
     <Compile Include="FPComputer.cs" />
     <Compile Include="GUIHelper.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="NodeCategories.cs" />
     <Compile Include="ProgramDrawer.cs" />
     <Compile Include="Program\Connectors\Connector.cs" />
     <Compile Include="Program\Connectors\ConnectorIn.cs" />
     <Compile Include="Program\Connectors\ConnectorOut.cs" />
+    <Compile Include="Program\Nodes\NodeSequence.cs" />
+    <Compile Include="Program\Nodes\NodeToggle.cs" />
     <Compile Include="Program\Nodes\NodePeriapsis.cs" />
     <Compile Include="Program\Nodes\NodeApoapsis.cs" />
-    <Compile Include="Program\Nodes\NodeHeading.cs" />
+    <Compile Include="Program\Nodes\NodeNavballHeading.cs" />
     <Compile Include="Program\Nodes\NodeBranch.cs" />
-    <Compile Include="Program\ResourceHelper.cs" />
+    <Compile Include="ResourceHelper.cs" />
     <Compile Include="Program\Nodes\NodeVerticalVelocity.cs" />
     <Compile Include="Program\Nodes\NodeProgradeVelocity.cs" />
     <Compile Include="Program\Nodes\NodeFloatDivide.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="Program\Nodes\NodeAltitude.cs" />
     <Compile Include="Program\Nodes\NodeAltitudeReached.cs" />
     <Compile Include="Program\Nodes\NodePreLaunch.cs" />
-    <Compile Include="Program\Nodes\NodeSetHeading.cs" />
+    <Compile Include="Program\Nodes\NodeSetNavballHeading.cs" />
     <Compile Include="Program\Nodes\NodeTick.cs" />
     <Compile Include="Program\Nodes\NodeDelay.cs" />
     <Compile Include="Program\Nodes\NodeSetThrottle.cs" />
@@ -84,13 +88,14 @@
     <Compile Include="Program\Nodes\ExecutableNode.cs" />
     <Compile Include="Program\FlightProgram.cs" />
     <Compile Include="Program\Nodes\Node.cs" />
-    <Compile Include="Program\PartHelper.cs" />
-    <Compile Include="Program\SASController.cs" />
-    <Compile Include="Program\SVector2.cs" />
-    <Compile Include="Program\SQuaternion.cs" />
-    <Compile Include="Program\VesselHelper.cs" />
+    <Compile Include="PartHelper.cs" />
+    <Compile Include="SASController.cs" />
+    <Compile Include="SVector2.cs" />
+    <Compile Include="SQuaternion.cs" />
+    <Compile Include="VesselHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program\SVector3.cs" />
+    <Compile Include="SVector3.cs" />
+    <Compile Include="VesselInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Parts\FPComputer\model.mu">

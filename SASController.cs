@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using KSPFlightPlanner.Program;
 using UnityEngine;
-namespace KSPFlightPlanner.Program
+namespace KSPFlightPlanner
 {
     public class SASController
     {
@@ -42,7 +42,13 @@ namespace KSPFlightPlanner.Program
         {
             if(SASControlEnabled && SASEnabled)
             {
-                program.Vessel.VesselSAS.LockHeading(SASTarget, true);
+                Quaternion at = program.Vessel.transform.rotation;
+                float angle = Quaternion.Angle(at, SASTarget);
+                if (angle > 10)
+                    program.Vessel.VesselSAS.LockHeading(SASTarget);
+                else   
+                    program.Vessel.VesselSAS.LockHeading(SASTarget, true);
+                
             }
         }
 

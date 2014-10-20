@@ -48,7 +48,7 @@ namespace KSPFlightPlanner.Program.Nodes
                 }
             }
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             if (triggerTimes.Count < maxEntries)
             {

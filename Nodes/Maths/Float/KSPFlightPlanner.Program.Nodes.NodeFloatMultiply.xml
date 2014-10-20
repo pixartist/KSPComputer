@@ -1,0 +1,5 @@
+<node>
+	<name>Multiply (float)</name>
+	<description>Multiply A by B</description>
+	<width>120</width>
+</node>

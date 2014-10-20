@@ -13,11 +13,13 @@ namespace KSPFlightPlanner
     {
         private KSPFlightPlanner.Program.FlightProgram activeProgram;
         private ProgramDrawer drawer;
-        private PartModule.StartState startState;
+        public PartModule.StartState LastStartState { get; private set; }
+        public VesselInformation VesselInfo { get; private set; }
         public override void OnStart(PartModule.StartState state)
         {
-            
-            startState = state;
+            if (VesselInfo == null)
+                VesselInfo = new VesselInformation();
+            LastStartState = state;
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
             Log.Write("Starting " + state);
             if (activeProgram == null)
@@ -26,7 +28,7 @@ namespace KSPFlightPlanner
                 activeProgram.Init(this);
                 drawer = new ProgramDrawer(activeProgram);
             }
-            if ((startState & StartState.PreLaunch) == StartState.PreLaunch)
+            if ((LastStartState & StartState.PreLaunch) == StartState.PreLaunch)
             {
                 activeProgram.Launch();
             }
@@ -41,13 +43,15 @@ namespace KSPFlightPlanner
          */
         public override void OnUpdate()
         {
-            if (startState != StartState.Editor && activeProgram != null)
+            if (LastStartState != StartState.Editor && activeProgram != null)
                 activeProgram.Update();
+            if (VesselInfo != null)
+                VesselInfo.Update(vessel);
 
         }
         public void OnGUI()
         {
-            if (startState == StartState.Editor && drawer.Show)
+            if (LastStartState == StartState.Editor && drawer.Show)
                 EditorTooltip.Instance.HideToolTip();
             if (drawer != null)
                 drawer.Draw();
@@ -56,7 +60,7 @@ namespace KSPFlightPlanner
         public override void OnLoad(ConfigNode node)
         {
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnLoad: " + node);
-            Log.Write("Loading program " + startState);
+            Log.Write("Loading program " + LastStartState);
             if (node.HasValue("FlightProgram"))
             {
                 string v = node.GetValue("FlightProgram");
@@ -73,7 +77,7 @@ namespace KSPFlightPlanner
                 }
                 catch (Exception e)
                 {
-                    Log.Write("Error loading program: " + e.Message + " (State: " + startState + ")");
+                    Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                     activeProgram = new Program.FlightProgram();
                 }
                 drawer = new ProgramDrawer(activeProgram);
@@ -82,7 +86,7 @@ namespace KSPFlightPlanner
         public override void OnSave(ConfigNode node)
         {
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnSave: " + node);
-            Log.Write("Saving program " + startState);
+            Log.Write("Saving program " + LastStartState);
             if (activeProgram != null)
             {
                 try
@@ -101,7 +105,7 @@ namespace KSPFlightPlanner
                 }
                 catch (Exception e)
                 {
-                    Log.Write("Could not save flight program: " + e.Message + " (State: " + startState + ")");
+                    Log.Write("Could not save flight program: " + e.Message + " (State: " + LastStartState + ")");
                 }
             }
         }

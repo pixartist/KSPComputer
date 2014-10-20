@@ -1,0 +1,5 @@
+<node>
+	<name>Altitude</name>
+	<description>Returns the current altitude</description>
+	<width>120</width>
+</node>

@@ -1,0 +1,5 @@
+<node>
+	<name>Navball heading</name>
+	<description>Returns the heading in refererence to the navball</description>
+	<width>120</width>
+</node>

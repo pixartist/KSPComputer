@@ -20,9 +20,9 @@ namespace KSPFlightPlanner.Program.Nodes
 
         void Program_OnTick()
         {
-            Execute();
+            Execute(null);
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             if (!Program.Vessel.Landed || In("IgnoreLanded").AsBool())
             {

@@ -24,10 +24,10 @@ namespace KSPFlightPlanner.Program.Connectors
         {
             //Log.Write("Trying to execute next node from connector");
             //Log.Write("Connection count: " + connections.Count);
-            foreach (var c in (from cn in connections where cn.Node is ExecutableNode select cn.Node as ExecutableNode))
+            foreach (var c in (from cn in connections where cn.Node is ExecutableNode select cn))
             {
                 //Log.Write("Executing next node from connector");
-                c.Execute();
+                (c.Node as ExecutableNode).Execute(c as ConnectorIn);
             }
         }
     }

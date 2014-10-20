@@ -1,0 +1,5 @@
+<node>
+	<name>Quaterntion to euler</name>
+	<description>Returns the euler angles from a Quaternion</description>
+	<width>160</width>
+</node>

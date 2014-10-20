@@ -6,7 +6,7 @@ using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
     [Serializable]
-    public class NodeFloatCompare : ExecutableNode
+    public class NodeCompare : ExecutableNode
     {
         public new static string Name = "Compare (Float)";
         public new static string Description = "Compares two floats";
@@ -22,7 +22,7 @@ namespace KSPFlightPlanner.Program.Nodes
             Out<Connector.Exec>(">=", false);
             Out<Connector.Exec>(">", false);
         }
-        protected override void OnExecute()
+        protected override void OnExecute(ConnectorIn input)
         {
             ExecuteNext();
 

@@ -1,0 +1,5 @@
+<node>
+	<name>Prograde velocity</name>
+	<description>Returns the velocity along the prograde vector</description>
+	<width>120</width>
+</node>

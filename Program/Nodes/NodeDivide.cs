@@ -6,12 +6,12 @@ using KSPFlightPlanner.Program.Connectors;
 namespace KSPFlightPlanner.Program.Nodes
 {
     [Serializable]
-    public class NodeFloatAdd : Node
+    public class NodeDivide : Node
     {
-        public new static string Name = "Add (Float)";
-        public new static string Description = "Adds two floats";
+        public new static string Name = "Divide (Float)";
+        public new static string Description = "Divides two floats";
         public new static SVector3 Color = new SVector3(0.2f, 1f, 1f);
-        public new static SVector2 Size = new SVector2(190, 200);
+        public new static SVector2 Size = new SVector2(190, 150);
         protected override void OnCreate()
         {
             In<float>("A");
@@ -22,8 +22,10 @@ namespace KSPFlightPlanner.Program.Nodes
         {
             var a = In("A").AsFloat();
             var b = In("B").AsFloat();
-            Out("Out", a + b);
+            if (b != 0)
+                Out("Out", a / b);
+            else
+               Out("Out", 0f);
         }
     }
 }
-

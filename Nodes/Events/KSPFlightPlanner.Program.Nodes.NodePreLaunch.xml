@@ -1,0 +1,5 @@
+<node>
+	<name>Pre-Launch</name>
+	<description>Triggers when the launchpad is loaded.</description>
+	<width>120</width>
+</node>

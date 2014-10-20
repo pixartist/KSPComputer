@@ -15,6 +15,20 @@ namespace KSPFlightPlanner.Program.Nodes
         public static SVector3 Color;
         public static SVector2 Size;
         public SVector2 Position;
+        public int InputCount
+        {
+            get
+            {
+                return inputs.Count;
+            }
+        }
+        public int OutputCount
+        {
+            get
+            {
+                return outputs.Count;
+            }
+        }
         public FlightProgram Program { get; private set; }
         private Dictionary<string, ConnectorIn> inputs;
         private Dictionary<string, ConnectorOut> outputs;

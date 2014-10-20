@@ -1,0 +1,5 @@
+<node>
+	<name>Sequence</name>
+	<description>Executes several nodes.</description>
+	<width>120</width>
+</node>

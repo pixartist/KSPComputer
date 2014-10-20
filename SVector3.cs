@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-namespace KSPFlightPlanner.Program
+namespace KSPFlightPlanner
 {
     [Serializable]
     public struct SVector3
@@ -14,6 +14,12 @@ namespace KSPFlightPlanner.Program
             this.x = x;
             this.y = y;
             this.z = z;
+        }
+        public SVector3(Vector3 v)
+        {
+            x = v.x;
+            y = v.y;
+            z = v.z;
         }
         public Vector3 GetVec3()
         {

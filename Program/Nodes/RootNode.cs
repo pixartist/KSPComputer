@@ -16,14 +16,14 @@ namespace KSPFlightPlanner.Program.Nodes
 
             Out<Connector.Exec>(DefaultExecName, false);
         }
-        public void Execute()
+        public void Execute(ConnectorIn input)
         {
 
             Log.Write(this.GetType() + " executing");
             RequestInputUpdates();
-            OnExecute();
+            OnExecute(input);
         }
-        protected virtual void OnExecute()
+        protected virtual void OnExecute(ConnectorIn input)
         {
             ExecuteNext();
         }
