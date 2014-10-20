@@ -1,5 +1,5 @@
 <node>
-	<name>Add (float)</name>
+	<name>Add</name>
 	<description>Add A and B</description>
 	<width>120</width>
 </node>

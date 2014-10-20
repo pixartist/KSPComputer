@@ -108,15 +108,18 @@ namespace KSPFlightPlanner
         }
         private void OnDrawWindow(int id)
         {
+
             GUI.depth = 150;
             if (draggedConnection != null && dragInfo != mousePos)
             {
                 GUIHelper.DrawLine(GUIUtility.ScreenToGUIPoint(dragInfo), GUIUtility.ScreenToGUIPoint(mousePos), Color.red, 4);
             }
+
             // GUI.Label(new Rect(200, 0, 100, 50), mousePos.ToString());
 
             DrawNodeToolbar();
             DrawNodes(new Rect(toolbarWidth, 0, windowRect.width - toolbarWidth, windowRect.height));
+
             if (program.Module.LastStartState == PartModule.StartState.Editor)
                 PreventEditorClickthrough();
             else
@@ -126,6 +129,7 @@ namespace KSPFlightPlanner
             {
                 Show = false;
             }
+
         }
         private void DrawNodeToolbar()
         {
@@ -148,7 +152,7 @@ namespace KSPFlightPlanner
                 }
                 cy += baseElementHeight;
             }
-            Log.Write("Drawing nodes");
+
             cy += baseElementHeight;
             var nodes = nodeCats.ListNodes();
             foreach (var node in nodes)
@@ -224,7 +228,7 @@ namespace KSPFlightPlanner
         {
             
             var info = nodeCats.GetNodeInfo(node.GetType());
-            Log.Write("Drawing node " + node + " width: " + info.width);
+            //Log.Write("Drawing node " + node + " width: " + info.width);
             float height = Math.Max(node.InputCount * 2, node.OutputCount) * baseElementHeight + baseElementHeight; 
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
             GUI.backgroundColor = info.color;

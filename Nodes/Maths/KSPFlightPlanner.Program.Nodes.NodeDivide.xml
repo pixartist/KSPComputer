@@ -1,5 +1,5 @@
 <node>
-	<name>Divide (float)</name>
+	<name>Divide</name>
 	<description>Divide A by B</description>
 	<width>120</width>
 </node>
