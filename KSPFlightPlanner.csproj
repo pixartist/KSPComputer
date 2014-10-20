@@ -55,6 +55,9 @@
     <Compile Include="Program\Connectors\Connector.cs" />
     <Compile Include="Program\Connectors\ConnectorIn.cs" />
     <Compile Include="Program\Connectors\ConnectorOut.cs" />
+    <Compile Include="Program\Nodes\NodeDelta.cs" />
+    <Compile Include="Program\Nodes\NodeTimeToPeriapsis.cs" />
+    <Compile Include="Program\Nodes\NodeTimeToApoapsis.cs" />
     <Compile Include="Program\Nodes\NodeSequence.cs" />
     <Compile Include="Program\Nodes\NodeToggle.cs" />
     <Compile Include="Program\Nodes\NodePeriapsis.cs" />
