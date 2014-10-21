@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using KSPComputer.Nodes;
+using DefaultNodes;
 namespace KSPFlightPlanner
 {
     public class NodeCategories
@@ -79,7 +80,6 @@ namespace KSPFlightPlanner
             }
 
         }
-        
         public const string catName = "category";
         public const string nodeName = "node";
         public const string fileType = ".xml";
@@ -90,7 +90,7 @@ namespace KSPFlightPlanner
         public NodeCategories(string path)
         {
             Log.Write("Loading node categories: " + path);
-            GetNodeTypes();
+            GetNodeTypes(path);
             root = new XElement("Categories");
             SelectedCategory = root;
             var rootCats = Directory.GetDirectories(path);
@@ -142,11 +142,12 @@ namespace KSPFlightPlanner
             return i;
         }
 
-        private void GetNodeTypes()
+        private void GetNodeTypes(string path)
         {
+
             nodeInfos = new Dictionary<string, NodeInfo>();
             nodeTypes = new Dictionary<string,Type>();
-            var types = FindAllDerivedTypes<Node>();
+            var types = FindAllDerivedTypes(typeof(Node));
             foreach (var t in types)
             {
                 nodeTypes.Add(t.ToString(), t);
@@ -161,11 +162,11 @@ namespace KSPFlightPlanner
         {
 
             string catPath = Path.Combine(path,catName + fileType);
-            Log.Write("Looking for " + catPath);
+            //Log.Write("Looking for " + catPath);
             if (File.Exists(catPath))
             {
                 XElement cat = XElement.Load(catPath);
-                Log.Write("Loaded category " + cat);
+                //Log.Write("Loaded category " + cat);
                 var files = Directory.GetFiles(path, "*"+ fileType);
                 string fName;
                 foreach(var f in files)
@@ -173,13 +174,26 @@ namespace KSPFlightPlanner
                     fName = Path.GetFileNameWithoutExtension(f);
                     if (fName != catName)
                     {
-                        if (nodeTypes.ContainsKey(fName))
+                       /* Type t = Type.GetType(fName);
+                        if (t != null)
+                        {
+                            var el = XElement.Load(f);
+                            cat.Add(el);
+                            nodeInfos[fName] = new NodeInfo(el, t);
+                            el.Add(new XElement("className", fName));
+                            Log.Write("Loaded type " + fName);
+                        }
+                        else
+                        {
+                            Log.Write("Could not find node type: " + fName);
+                        }*/
+                       if (nodeTypes.ContainsKey(fName))
                         {
                             var el = XElement.Load(f);
                             cat.Add(el);
                             nodeInfos[fName] = new NodeInfo(el, GetType(fName));
                             el.Add(new XElement("className", fName));
-                            Log.Write("Loaded type " + fName);
+                            Log.Write("Loaded node type " + fName);
                         }
                         else
                         {
@@ -207,20 +221,21 @@ namespace KSPFlightPlanner
             }
             return at;
         }
-        public static List<Type> FindAllDerivedTypes<T>()
-        {
-            return FindAllDerivedTypes<T>(Assembly.GetAssembly(typeof(T)));
-        }
 
-        public static List<Type> FindAllDerivedTypes<T>(Assembly assembly)
+        public static List<Type> FindAllDerivedTypes(Type baseType)
         {
-            var derivedType = typeof(T);
-            return assembly
-                .GetTypes()
-                .Where(t =>
-                    derivedType.IsAssignableFrom(t) && !t.IsAbstract
-                    ).ToList();
-
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            List<Type> types = new List<Type>();
+            foreach (var assembly in assemblies)
+            {
+                //Log.Write("Looking for " + baseType + " in " + assembly);
+                types.AddRange(assembly
+                    .GetTypes()
+                    .Where(t =>
+                        baseType.IsAssignableFrom(t) && !t.IsAbstract
+                        ));
+            }
+            return types;
         }
     }
 }

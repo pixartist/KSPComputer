@@ -7,7 +7,6 @@ using KSP;
 using UnityEngine;
 using KSPComputer;
 using System.IO;
-using KSPComputer;
 namespace KSPFlightPlanner
 {
     public class FPComputer : PartModule
@@ -24,11 +23,11 @@ namespace KSPFlightPlanner
             if (activeProgram == null)
             {
                 activeProgram = new FlightProgram();
-                activeProgram.Init(vessel);
                 drawer = new ProgramDrawer(this, activeProgram);
             }
             if ((LastStartState & StartState.PreLaunch) == StartState.PreLaunch)
             {
+                activeProgram.Init(vessel);
                 activeProgram.Launch();
             }
             
@@ -42,8 +41,12 @@ namespace KSPFlightPlanner
          */
         public override void OnUpdate()
         {
-            if (LastStartState != StartState.Editor && activeProgram != null)
+            if (LastStartState != StartState.Editor && activeProgram != null && vessel != null)
+            {
+                if (activeProgram.Vessel == null)
+                    activeProgram.Init(vessel);
                 activeProgram.Update();
+            }
             
 
         }
@@ -58,7 +61,7 @@ namespace KSPFlightPlanner
         public override void OnLoad(ConfigNode node)
         {
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnLoad: " + node);
-            Log.Write("Loading program " + LastStartState);
+            Log.Write("Loading program " + LastStartState + ", Vessel :" + vessel);
             if (node.HasValue("FlightProgram"))
             {
                 string v = node.GetValue("FlightProgram");
@@ -70,7 +73,7 @@ namespace KSPFlightPlanner
                     using (MemoryStream fs = new MemoryStream(Convert.FromBase64String(v)))
                     {
                         activeProgram = (FlightProgram)f.Deserialize(fs);
-                        
+                        Log.Write("Program loaded from file");
                     }
                 }
                 catch (Exception e)
@@ -78,9 +81,13 @@ namespace KSPFlightPlanner
                     Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                     activeProgram = new FlightProgram();
                 }
-                activeProgram.Init(vessel);
-                drawer = new ProgramDrawer(this, activeProgram);
+                
             }
+            else
+            {
+                activeProgram = new FlightProgram();
+            }
+            drawer = new ProgramDrawer(this, activeProgram);
         }
         public override void OnSave(ConfigNode node)
         {

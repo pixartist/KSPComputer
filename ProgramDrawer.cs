@@ -8,6 +8,7 @@ using KSPComputer;
 using KSPComputer.Types;
 using KSPComputer.Connectors;
 using KSPComputer.Nodes;
+using DefaultNodes;
 namespace KSPFlightPlanner
 {
     public class ProgramDrawer

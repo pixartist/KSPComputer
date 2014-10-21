@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\GameData\FlightPlanner\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,6 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\DefaultNodes\bin\Release\DefaultNodes.dll">
+      <Link>Nodes\DefaultNodes.dll</Link>
+    </Content>
     <Content Include="Parts\FPComputer\model.mu">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -64,9 +67,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DefaultNodes\DefaultNodes.csproj">
       <Project>{db500499-a3f5-4213-88a0-bd499fd0bc00}</Project>
@@ -80,7 +81,12 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo on
-</PostBuildEvent>
+mkdir "$(TargetDir)Plugins\"
+move /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\$(TargetFileName)"
+move /Y "$(TargetDir)KSPComputer.dll" "$(TargetDir)Plugins\KSPComputer.dll"
+move /Y "$(TargetDir)DefaultNodes.dll" "$(TargetDir)Plugins\DefaultNodes.dll"
+del "$(TargetDir)*.dll"
+del "$(TargetDir)*.pdb"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
