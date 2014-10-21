@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Euler to Quaternion</name>
+	<description>Creates a Quaternion from euler angles.</description>
+	<width>160</width>
+</node>

@@ -1,4 +1,4 @@
-KSP Flight Planner Plugin
+KSP Flight Computer
 
 Planned features
 - Action groups
