@@ -9,3 +9,14 @@ D:\Coding\WIP\KSPFlightPlanner\KSPComputer\bin\Release\Mono.Security.dll
 D:\Coding\WIP\KSPFlightPlanner\KSPComputer\obj\Release\KSPComputer.dll
 D:\Coding\WIP\KSPFlightPlanner\KSPComputer\obj\Release\KSPComputer.pdb
 D:\Coding\WIP\KSPFlightPlanner\KSPComputer\obj\Release\KSPComputer.csprojResolveAssemblyReference.cache
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\KSPComputer.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\KSPComputer.pdb
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Assembly-CSharp.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\UnityEngine.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\TDx.TDxInput.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Mono.Cecil.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Assembly-CSharp-firstpass.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Mono.Security.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.csprojResolveAssemblyReference.cache
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.pdb

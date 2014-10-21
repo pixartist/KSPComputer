@@ -54,9 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\DefaultNodes\bin\Release\DefaultNodes.dll">
-      <Link>Nodes\DefaultNodes.dll</Link>
-    </Content>
     <Content Include="Parts\FPComputer\model.mu">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -67,7 +64,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Nodes\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DefaultNodes\DefaultNodes.csproj">
       <Project>{db500499-a3f5-4213-88a0-bd499fd0bc00}</Project>
