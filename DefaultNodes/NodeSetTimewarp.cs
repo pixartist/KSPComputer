@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            var m = Math.Max(1, In("Multiplier").AsInt());
+            var m = Math.Max(1, In("Multiplier").AsInt())-1;
             TimeWarp.SetRate(m, true);
             ExecuteNext();
         }

@@ -46,7 +46,7 @@ namespace KSPComputer.Helpers
             VesselOrientation = program.Vessel.transform.rotation;
             //if(program.Vessel.at)
             Prograde = program.Vessel.srf_velocity.normalized;
-            if (north == null)
+          /*  if (north == null)
             {
                 //up = DebugHelper.AddLine(v, Color.red);
                 north = DebugHelper.AddLine(program.Vessel, Color.blue);
@@ -59,7 +59,7 @@ namespace KSPComputer.Helpers
                 DebugHelper.UpdateLine(north, com, Prograde * 500);
                // DebugHelper.UpdateLine(east, com,OrbitalEast * 500);
                 //DebugHelper.UpdateLine(fw, com, Forward * 500);
-            }
+            }*/
         }
         public Quaternion ReferenceToWorld(Quaternion localRotation, FrameOfReference reference)
         {

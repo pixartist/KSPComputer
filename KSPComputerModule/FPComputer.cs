@@ -13,7 +13,9 @@ namespace KSPComputerModule
     {
         private FlightProgram activeProgram;
         private ProgramDrawer drawer;
-        private float startTime;
+        private bool started = false;
+        private double startTime = 0;
+        private float fps = 0;
         public PartModule.StartState LastStartState { get; private set; }
         
         public override void OnStart(PartModule.StartState state)
@@ -29,19 +31,46 @@ namespace KSPComputerModule
             
             if ((LastStartState & StartState.PreLaunch) == StartState.PreLaunch)
             {
-                startTime = Time.time;
-                StartCoroutine("StartDelay");
-               
+                StartCoroutine("StartDelay");  
+                started = false;
+                startTime = 0;
             }
             
         }
+        private bool CheckVesselReady()
+        {
+            if ((LastStartState & StartState.PreLaunch) == StartState.PreLaunch)
+                if (Math.Abs(vessel.orbit.timeToAp) > 0.1)
+                    return false;
+            return true;
+        }
         private IEnumerator StartDelay()
         {
-            if(Time.time < startTime + 8f)
+            while (!CheckVesselReady())
+            {
+                Log.Write("Vessel not ready");
                 yield return null;
+            }
+            //wait for stable fps:
+            while (fps < 10)
+            {
+                yield return null;
+            }
+            Log.Write("FPS: " + fps);
+            startTime = Planetarium.GetUniversalTime();
+            Log.Write("Start time: " + startTime);
+            double t = startTime;
+            while (t  < (startTime + 6))
+            {
+                Log.Write("Vessel not ready " + Planetarium.GetUniversalTime());
+                t = Planetarium.GetUniversalTime();
+                yield return null;
+            }
+            Log.Write("Vessel ready " + Planetarium.GetUniversalTime());
+            
             activeProgram.Init(vessel);
             activeProgram.Launch();
-            
+            started = true;
         }
         public override void OnAwake()
         {
@@ -52,7 +81,10 @@ namespace KSPComputerModule
          */
         public override void OnUpdate()
         {
-            if (LastStartState != StartState.Editor && activeProgram != null && vessel != null)
+            float t = Time.time;
+            fps = 0.95f * fps + 0.05f * (1 / Time.deltaTime);
+            
+            if (started && activeProgram != null)
             {
                 activeProgram.Update();
             }

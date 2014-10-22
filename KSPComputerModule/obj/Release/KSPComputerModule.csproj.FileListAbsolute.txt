@@ -169,3 +169,4 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\KSPComputer.pdb
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.csprojResolveAssemblyReference.cache
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.dll
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.pdb
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml

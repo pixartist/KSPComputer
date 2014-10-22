@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeAdd.cs" />
+    <Compile Include="NodeAltitudeOverGround.cs" />
     <Compile Include="NodeAltitude.cs" />
     <Compile Include="NodeApoapsisAltitude.cs" />
     <Compile Include="NodeBranch.cs" />
@@ -127,6 +128,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballRetrograde.xml">

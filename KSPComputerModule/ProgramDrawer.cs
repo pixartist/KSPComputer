@@ -239,10 +239,13 @@ namespace KSPComputerModule
             GUI.Box(new Rect(0, 0, info.width, height), info.name);
             if (PointerAvailable && mousePressed)
             {
-                if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
+                if (mousePos.x > toolbarWidth)
                 {
-                    draggedNode = node;
-                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                    if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
+                    {
+                        draggedNode = node;
+                        dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                    }
                 }
             }
             DrawNodeInputs(node.Inputs, info.width);
