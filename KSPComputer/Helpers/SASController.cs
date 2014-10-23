@@ -45,7 +45,9 @@ namespace KSPComputer.Helpers
                 if (SASControlEnabled)
                     sasTarget = value;
                 else
-                    program.Vessel.VesselSAS.LockHeading(SASTarget, true);
+                {
+                    program.Vessel.VesselSAS.LockHeading(value);
+                }
             }
         }
         public bool SASControlEnabled { get; set; }
@@ -62,12 +64,13 @@ namespace KSPComputer.Helpers
 
                 Quaternion at = program.VesselInfo.VesselOrientation;
                 float angle = Quaternion.Angle(at, SASTarget);
-                Quaternion t = SASTarget;
-                float angleAm =  Mathf.Min(1, 0.002f * (180f / angle));
-
-                t = Quaternion.Slerp(at, t, angleAm);
                 if (angle > 10f)
+                {
+                    Quaternion t = SASTarget;
+                    float angleAm = Mathf.Min(1, 0.005f * (180f / angle));
+                    t = Quaternion.Slerp(at, t, angleAm);
                     program.Vessel.VesselSAS.LockHeading(t);
+                }
                 else
                     program.Vessel.VesselSAS.LockHeading(SASTarget, true);
                 

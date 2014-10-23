@@ -16,7 +16,8 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Velocity", (double)Vector3.Dot(Program.Vessel.ReferenceTransform.up, Program.Vessel.obt_velocity));
+            Out("Velocity", (double)Vector3.Dot(Program.Vessel.ReferenceTransform.up, Program.VesselInfo.Velocity));
+            
         }
     }
 }

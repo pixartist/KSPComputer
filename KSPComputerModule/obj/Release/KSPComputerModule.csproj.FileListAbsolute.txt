@@ -170,3 +170,6 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.dll
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.pdb
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetNumericValue.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeToggleLandingGear.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Events\DefaultNodes.NodeTouchdown.xml

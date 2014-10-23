@@ -103,3 +103,6 @@ D:\Coding\WIP\KSPFlightComputer\DefaultNodes\obj\Release\DefaultNodes.csprojReso
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\obj\Release\DefaultNodes.dll
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\obj\Release\DefaultNodes.pdb
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetNumericValue.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeToggleLandingGear.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Events\DefaultNodes.NodeTouchdown.xml

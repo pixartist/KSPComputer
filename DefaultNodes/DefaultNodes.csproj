@@ -68,14 +68,18 @@
     <Compile Include="NodeQuaternionToEuler.cs" />
     <Compile Include="NodeSequence.cs" />
     <Compile Include="NodeSetNavballHeading.cs" />
+    <Compile Include="NodeIncrement.cs" />
     <Compile Include="NodeSetThrottle.cs" />
     <Compile Include="NodeStageFuelEmpty.cs" />
     <Compile Include="NodeSubtract.cs" />
+    <Compile Include="NodeTouchdown.cs" />
     <Compile Include="NodeTick.cs" />
     <Compile Include="NodeTimeToApoapsis.cs" />
     <Compile Include="NodeTimeToPeriapsis.cs" />
     <Compile Include="NodeToggle.cs" />
     <Compile Include="NodeSetTimewarp.cs" />
+    <Compile Include="NodeSetNumericValue.cs" />
+    <Compile Include="NodeToggleLandingGear.cs" />
     <Compile Include="NodeToggleSAS.cs" />
     <Compile Include="NodeToggleSASController.cs" />
     <Compile Include="NodeTriggerNextStage.cs" />
@@ -95,6 +99,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetTimewarp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetNumericValue.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeToggleLandingGear.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeToggleSASController.xml">
@@ -119,6 +129,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Events\DefaultNodes.NodePreLaunch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Events\DefaultNodes.NodeTouchdown.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Events\DefaultNodes.NodeTick.xml">
@@ -164,6 +177,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeIncrement.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeDelta.xml">

@@ -24,18 +24,21 @@ namespace KSPComputer.Helpers
         /// East Vector
         /// </summary>
         public Vector3 OrbitalEast { get; private set; }
+        public Vector3 Velocity { get; private set; }
         public Vector3 Forward { get; private set; }
         public Quaternion OrbitalOrientation { get; private set; }
         public Quaternion VesselOrientation { get; private set; }
         public Vector3 Prograde { get; private set; }
         private FlightProgram program;
+        public bool InOrbit { get; private set; }
         public VesselInformation(FlightProgram program)
         {
             this.program = program;
         }
         public void Update()
         {
-
+            InOrbit = program.Vessel.altitude > TimeWarp.fetch.GetAltitudeLimit(5, program.Vessel.mainBody);
+            Velocity = InOrbit ? program.Vessel.obt_velocity : program.Vessel.srf_velocity;
             var com = program.Vessel.findWorldCenterOfMass();
 
             OrbitalUp = (com - program.Vessel.mainBody.position).normalized;
@@ -45,7 +48,8 @@ namespace KSPComputer.Helpers
             Forward = program.Vessel.transform.up;
             VesselOrientation = program.Vessel.transform.rotation;
             //if(program.Vessel.at)
-            Prograde = program.Vessel.srf_velocity.normalized;
+            Prograde = Velocity.normalized;
+            
           /*  if (north == null)
             {
                 //up = DebugHelper.AddLine(v, Color.red);
