@@ -38,5 +38,9 @@ namespace DefaultNodes
                 }
             }
         }
+        protected override void OnDestroy()
+        {
+            Program.OnTick -= Program_OnTick;
+        }
     }
 }

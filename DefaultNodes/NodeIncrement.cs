@@ -22,11 +22,12 @@ namespace DefaultNodes
             if (input == In("Reset"))
                 count = 0;
             else
-            {
-                Out("Value", In("Start").AsDouble() + count * In("Step").AsDouble());
                 count++;
-            }
             ExecuteNext();
+        }
+        protected override void OnUpdateOutputData()
+        {
+            Out("Value", In("Start").AsDouble() + count * In("Step").AsDouble());
         }
     }
 }

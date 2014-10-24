@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KSPComputer;
 using KSPComputer.Nodes;
 using KSPComputer.Connectors;
 namespace DefaultNodes
@@ -66,6 +67,10 @@ namespace DefaultNodes
                 canTrigger = true;
             }
             lastValue = v;
+        }
+        protected override void OnDestroy()
+        {
+            Program.OnTick -= Program_OnTick;
         }
     }
 }

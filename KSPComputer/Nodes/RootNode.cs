@@ -20,8 +20,16 @@ namespace KSPComputer.Nodes
         {
 
             //Log.Write(this.GetType() + " executing");
-            RequestInputUpdates();
-            OnExecute(input);
+            try
+            {
+                RequestInputUpdates();
+                OnExecute(input);
+            }
+            catch(Exception e)
+            {
+                Log.Write("Node " + this.GetType() + " execution threw exception. Removing node. Exception: " + e.Message);
+                Program.RemoveNode(this);
+            }
         }
         protected virtual void OnExecute(ConnectorIn input)
         {

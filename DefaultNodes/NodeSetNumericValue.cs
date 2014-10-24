@@ -9,6 +9,7 @@ namespace DefaultNodes
     [Serializable]
     public class NodeSetNumericValue : ExecutableNode
     {
+        private double currentValue = 0;
         protected override void OnCreate()
         {
             In<double>("Value");
@@ -16,8 +17,12 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Out("Value", In("Value").AsDouble());
+            currentValue = In("Value").AsDouble();
             ExecuteNext();
+        }
+        protected override void OnUpdateOutputData()
+        {
+            Out("Value", currentValue);
         }
     }
 }

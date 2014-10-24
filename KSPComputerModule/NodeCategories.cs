@@ -19,6 +19,14 @@ namespace KSPComputerModule
             public string description;
             public Color color;
             public float width;
+            public NodeInfo(string name, Type type, string description, Color color, float width)
+            {
+                this.name = name;
+                this.type = type;
+                this.description = description;
+                this.color = color;
+                this.width = width;
+            }
             public NodeInfo(XElement element, Type type)
             {
                 this.name = "Unnamed";
@@ -232,7 +240,7 @@ namespace KSPComputerModule
                 types.AddRange(assembly
                     .GetTypes()
                     .Where(t =>
-                        baseType.IsAssignableFrom(t) && !t.IsAbstract
+                        baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType
                         ));
             }
             return types;

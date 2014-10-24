@@ -8,6 +8,7 @@ namespace KSPComputer.Connectors
     [Serializable]
     public abstract class Connector
     {
+        [Serializable]
         public struct Exec
         {
         }
@@ -84,7 +85,8 @@ namespace KSPComputer.Connectors
         }
         public void DisconnectAll()
         {
-            foreach (var c in connections)
+            var arr = connections.ToArray();
+            foreach (var c in arr)
                 DisconnectFrom(c);
         }
     }

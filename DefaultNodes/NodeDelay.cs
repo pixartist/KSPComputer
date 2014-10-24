@@ -58,6 +58,10 @@ namespace DefaultNodes
                 throw (new Exception(this.GetType() + ": Entry count exceeded!"));
             }
         }
+        protected override void OnDestroy()
+        {
+            Program.OnTick -= Program_OnTick;
+        }
   
     }
 }

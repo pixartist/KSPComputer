@@ -10,11 +10,11 @@ namespace KSPComputer.Connectors
     public class ConnectorIn : Connector
     {
         internal bool FreshData { get; set; }
-        private Object buffer;
-        internal ConnectorIn(Type dataType, bool allowMultipleConnections = false)
+        private object buffer;
+        internal ConnectorIn(Type dataType, object defaultValue, bool allowMultipleConnections = false)
             : base(dataType, allowMultipleConnections)
         {
-
+            buffer = defaultValue;
         }
         public void RequestData()
         {
@@ -22,14 +22,32 @@ namespace KSPComputer.Connectors
             //never called on execution nodes
             foreach (var i in connections)
             {
-                if (!(i.Node is ExecutableNode || i.Node is RootNode))
-                    i.Node.UpdateOutputData();
+                i.Node.UpdateOutputData();
             }
         }
-        public void Set(Object data)
+        public void Set(object data)
         {
             buffer = data;
             FreshData = true;
+        }
+        public T Get<T>()
+        {
+            var type = typeof(T);
+            if(type == typeof(double))
+                return (T)(object)AsDouble();
+            if(type == typeof(float))
+                return (T)(object)AsFloat();
+            if(type == typeof(int))
+                return (T)(object)AsInt();
+            if(type == typeof(bool))
+                return (T)(object)AsBool();
+            if (type == typeof(SVector3))
+                return (T)(object)AsVector3();
+            if (type == typeof(SQuaternion))
+                return (T)(object)AsQuaternion();
+            if (type == typeof(string))
+                return (T)(object)AsString();
+            return default(T);
         }
         public string AsString()
         {

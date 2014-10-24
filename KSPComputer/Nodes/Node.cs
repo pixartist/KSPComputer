@@ -49,14 +49,14 @@ namespace KSPComputer.Nodes
             inputs = new Dictionary<string, ConnectorIn>();
             outputs = new Dictionary<string, ConnectorOut>();
         }
-        internal void Init(FlightProgram program)
+        internal virtual void Init(FlightProgram program)
         {
             Program = program;
             OnCreate();
         }
         protected void In<T>(string name, bool allowMultipleConnections = false)
         {
-            var connector = new ConnectorIn(typeof(T), allowMultipleConnections);
+            var connector = new ConnectorIn(typeof(T), default(T), allowMultipleConnections);
             connector.Init(this);
             inputs.Add(name, connector);
         }
@@ -100,12 +100,15 @@ namespace KSPComputer.Nodes
         }
         public void UpdateOutputData()
         {
+            
             RequestInputUpdates();
             OnUpdateOutputData();
         }
         protected virtual void OnUpdateOutputData()
         { }
         protected virtual void OnCreate()
+        { }
+        protected virtual void OnDestroy()
         { }
         protected void RequestInputUpdates()
         {
@@ -120,6 +123,26 @@ namespace KSPComputer.Nodes
                     i.RequestData();
                 }
             }
+        }
+        private void DisconnectAllInputs()
+        {
+            var keys = inputs.Keys;
+            foreach (var k in keys)
+                inputs[k].DisconnectAll();
+            inputs.Clear();
+        }
+        private void DisconnectAllOutputs()
+        {
+            var keys = outputs.Keys;
+            foreach (var k in keys)
+                outputs[k].DisconnectAll();
+        }
+        public void Destroy()
+        {
+           
+            OnDestroy();
+            DisconnectAllInputs();
+            DisconnectAllOutputs();
         }
         public IEnumerable<Connector> GetConnectedConnectors()
         {

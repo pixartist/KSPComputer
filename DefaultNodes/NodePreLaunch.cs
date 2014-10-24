@@ -17,5 +17,9 @@ namespace DefaultNodes
         {
             Execute(null);
         }
+        protected override void OnDestroy()
+        {
+            Program.OnLaunch -= Program_OnLaunch;
+        }
     }
 }

@@ -8,6 +8,7 @@ using KSPComputer;
 using KSPComputer.Types;
 using KSPComputer.Connectors;
 using KSPComputer.Nodes;
+using KSPComputer.Variables;
 using DefaultNodes;
 namespace KSPComputerModule
 {
@@ -30,6 +31,15 @@ namespace KSPComputerModule
         private bool mousePressed = false;
         private bool mouseReleased = false;
         private const float inactiveCol = 0.7f;
+        private Type selectedVariableType = typeof(double);
+        private string currentVarName = "";
+        private Dictionary<string, Type> selectableVariableTypes = new Dictionary<string,Type>
+        {
+            {"Number", typeof(double)},
+            {"Bool", typeof(bool)},
+            {"Vector3", typeof(SVector3)},
+            {"Quaternion",  typeof(SQuaternion)}
+        };
         private bool PointerAvailable
         {
             get
@@ -54,6 +64,7 @@ namespace KSPComputerModule
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
             nodeCats = new NodeCategories(Environment.CurrentDirectory + "\\GameData\\FlightPlanner\\Nodes\\");
+            
         }
         public void Draw()
         {
@@ -137,6 +148,7 @@ namespace KSPComputerModule
         }
         private void DrawNodeToolbar()
         {
+            //draw back button
             float cy = baseElementHeight;
             GUI.BeginGroup(new Rect(0, 0, toolbarWidth, windowRect.height), "Nodes");
             if (GUI.Button(new Rect(0, 0 + cy, toolbarWidth, baseElementHeight), "Back"))
@@ -145,6 +157,7 @@ namespace KSPComputerModule
                 return;
             }
             cy += baseElementHeight * 2;
+            //Draw categories
             var cats = nodeCats.ListSubCategories();
             foreach(var cat in cats)
             {
@@ -156,8 +169,8 @@ namespace KSPComputerModule
                 }
                 cy += baseElementHeight;
             }
-
             cy += baseElementHeight;
+            //Draw nodes
             var nodes = nodeCats.ListNodes();
             foreach (var node in nodes)
             {
@@ -167,6 +180,50 @@ namespace KSPComputerModule
                     Log.Write("Button pressed: " + node.name);
                     draggedNode = program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
                     dragInfo = new Vector2(0, 0);
+                }
+                cy += baseElementHeight;
+            }
+            cy += baseElementHeight;
+            //Draw add variable
+            MethodInfo addMethod = program.GetType().GetMethod("AddVariable");
+            GUI.backgroundColor = defaultColor;
+            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Add variables");
+            cy += baseElementHeight;
+            foreach(var k in selectableVariableTypes)
+            {
+                GUI.backgroundColor = TypeColor(k.Value);
+                if (GUI.Toggle(new Rect(0, cy, toolbarWidth, baseElementHeight), selectedVariableType == k.Value, k.Key))
+                    selectedVariableType = k.Value;
+                cy += baseElementHeight;
+            }
+            GUI.backgroundColor = defaultColor;
+            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Name");
+            cy += baseElementHeight;
+            currentVarName = GUI.TextField(new Rect(0, cy, toolbarWidth, baseElementHeight), currentVarName);
+            cy += baseElementHeight;
+            if (GUI.Button(new Rect(0, cy, toolbarWidth, baseElementHeight), "Add"))
+            {
+                if(!string.IsNullOrEmpty(currentVarName))
+                    program.AddVariable(selectedVariableType, currentVarName);
+            }
+            cy += baseElementHeight;
+            cy += baseElementHeight;
+            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Variables");
+            cy += baseElementHeight;
+            //draw variables
+            foreach(var v in program.Variables)
+            {
+                GUI.backgroundColor = TypeColor(v.Value.Type);
+                if (GUI.Button(new Rect(0, cy, toolbarWidth -baseElementHeight, baseElementHeight), v.Key))
+                {
+                    //add variableNode
+                    draggedNode = program.AddVariableNode(GUIUtility.GUIToScreenPoint(mousePos), v.Key);
+                    dragInfo = new Vector2(0, 0);
+                }
+                if (GUI.Button(new Rect(toolbarWidth - baseElementHeight, cy, baseElementHeight, baseElementHeight), "X"))
+                {
+                    //remove variable
+                    program.RemoveVariable(v.Key);
                 }
                 cy += baseElementHeight;
             }
@@ -230,8 +287,23 @@ namespace KSPComputerModule
         }
         private void DrawNode(Node node)
         {
-            
-            var info = nodeCats.GetNodeInfo(node.GetType());
+            //find variable node
+            NodeCategories.NodeInfo info = new NodeCategories.NodeInfo();
+            var nodeType = node.GetType();
+            if (nodeType.IsGenericType)
+            {
+                if (nodeType.GetGenericTypeDefinition() == typeof(VariableNode<>))
+                {
+                    Variable v = node.GetType().GetProperty("Variable").GetValue(node, null) as Variable;
+                    var n = from va in program.Variables where va.Value == v select va.Key;
+                    if (n.Count() > 0)
+                    {
+                        info = new NodeCategories.NodeInfo(n.First(), v.Type, "Variable node", TypeColor(v.Type), 120);
+                    }
+                }
+            }
+            else
+                info = nodeCats.GetNodeInfo(node.GetType());
             //Log.Write("Drawing node " + node + " width: " + info.width);
             float height = Math.Max(node.InputCount * 2, node.OutputCount) * baseElementHeight + baseElementHeight; 
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
@@ -403,6 +475,10 @@ namespace KSPComputerModule
         Color ConnectionColor(Connector c)
         {
             var t = c.DataType;
+            return TypeColor(t);
+        }
+        Color TypeColor(Type t)
+        {
             if (t == typeof(float))
                 return new Color(0.2f, 1f, 0.3f);
             if (t == typeof(double))
@@ -417,7 +493,6 @@ namespace KSPComputerModule
                 return new Color(0.8f, 0.5f, 0.2f);
             return Color.white;
         }
-        
         public static T GetStaticFieldValue<T>(Type t, string fieldName)
         {
             FieldInfo field = t.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);

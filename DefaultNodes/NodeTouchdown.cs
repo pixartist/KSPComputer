@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KSPComputer;
 using KSPComputer.Nodes;
 namespace DefaultNodes
 {
@@ -17,17 +18,21 @@ namespace DefaultNodes
 
         void Program_OnTick()
         {
+            bool landed = Program.Vessel.checkLanded();
             if(!canTrigger)
             {
                 canTrigger = true;
-                
             }
             else if (!wasLanded)
             {
-                if (Program.Vessel.Landed)
+                if (landed)
                     Execute(null);
             }
-            wasLanded = Program.Vessel.Landed;
+            wasLanded = landed;
+        }
+        protected override void OnDestroy()
+        {
+            Program.OnTick -= Program_OnTick;
         }
     }
 }
