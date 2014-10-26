@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Forward velocity</name>
+	<description>Returns the vessel velocity along the forward vector.</description>
+	<width>120</width>
+</node>

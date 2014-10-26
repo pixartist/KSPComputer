@@ -69,6 +69,7 @@ namespace KSPComputer.Helpers
                     Quaternion t = SASTarget;
                     float angleAm = Mathf.Min(1, 0.005f * (180f / angle));
                     t = Quaternion.Slerp(at, t, angleAm);
+                   
                     program.Vessel.VesselSAS.LockHeading(t);
                 }
                 else

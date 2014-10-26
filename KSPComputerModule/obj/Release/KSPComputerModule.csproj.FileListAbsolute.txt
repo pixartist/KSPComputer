@@ -131,7 +131,6 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeNavballRetrograde.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeNavballPrograde.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeProgradeVelocity.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeTimeToPeriapsis.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeTimeToApoapsis.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeVerticalVelocity.xml
@@ -174,3 +173,12 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\KSPComputer.pdb
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.csprojResolveAssemblyReference.cache
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.dll
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\obj\Release\KSPComputerModule.pdb
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeSurfaceLocation.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeForwardVelocity.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\category.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeNot.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeOr.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeAnd.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeGreater.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeAbs.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml

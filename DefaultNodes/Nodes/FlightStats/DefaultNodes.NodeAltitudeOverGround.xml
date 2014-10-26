@@ -2,5 +2,5 @@
 <node>
 	<name>Altitude over ground</name>
 	<description>Returns the current vessel altitude over the ground.</description>
-	<width>120</width>
+	<width>160</width>
 </node>

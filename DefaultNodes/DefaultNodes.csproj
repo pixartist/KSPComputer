@@ -46,7 +46,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NodeAbs.cs" />
+    <Compile Include="NodeSurfaceVelocity.cs" />
+    <Compile Include="NodeNot.cs" />
+    <Compile Include="NodeOr.cs" />
+    <Compile Include="NodeAnd.cs" />
+    <Compile Include="NodeGreater.cs" />
     <Compile Include="NodeAdd.cs" />
+    <Compile Include="NodeSurfaceLocation.cs" />
     <Compile Include="NodeAltitudeOverGround.cs" />
     <Compile Include="NodeAltitude.cs" />
     <Compile Include="NodeApoapsisAltitude.cs" />
@@ -64,7 +71,7 @@
     <Compile Include="NodeNavballHeading.cs" />
     <Compile Include="NodePeriapsisAltitude.cs" />
     <Compile Include="NodePreLaunch.cs" />
-    <Compile Include="NodeProgradeVelocity.cs" />
+    <Compile Include="NodeForwardVelocity.cs" />
     <Compile Include="NodeQuaternionToEuler.cs" />
     <Compile Include="NodeSequence.cs" />
     <Compile Include="NodeSetNavballHeading.cs" />
@@ -110,6 +117,18 @@
     <Content Include="Nodes\Actions\DefaultNodes.NodeToggleSASController.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Boolean\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeNot.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeOr.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeAnd.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Events\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -143,6 +162,13 @@
     <Content Include="Nodes\FlightStats\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceLocation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -152,7 +178,7 @@
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballPrograde.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeProgradeVelocity.xml">
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeForwardVelocity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeTimeToPeriapsis.xml">
@@ -177,6 +203,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeGreater.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeIncrement.xml">

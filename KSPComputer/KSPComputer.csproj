@@ -50,6 +50,7 @@
     <Compile Include="Connectors\ConnectorIn.cs" />
     <Compile Include="Connectors\ConnectorOut.cs" />
     <Compile Include="Helpers\DebugHelper.cs" />
+    <Compile Include="Helpers\MathfHelper.cs" />
     <Compile Include="Helpers\PartHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Helpers\SASController.cs" />
