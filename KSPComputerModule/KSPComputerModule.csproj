@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="FPComputer.cs" />
     <Compile Include="GUIHelper.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="NodeCategories.cs" />
     <Compile Include="ProgramDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -182,3 +182,9 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\Defa
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeGreater.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeAbs.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeShowValue.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeMin.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeMax.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeClamp.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetWheelSteer.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetWheelThrottle.xml

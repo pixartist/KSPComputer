@@ -24,7 +24,7 @@ namespace KSPComputer.Nodes
         protected override void OnExecute(ConnectorIn input)
         {
             Variable.Value = In("Set").Get<T>();
-            Log.Write(this.GetType() + " getting value " + Variable.Value + " as " + typeof(T));
+            //Log.Write(this.GetType() + " getting value " + Variable.Value + " as " + typeof(T));
             ExecuteNext();
         }
         protected override void OnUpdateOutputData()

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Multiply</name>
+	<description>Multiplies A by B.</description>
+	<width>120</width>
+</node>

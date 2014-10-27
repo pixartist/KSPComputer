@@ -63,7 +63,7 @@ namespace KSPComputerModule
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
-            nodeCats = new NodeCategories(Environment.CurrentDirectory + "\\GameData\\FlightPlanner\\Nodes\\");
+            nodeCats = new NodeCategories(Environment.CurrentDirectory + "\\GameData\\FlightComputer\\Nodes\\");
             
         }
         public void Draw()

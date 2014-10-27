@@ -9,7 +9,7 @@ namespace KSPComputer
     {
         public static void Write(string info)
         {
-            Debug.Log("[FlightPlanner]: " + info);
+            Debug.Log("[FlightComputer]: " + info);
         }
     }
 }

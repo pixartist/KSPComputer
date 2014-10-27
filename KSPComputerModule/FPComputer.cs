@@ -20,6 +20,7 @@ namespace KSPComputerModule
         
         public override void OnStart(PartModule.StartState state)
         {
+            
             LastStartState = state;
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
             Log.Write("Starting " + state);
@@ -48,7 +49,7 @@ namespace KSPComputerModule
         {
             while (!CheckVesselReady())
             {
-                Log.Write("Vessel not ready");
+                //Log.Write("Vessel not ready");
                 yield return null;
             }
             //wait for stable fps:
@@ -62,7 +63,7 @@ namespace KSPComputerModule
             double t = startTime;
             while (t  < (startTime + 6))
             {
-                Log.Write("Vessel not ready " + Planetarium.GetUniversalTime());
+                //Log.Write("Vessel not ready " + Planetarium.GetUniversalTime());
                 t = Planetarium.GetUniversalTime();
                 yield return null;
             }

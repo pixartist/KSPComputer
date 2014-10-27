@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using KSPComputer;
 using KSPComputer.Nodes;
 using DefaultNodes;
 namespace KSPComputerModule
