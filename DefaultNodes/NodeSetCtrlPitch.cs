@@ -7,22 +7,16 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetNumericValue : ExecutableNode
+    public class NodeSetCtrlPitch : ExecutableNode
     {
-        private double currentValue = 0;
         protected override void OnCreate()
         {
-            In<double>("Value");
-            Out<double>("Value");
+            In<double>("Pitch");
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            currentValue = In("Value").AsDouble();
+            Program.Vessel.ctrlState.pitch = (float)In("Pitch").AsDouble();
             ExecuteNext();
-        }
-        protected override void OnUpdateOutputData()
-        {
-            Out("Value", currentValue);
         }
     }
 }

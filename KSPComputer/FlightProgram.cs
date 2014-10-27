@@ -16,8 +16,11 @@ namespace KSPComputer
     public class FlightProgram
     {
         public delegate void FlightEventHandler();
+        public delegate void CustomActionHandler(int action);
         public event FlightEventHandler OnTick;
         public event FlightEventHandler OnLaunch;
+        public event CustomActionHandler OnCustomAction;
+
         [NonSerialized]
         private Vessel vessel;
         [NonSerialized]
@@ -76,6 +79,12 @@ namespace KSPComputer
             if (OnLaunch != null)
                 OnLaunch();
         }
+        public void TriggerAction(int action)
+        {
+            if (OnCustomAction != null)
+                OnCustomAction(action);
+        }
+
         public Node AddNode(Type nodeType, Vector2 position)
         {
             if (nodeType.IsSubclassOf(typeof(Node)))

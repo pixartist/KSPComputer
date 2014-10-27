@@ -17,10 +17,50 @@ namespace KSPComputerModule
         private double startTime = 0;
         private float fps = 0;
         public PartModule.StartState LastStartState { get; private set; }
-        
+        #region customActions
+        [KSPAction("Custom Action 1")]
+        public void CustomAction1(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(1);
+        }
+        [KSPAction("Custom Action 2")]
+        public void CustomAction2(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(2);
+        }
+        [KSPAction("Custom Action 3")]
+        public void CustomAction3(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(3);
+        }
+        [KSPAction("Custom Action 4")]
+        public void CustomAction4(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(4);
+        }
+        [KSPAction("Custom Action 5")]
+        public void CustomAction5(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(5);
+        }
+        [KSPAction("Custom Action 6")]
+        public void CustomAction6(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(6);
+        }
+        [KSPAction("Custom Action 7")]
+        public void CustomAction7(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(7);
+        }
+        [KSPAction("Custom Action 8")]
+        public void CustomAction8(KSPActionParam param)
+        {
+            if (activeProgram != null && started) activeProgram.TriggerAction(8);
+        }
+        #endregion
         public override void OnStart(PartModule.StartState state)
         {
-            
             LastStartState = state;
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnStart: " + state);
             Log.Write("Starting " + state);
@@ -53,7 +93,7 @@ namespace KSPComputerModule
                 yield return null;
             }
             //wait for stable fps:
-            while (fps < 10)
+            while (fps < 10 || vessel == null)
             {
                 yield return null;
             }
@@ -61,7 +101,7 @@ namespace KSPComputerModule
             startTime = Planetarium.GetUniversalTime();
             Log.Write("Start time: " + startTime);
             double t = startTime;
-            while (t  < (startTime + 6))
+            while (t  < (startTime + 1))
             {
                 //Log.Write("Vessel not ready " + Planetarium.GetUniversalTime());
                 t = Planetarium.GetUniversalTime();

@@ -10,6 +10,7 @@ using KSPComputer.Connectors;
 using KSPComputer.Nodes;
 using KSPComputer.Variables;
 using DefaultNodes;
+using System.IO;
 namespace KSPComputerModule
 {
     public class ProgramDrawer
@@ -63,7 +64,8 @@ namespace KSPComputerModule
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
-            nodeCats = new NodeCategories(Environment.CurrentDirectory + "\\GameData\\FlightComputer\\Nodes\\");
+            nodeCats = new NodeCategories(
+                Path.Combine(Path.Combine(Path.Combine(Environment.CurrentDirectory, "GameData"), "FlightComputer"), "Nodes"));
             
         }
         public void Draw()
@@ -85,7 +87,7 @@ namespace KSPComputerModule
                     mouseReleased = true;
                     mouseDown = false;
                 }
-                if (draggedConnection != null && Input.GetMouseButton(2))
+                if (draggedConnection != null && Event.current.button == 1)
                 {
                     draggedConnection = null;
                 }
@@ -488,9 +490,9 @@ namespace KSPComputerModule
             if (t == typeof(Quaternion))
                 return new Color(0.2f, 1.0f, 1.0f);
             if (t == typeof(SVector3))
-                return new Color(1.0f, 0.2f, 0.2f);
-            if (t == typeof(SVector3))
-                return new Color(0.8f, 0.5f, 0.2f);
+                return new Color(1.0f, 1.0f, 0.0f);
+            if (t == typeof(SVector2))
+                return new Color(1.0f, 0.6f, 0.0f);
             return Color.white;
         }
         public static T GetStaticFieldValue<T>(Type t, string fieldName)

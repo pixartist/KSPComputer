@@ -52,7 +52,6 @@ D:\Coding\WIP\KSPFlightPlanner\DefaultNodes\bin\Release\Nodes\Actions\DefaultNod
 D:\Coding\WIP\KSPFlightPlanner\DefaultNodes\bin\Release\Nodes\FlightStats\DefaultNodes.NodeNavballRetrograde.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\category.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetTimewarp.xml
-D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetNumericValue.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeToggleLandingGear.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeToggleSASController.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Events\category.xml
@@ -121,3 +120,7 @@ D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Maths\DefaultNode
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Maths\DefaultNodes.NodeClamp.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetWheelSteer.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetWheelThrottle.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetCtrlRoll.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetCtrlYaw.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Events\DefaultNodes.NodeCustomAction.xml

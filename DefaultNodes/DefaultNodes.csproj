@@ -50,6 +50,9 @@
     <Compile Include="NodeClamp.cs" />
     <Compile Include="NodeMin.cs" />
     <Compile Include="NodeMax.cs" />
+    <Compile Include="NodeSetCtrlRoll.cs" />
+    <Compile Include="NodeSetCtrlYaw.cs" />
+    <Compile Include="NodeSetCtrlPitch.cs" />
     <Compile Include="NodeSetWheelSteer.cs" />
     <Compile Include="NodeSetWheelThrottle.cs" />
     <Compile Include="NodeShowValue.cs" />
@@ -85,13 +88,13 @@
     <Compile Include="NodeSetThrottle.cs" />
     <Compile Include="NodeStageFuelEmpty.cs" />
     <Compile Include="NodeSubtract.cs" />
+    <Compile Include="NodeCustomAction.cs" />
     <Compile Include="NodeTouchdown.cs" />
     <Compile Include="NodeTick.cs" />
     <Compile Include="NodeTimeToApoapsis.cs" />
     <Compile Include="NodeTimeToPeriapsis.cs" />
     <Compile Include="NodeToggle.cs" />
     <Compile Include="NodeSetTimewarp.cs" />
-    <Compile Include="NodeSetNumericValue.cs" />
     <Compile Include="NodeToggleLandingGear.cs" />
     <Compile Include="NodeToggleSAS.cs" />
     <Compile Include="NodeToggleSASController.cs" />
@@ -111,6 +114,15 @@
     <Content Include="Nodes\Actions\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetCtrlRoll.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetCtrlYaw.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetWheelSteer.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -121,9 +133,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetTimewarp.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Nodes\Actions\DefaultNodes.NodeSetNumericValue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeToggleLandingGear.xml">
@@ -163,6 +172,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Events\DefaultNodes.NodePreLaunch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Events\DefaultNodes.NodeCustomAction.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Events\DefaultNodes.NodeTouchdown.xml">
