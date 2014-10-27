@@ -47,7 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
+    <Compile Include="NodeBreakVector2.cs" />
     <Compile Include="NodeClamp.cs" />
+    <Compile Include="NodeLess.cs" />
+    <Compile Include="NodeMagnitudeVector2.cs" />
+    <Compile Include="NodeMagnitudeVector3.cs" />
+    <Compile Include="NodeNormalizeVector3.cs" />
+    <Compile Include="NodeNormalizeVector2.cs" />
+    <Compile Include="NodeMakeVector2.cs" />
     <Compile Include="NodeMin.cs" />
     <Compile Include="NodeMax.cs" />
     <Compile Include="NodeSetCtrlRoll.cs" />
@@ -144,6 +151,9 @@
     <Content Include="Nodes\Boolean\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeLess.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Boolean\DefaultNodes.NodeNot.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -238,7 +248,33 @@
     <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeMagnitudeVector2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeMagnitudeVector3.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeNormalizeVector3.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeNormalizeVector2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeBreakVector2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeClamp.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeMakeVector2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeMin.xml">
@@ -253,16 +289,16 @@
     <Content Include="Nodes\Maths\DefaultNodes.NodeDelta.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\DefaultNodes.NodeEulerToQuaternion.xml">
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeEulerToQuaternion.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\DefaultNodes.NodeQuaternionToEuler.xml">
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeQuaternionToEuler.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\DefaultNodes.NodeMakeVector3.xml">
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeMakeVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\DefaultNodes.NodeBreakVector3.xml">
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeBreakVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
@@ -279,6 +315,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeAdd.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector2\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\ProgramFlow\category.xml">

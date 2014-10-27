@@ -121,6 +121,12 @@ namespace KSPComputer.Connectors
                 return (SVector3)buffer;
             return new SVector3();
         }
+        public SVector2 AsVector2()
+        {
+            if (buffer is SVector2)
+                return (SVector2)buffer;
+            return new SVector2();
+        }
         public SQuaternion AsQuaternion()
         {
             if (buffer is SQuaternion)

@@ -19,3 +19,4 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Assembly-CSharp-firstpas
 D:\Coding\WIP\KSPFlightComputer\KSPComputer\bin\Release\Mono.Security.dll
 D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.dll
 D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.pdb
+D:\Coding\WIP\KSPFlightComputer\KSPComputer\obj\Release\KSPComputer.csprojResolveAssemblyReference.cache

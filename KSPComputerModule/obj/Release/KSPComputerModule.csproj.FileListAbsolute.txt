@@ -140,10 +140,6 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\category.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeIncrement.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDelta.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeEulerToQuaternion.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeQuaternionToEuler.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeMakeVector3.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeBreakVector3.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeCompare.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDivide.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeMultiply.xml
@@ -191,3 +187,16 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\Defa
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetCtrlYaw.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Events\DefaultNodes.NodeCustomAction.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\category.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeNormalizeVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeNormalizeVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeBreakVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeMakeVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeEulerToQuaternion.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeQuaternionToEuler.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeMakeVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeBreakVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\category.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeMagnitudeVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeMagnitudeVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeLess.xml

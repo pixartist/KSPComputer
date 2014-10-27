@@ -39,7 +39,8 @@ namespace KSPComputerModule
             {"Number", typeof(double)},
             {"Bool", typeof(bool)},
             {"Vector3", typeof(SVector3)},
-            {"Quaternion",  typeof(SQuaternion)}
+            {"Quaternion",  typeof(SQuaternion)},
+            {"Vector2", typeof(SVector2)}
         };
         private bool PointerAvailable
         {
@@ -64,8 +65,8 @@ namespace KSPComputerModule
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
-            nodeCats = new NodeCategories(
-                Path.Combine(Path.Combine(Path.Combine(Environment.CurrentDirectory, "GameData"), "FlightComputer"), "Nodes"));
+            nodeCats = NodeCategories.Instance;
+                
             
         }
         public void Draw()
@@ -490,9 +491,9 @@ namespace KSPComputerModule
             if (t == typeof(Quaternion))
                 return new Color(0.2f, 1.0f, 1.0f);
             if (t == typeof(SVector3))
-                return new Color(1.0f, 1.0f, 0.0f);
+                return new Color(1.0f, 0.7f, 0.0f);
             if (t == typeof(SVector2))
-                return new Color(1.0f, 0.6f, 0.0f);
+                return new Color(1.0f, 1.0f, 0.0f);
             return Color.white;
         }
         public static T GetStaticFieldValue<T>(Type t, string fieldName)

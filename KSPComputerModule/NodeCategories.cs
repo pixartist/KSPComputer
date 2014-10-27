@@ -13,6 +13,16 @@ namespace KSPComputerModule
 {
     public class NodeCategories
     {
+        private static NodeCategories instance;
+        public static NodeCategories Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new NodeCategories();
+                return instance;
+            }
+        }
         public struct NodeInfo
         {
             public string name;
@@ -96,8 +106,9 @@ namespace KSPComputerModule
         private Dictionary<string, NodeInfo> nodeInfos;
         private XElement root;
         public XElement SelectedCategory { get; private set; }
-        public NodeCategories(string path)
+        private NodeCategories()
         {
+            string path = Path.Combine(Path.Combine(Path.Combine(Environment.CurrentDirectory, "GameData"), "FlightComputer"), "Nodes");
             Log.Write("Loading node categories: " + path);
             GetNodeTypes(path);
             root = new XElement("Categories");

@@ -19,7 +19,7 @@ namespace DefaultNodes
         {
             var a = In("A").AsDouble();
             var b = In("B").AsDouble();
-            Out("Out", a>b);
+            Out(">", a > b);
         }
     }
 }
