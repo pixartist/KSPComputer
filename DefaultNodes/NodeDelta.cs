@@ -9,6 +9,7 @@ namespace DefaultNodes
     [Serializable]
     public class NodeDelta : Node
     {
+        double lastTime = -1;
         double lastValue;
         protected override void OnCreate()
         {
@@ -18,8 +19,13 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            var v = In("Value").AsDouble();
-            Out("Delta", v - lastValue);
+            double t = Planetarium.GetUniversalTime();
+            double v = In("Value").AsDouble();
+            if (lastTime >= 0)
+            {
+                Out("Delta", (v - lastValue) / (t - lastTime));
+            }
+            lastTime = t;
             lastValue = v;
         }
     }

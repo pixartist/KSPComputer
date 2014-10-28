@@ -47,9 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
+    <Compile Include="NodeGravity.cs" />
+    <Compile Include="NodeMass.cs" />
+    <Compile Include="NodeMaxThrust.cs" />
+    <Compile Include="NodeScaleVector3.cs" />
+    <Compile Include="NodeScaleVector2.cs" />
+    <Compile Include="NodeSubtractVector2.cs" />
+    <Compile Include="NodeSubtractVector3.cs" />
+    <Compile Include="NodeAddVector3.cs" />
     <Compile Include="NodeBreakVector2.cs" />
     <Compile Include="NodeClamp.cs" />
     <Compile Include="NodeLess.cs" />
+    <Compile Include="NodeAddVector2.cs" />
     <Compile Include="NodeMagnitudeVector2.cs" />
     <Compile Include="NodeMagnitudeVector3.cs" />
     <Compile Include="NodeNormalizeVector3.cs" />
@@ -199,6 +208,15 @@
     <Content Include="Nodes\FlightStats\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGravity.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeMass.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -248,11 +266,23 @@
     <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeScaleVector2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeSubtractVector2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeMagnitudeVector2.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeAddVector2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Maths\Vector3\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeAddVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeMagnitudeVector3.xml">
@@ -318,6 +348,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector2\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeScaleVector3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeSubtractVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\ProgramFlow\category.xml">

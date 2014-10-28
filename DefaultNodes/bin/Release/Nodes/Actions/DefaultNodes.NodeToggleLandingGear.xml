@@ -2,5 +2,5 @@
 <node>
 	<name>Toggle Landing Gear</name>
 	<description>Extend or retract landing gear.</description>
-	<width>120</width>
+	<width>140</width>
 </node>

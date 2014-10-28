@@ -200,3 +200,12 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeMagnitudeVector2.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeMagnitudeVector3.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Boolean\DefaultNodes.NodeLess.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeScaleVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeSubtractVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector2\DefaultNodes.NodeAddVector2.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeAddVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeScaleVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector3\DefaultNodes.NodeSubtractVector3.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeMass.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeGravity.xml

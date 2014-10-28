@@ -15,6 +15,17 @@ namespace KSPComputer.Helpers
         {
             return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.amount).Sum();
         }
+        public static float GetMaxThrust(this Part part)
+        {
+            Log.Write("Part: " + part);
+            foreach(var m in part.Modules)
+            {
+                if (m is ModuleEngines)
+                    Log.Write("Engine: " + (m as ModuleEngines).maxThrust);
+            }
+            return (from PartModule m in part.Modules where m is ModuleEngines select (m as ModuleEngines).maxThrust).Sum();
+        }
+        
         public static double CountMaxResourcesInChildren(this Part part, params DefaultResources[] resources)
         {
             return CountMaxResources(part, resources) + (from Part p in part.children select p.CountMaxResourcesInChildren(resources)).Sum();
@@ -22,6 +33,10 @@ namespace KSPComputer.Helpers
         public static double CountRemainingResourcesInChildren(this Part part, params DefaultResources[] resources)
         {
             return CountRemainingResources(part, resources) + (from Part p in part.children select p.CountRemainingResourcesInChildren(resources)).Sum();
+        }
+        public static float CountMaxThrustInChildren(this Part part)
+        {
+            return part.GetMaxThrust() + (from Part p in part.children select p.CountMaxThrustInChildren()).Sum();
         }
         
         public static bool IsUnfiredDecoupler(this Part part)

@@ -43,6 +43,8 @@ namespace KSPComputer.Connectors
                 return (T)(object)AsBool();
             if (type == typeof(SVector3))
                 return (T)(object)AsVector3();
+            if (type == typeof(SVector2))
+                return (T)(object)AsVector2();
             if (type == typeof(SQuaternion))
                 return (T)(object)AsQuaternion();
             if (type == typeof(string))

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<node>
+  <name>Add Vector3</name>
+  <description>Adds two Vector3.</description>
+  <width>120</width>
+</node>

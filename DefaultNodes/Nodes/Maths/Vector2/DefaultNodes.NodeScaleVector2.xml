@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Scale Vector2</name>
+	<description>Multiplies all components of the Vector by the given value.</description>
+	<width>120</width>
+</node>

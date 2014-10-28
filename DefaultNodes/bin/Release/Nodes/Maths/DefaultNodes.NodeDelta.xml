@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <node>
-	<name>Delta</name>
-	<description>Returns the delta of the input node.</description>
+	<name>Delta /s</name>
+	<description>Returns the delta of the input node per second.</description>
 	<width>120</width>
 </node>

@@ -31,6 +31,10 @@ namespace KSPComputer.Helpers
         public Quaternion VesselOrientation { get; private set; }
         public Quaternion NavballOrientation { get; private set; }
         public Vector3 NavballHeading { get; private set; }
+        public Vector3 GravityVector { get; private set; }
+        public Vector3 CenterOfMass { get; private set; }
+        public double CurrentGravity { get; private set; }
+
         public double Roll { get; private set; }
         public Vector3 Prograde { get; private set; }
         private FlightProgram program;
@@ -43,9 +47,9 @@ namespace KSPComputer.Helpers
         {
             InOrbit = program.Vessel.altitude > TimeWarp.fetch.GetAltitudeLimit(5, program.Vessel.mainBody);
             Velocity = InOrbit ? program.Vessel.obt_velocity : program.Vessel.srf_velocity;
-            var com = program.Vessel.findWorldCenterOfMass();
+            CenterOfMass = program.Vessel.findWorldCenterOfMass();
             WorldPosition = program.Vessel.transform.position;
-            OrbitalUp = (com - program.Vessel.mainBody.position).normalized;
+            OrbitalUp = (CenterOfMass - program.Vessel.mainBody.position).normalized;
             OrbitalNorth = program.Vessel.mainBody.transform.up.normalized;
             OrbitalEast = Vector3.Cross(OrbitalUp, OrbitalNorth).normalized;
             OrbitalOrientation = Quaternion.LookRotation(OrbitalNorth, OrbitalUp);
@@ -56,7 +60,8 @@ namespace KSPComputer.Helpers
             Roll = NavballHeading.SignedAngle((Vector3.up - NavballHeading) * -1, NavballOrientation * Vector3.forward);
             //if(program.Vessel.at)
             Prograde = Velocity.normalized;
-            
+            GravityVector = FlightGlobals.getGeeForceAtPosition(CenterOfMass);
+            CurrentGravity = GravityVector.magnitude;
           /*  if (north == null)
             {
                 //up = DebugHelper.AddLine(v, Color.red);
