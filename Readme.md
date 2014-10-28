@@ -8,12 +8,13 @@ Features
 - XML based category & node description
 - Automatic reflection based node type registration
 - Very simple node syntax
+- Action groups
+- Variables
 
 Planned features
-- Action groups
 - Savable programs
 - Subroutines
-- Variables
+
 
 
 
