@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
+    <Compile Include="NodeDT.cs" />
+    <Compile Include="NodeDelta.cs" />
     <Compile Include="NodeGravity.cs" />
     <Compile Include="NodeMass.cs" />
     <Compile Include="NodeMaxThrust.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="NodeBreakVector3.cs" />
     <Compile Include="NodeCompare.cs" />
     <Compile Include="NodeDelay.cs" />
-    <Compile Include="NodeDelta.cs" />
+    <Compile Include="NodeDeltaS.cs" />
     <Compile Include="NodeDivide.cs" />
     <Compile Include="NodeEulerToQuaternion.cs" />
     <Compile Include="NodeMakeVector3.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="NodeStageFuelEmpty.cs" />
     <Compile Include="NodeSubtract.cs" />
     <Compile Include="NodeCustomAction.cs" />
+    <Compile Include="NodeSetSASControllerStrength.cs" />
     <Compile Include="NodeTouchdown.cs" />
     <Compile Include="NodeTick.cs" />
     <Compile Include="NodeTimeToApoapsis.cs" />
@@ -137,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetWheelSteer.xml">
@@ -266,6 +272,12 @@
     <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeDelta.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeDT.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeScaleVector2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -316,7 +328,7 @@
     <Content Include="Nodes\Maths\DefaultNodes.NodeIncrement.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\DefaultNodes.NodeDelta.xml">
+    <Content Include="Nodes\Maths\DefaultNodes.NodeDeltaS.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeEulerToQuaternion.xml">

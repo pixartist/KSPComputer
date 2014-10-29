@@ -51,11 +51,13 @@ namespace KSPComputer.Helpers
             }
         }
         public bool SASControlEnabled { get; set; }
+        public float SASControllerStrength { get; set; }
         private FlightProgram program;
         public SASController(FlightProgram program)
         {
             this.program = program;
             SASControlEnabled = true;
+            SASControllerStrength = 1;
         }
         public void Update()
         {
@@ -67,7 +69,7 @@ namespace KSPComputer.Helpers
                 if (angle > 10f)
                 {
                     Quaternion t = SASTarget;
-                    float angleAm = Mathf.Min(1, 0.005f * (180f / angle));
+                    float angleAm = Mathf.Min(1, 0.005f * SASControllerStrength * (180f / angle));
                     t = Quaternion.Slerp(at, t, angleAm);
                    
                     program.Vessel.VesselSAS.LockHeading(t);

@@ -139,7 +139,6 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeAltitude.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\category.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeIncrement.xml
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDelta.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeCompare.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDivide.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeMultiply.xml
@@ -209,3 +208,7 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Vector
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeMass.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeGravity.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDT.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDeltaS.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDelta.xml

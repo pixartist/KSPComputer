@@ -248,12 +248,20 @@ namespace KSPComputerModule
             List<Type> types = new List<Type>();
             foreach (var assembly in assemblies)
             {
-                //Log.Write("Looking for " + baseType + " in " + assembly);
-                types.AddRange(assembly
-                    .GetTypes()
-                    .Where(t =>
-                        baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType
-                        ));
+                try
+                {
+                    //Log.Write("Looking for " + baseType + " in " + assembly);
+                    var aTypes = assembly
+                     .GetTypes()
+                     .Where(t =>
+                         baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType
+                         );
+                    types.AddRange(aTypes);
+                }
+                catch(Exception e)
+                {
+                    Log.Write("Error, could not load types from assembly \"" + assembly + "\": " + e.Message);
+                }
             }
             return types;
         }

@@ -7,8 +7,9 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeDelta : Node
+    public class NodeDeltaS : Node
     {
+        double lastTime = -1;
         double lastValue;
         protected override void OnCreate()
         {
@@ -18,8 +19,13 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
+            double t = Planetarium.GetUniversalTime();
             double v = In("Value").AsDouble();
-            Out("Delta", (v - lastValue));
+            if (lastTime >= 0)
+            {
+                Out("Delta", (v - lastValue) / (t - lastTime));
+            }
+            lastTime = t;
             lastValue = v;
         }
     }

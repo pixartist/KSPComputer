@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using KSPComputer.Nodes;
 using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeDelta : Node
+    public class NodeDT : Node
     {
         double lastValue;
         protected override void OnCreate()
         {
-            lastValue = 0;
-            In<double>("Value");
-            Out<double>("Delta");
+            Out<double>("Delta Time");
         }
         protected override void OnUpdateOutputData()
         {
-            double v = In("Value").AsDouble();
-            Out("Delta", (v - lastValue));
-            lastValue = v;
+            Out("Delta Time", (double)Time.deltaTime);
         }
     }
 }
