@@ -1,5 +1,7 @@
 KSP Flight Computer
 
+Created by Finn 'pixartist' Sohst
+
 Features
 - VPL to program vessel behavior
 - Open design allowing easy addition of custom nodes
