@@ -30,9 +30,8 @@ namespace KSPComputer.Helpers
             }
             return fuel;
         }
-        public static double CurrentStageFuelMax(this Vessel v, params DefaultResources[] resources)
+        public static bool CurrentStageHasFuel(this Vessel v)
         {
-            double maxFuel = 0;
             if (v.currentStage > 0)
             {
                 foreach (var part in v.Parts)
@@ -41,6 +40,33 @@ namespace KSPComputer.Helpers
                     {
                         if (part.IsUnfiredDecoupler())
                         {
+                            if (part.CheckEnginesHaveFuelInChildren())
+                                return true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (v.rootPart.CheckEnginesHaveFuelInChildren())
+                    return true;
+            }
+            return false;
+        }
+        public static double CurrentStageFuelMax(this Vessel v, params DefaultResources[] resources)
+        {
+            double maxFuel = 0;
+            if (v.currentStage > 0)
+            {
+                Log.Write("Checking stage parts");
+                foreach (var part in v.Parts)
+                {
+                    if (part.inverseStage == v.currentStage - 1)
+                    {
+                        
+                        if (part.IsUnfiredDecoupler())
+                        {
+                            
                             maxFuel += part.CountMaxResourcesInChildren(resources);
                         }
                     }
@@ -48,6 +74,7 @@ namespace KSPComputer.Helpers
             }
             else
             {
+                Log.Write("Checking all parts");
                 maxFuel += v.rootPart.CountMaxResourcesInChildren(resources);
             }
             return maxFuel;

@@ -145,3 +145,4 @@ D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Maths\DefaultNode
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Maths\DefaultNodes.NodeDeltaS.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.xml
 D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\Maths\DefaultNodes.NodeDelta.xml
+D:\Coding\WIP\KSPFlightComputer\DefaultNodes\bin\Release\Nodes\FlightStats\DefaultNodes.NodeNavballHeadingTarget.xml

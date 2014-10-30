@@ -52,6 +52,7 @@
     <Compile Include="NodeGravity.cs" />
     <Compile Include="NodeMass.cs" />
     <Compile Include="NodeMaxThrust.cs" />
+    <Compile Include="NodeNavballHeadingTarget.cs" />
     <Compile Include="NodeScaleVector3.cs" />
     <Compile Include="NodeScaleVector2.cs" />
     <Compile Include="NodeSubtractVector2.cs" />
@@ -221,6 +222,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballHeadingTarget.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml">

@@ -9,20 +9,36 @@ namespace KSPComputer.Helpers
     {
         public static double CountMaxResources(this Part part, params DefaultResources[] resources)
         {
+            if (part.IsUnfiredDecoupler() || part.IsSepratron())
+                return 0.0;
+           
             return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.maxAmount).Sum();
         }
         public static double CountRemainingResources(this Part part, params DefaultResources[] resources)
         {
-            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.amount).Sum();
+            if (part.IsUnfiredDecoupler() || part.IsSepratron())
+                return 0.0;
+            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) && r.amount > 0.01 select r.amount).Sum();
+        }
+        public static bool CheckEngineHasFuel(this Part part)
+        {
+            if (!part.IsEngine())
+                return false;
+            else
+            {
+                foreach (PartModule m in part.Modules)
+                {
+                    ModuleEngines eng = m as ModuleEngines;
+                    if (eng != null) return !eng.getFlameoutState;
+
+                    ModuleEnginesFX engFX = m as ModuleEnginesFX;
+                    if (engFX != null) return !engFX.getFlameoutState;
+                }
+            }
+            return false;
         }
         public static float GetMaxThrust(this Part part)
         {
-            Log.Write("Part: " + part);
-            foreach(var m in part.Modules)
-            {
-                if (m is ModuleEngines)
-                    Log.Write("Engine: " + (m as ModuleEngines).maxThrust);
-            }
             return (from PartModule m in part.Modules where m is ModuleEngines select (m as ModuleEngines).maxThrust).Sum();
         }
         
@@ -33,6 +49,17 @@ namespace KSPComputer.Helpers
         public static double CountRemainingResourcesInChildren(this Part part, params DefaultResources[] resources)
         {
             return CountRemainingResources(part, resources) + (from Part p in part.children select p.CountRemainingResourcesInChildren(resources)).Sum();
+        }
+        public static bool CheckEnginesHaveFuelInChildren(this Part part)
+        {
+            if (part.CheckEngineHasFuel())
+                return true;
+            foreach(var c in part.children)
+            {
+                if (c.CheckEnginesHaveFuelInChildren())
+                    return true;
+            }
+            return false;
         }
         public static float CountMaxThrustInChildren(this Part part)
         {
@@ -57,6 +84,39 @@ namespace KSPComputer.Helpers
                         return true;
                     break;
                 }
+            }
+            return false;
+        }
+        public static bool IsSepratron(this Part part)
+        {
+            return part.ActivatesEvenIfDisconnected
+                && part.IsEngine()
+                && part.IsDecoupledInStage(part.inverseStage)
+                && !part.isControlSource;
+        }
+        public static bool IsEngine(this Part part)
+        {
+            foreach (PartModule module in part.Modules)
+            {
+                if (module is ModuleEngines || module is ModuleEnginesFX) 
+                    return true;
+            }
+            return false;
+        }
+        public static bool IsDecoupledInStage(this Part part, int stage)
+        {
+            if ((part.IsUnfiredDecoupler() || part.IsLaunchClamp()) && part.inverseStage == stage)
+                return true;
+            if (part.parent == null) 
+                return false;
+            return part.parent.IsDecoupledInStage(stage);
+        }
+        public static bool IsLaunchClamp(this Part part)
+        {
+            foreach (PartModule m in part.Modules)
+            {
+                if (m is LaunchClamp) 
+                    return true;
             }
             return false;
         }
