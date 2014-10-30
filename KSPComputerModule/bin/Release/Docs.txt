@@ -1,0 +1,241 @@
+* **Actions**
+  
+    -Set Pitch (direct)  
+     _Sets the vessel control pitch._  
+  
+    -Set Roll (direct)  
+     _Sets the vessel control roll._  
+  
+    -Set Yaw (direct)  
+     _Sets the vessel control yaw._  
+  
+    -Set navball heading  
+     _Sets the heading of the SAS system according to the navball._  
+  
+    -Set SAS Controller strength  
+     _Changes how strongly the SAS Controller reacts._  
+  
+    -Set throttle  
+     _Sets the throttle amount (0-1)._  
+  
+    -Set timewarp  
+     _Sets the timewarp rate._  
+  
+    -Set wheel steer  
+     _Sets the steering of the vessel wheels._  
+  
+    -Set wheel throttle  
+     _Sets the throttle of the vessel wheels._  
+  
+    -Show value  
+     _Displays a value for debugging._  
+  
+    -Toggle Landing Gear  
+     _Extend or retract landing gear._  
+  
+    -Toggle SAS  
+     _Enabled or disables SAS._  
+  
+    -Toggle SAS Controller  
+     _Enabled or disables SAS Controller. The SAS Controller maintains the current heading and dampens the SAS rotation._  
+  
+    -Trigger next stage  
+     _Triggers the stage seperation for the next stage._  
+  
+* **Boolean**
+  
+    -And  
+     _Checks if A and B are true._  
+  
+    -Greater  
+     _Checks if A > B._  
+  
+    -Less  
+     _Checks if A < B._  
+  
+    -Not  
+     _Inverts the value of A._  
+  
+    -Or  
+     _Checks if A or B is true._  
+  
+* **Events**
+  
+    -Custom action  
+     _Triggers when a custom action button is pressed._  
+  
+    -PreLaunch  
+     _Triggers when the vessel is placed on the launch pad._  
+  
+    -Stage fuel empty  
+     _Triggers when the fuel in the current stage is used up._  
+  
+    -Tick  
+     _Triggers every update._  
+  
+    -Touchdown  
+     _Triggers when the vessel lands._  
+  
+    -Value reached  
+     _Triggers when the value reaches the trigger value._  
+  
+* **Flight stats**
+  
+    -Altitude  
+     _Returns the current vessel altitude._  
+  
+    -Altitude over ground  
+     _Returns the current vessel altitude over the ground._  
+  
+    -Apoapsis altitude  
+     _Returns the apoapsis altitude._  
+  
+    -Forward velocity  
+     _Returns the vessel velocity along the forward vector._  
+  
+    -Gravity  
+     _Returns the current gravitational acceleration._  
+  
+    -Vessel mass  
+     _Returns the current vessel mass._  
+  
+    -Max thrust  
+     _Returns the current maximum thrust._  
+  
+    -Navball heading  
+     _Returns the current navball heading._  
+  
+    -Navball heading to target  
+     _Returns the current navball heading towards the target._  
+  
+    -Navball prograde  
+     _Returns the current navball prograde value._  
+  
+    -Navball retrograde  
+     _Returns the current navball retrograde value._  
+  
+    -Periapses altitude  
+     _Returns the periapses altitude._  
+  
+    -Surface Location  
+     _Returns the current vessel postition as latitude and longitude._  
+  
+    -Surface Velocity  
+     _Returns the current vessel velocity as latitude, longitude and vertical._  
+  
+    -Time to apoapsis  
+     _Returns the time until the apoapsis is reached._  
+  
+    -Time to periapsis  
+     _Returns the time until the periapsis is reached._  
+  
+    -Vertical velocity  
+     _Returns the velocity along the up vector._  
+  
+* **Maths**
+  
+    * **Vector2**
+  
+        -Add Vector2  
+     _Adds two Vector2._  
+  
+        -Break Vector2  
+     _Breaks out the components of a Vector2._  
+  
+        -Magnitude Vector2  
+     _returns the magnitude of the Vector2._  
+  
+        -Make Vector2  
+     _Creates a Vector2._  
+  
+        -Normalize Vector2  
+     _Changes the magnitude of a Vector2 to 1._  
+  
+        -Scale Vector2  
+     _Multiplies all components of the Vector by the given value._  
+  
+        -Subtract Vector2  
+     _Subtracts B from A._  
+  
+    * **Vector3**
+  
+        -Add Vector3  
+     _Adds two Vector3._  
+  
+        -Break Vector3  
+     _Breaks out the components of a Vector3._  
+  
+        -Euler to Quaternion  
+     _Creates a Quaternion from euler angles._  
+  
+        -Magnitude Vector3  
+     _returns the magnitude of the Vector3._  
+  
+        -Make Vector3  
+     _Creates a Vector3._  
+  
+        -Normalize Vector3  
+     _Changes the magnitude of a Vector3 to 1._  
+  
+        -Quaternion to euler  
+     _Converts a Quaternion to euler angles._  
+  
+        -Scale Vector3  
+     _Multiplies all components of the Vector by the given value._  
+  
+        -Subtract Vector3  
+     _Subtracts B from A._  
+  
+    -Absolute  
+     _Removes the sign from a value._  
+  
+    -Add  
+     _Adds A and B._  
+  
+    -Clamp  
+     _Clamps the value so that it is between Min and Max._  
+  
+    -Compare  
+     _Compares A and B._  
+  
+    -Delta  
+     _Returns the delta of the input node._  
+  
+    -Delta /s  
+     _Returns the delta of the input node per second._  
+  
+    -Divide  
+     _Divides A by B._  
+  
+    -Delta Time  
+     _Returns the delta time from the last update to the current._  
+  
+    -Increment  
+     _Increments the value with each execution._  
+  
+    -Max  
+     _Returns the greater of both values._  
+  
+    -Min  
+     _Returns the lesser of both values._  
+  
+    -Multiply  
+     _Multiplies A by B._  
+  
+    -Subtract  
+     _Subtracts B from A._  
+  
+* **Program flow**
+  
+    -Branch  
+     _Branches according to the bool input._  
+  
+    -Delay  
+     _Delays incoming executions by the given amount._  
+  
+    -Sequence  
+     _Executes multiple nodes._  
+  
+    -Toggle  
+     _Execution node that can be enabled and disabled. Starts disabled._  
+  

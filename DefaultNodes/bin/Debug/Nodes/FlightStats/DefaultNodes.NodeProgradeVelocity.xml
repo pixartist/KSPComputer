@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Prograde velocity</name>
-	<description>Returns the vessel velocity along the prograde vector.</description>
-	<width>120</width>
-</node>

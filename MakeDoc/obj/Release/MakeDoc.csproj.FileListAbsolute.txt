@@ -1,0 +1,8 @@
+D:\Coding\WIP\KSPFlightComputer\MakeDoc\bin\Release\MakeDoc.exe.config
+D:\Coding\WIP\KSPFlightComputer\MakeDoc\bin\Release\MakeDoc.exe
+D:\Coding\WIP\KSPFlightComputer\MakeDoc\bin\Release\MakeDoc.pdb
+D:\Coding\WIP\KSPFlightComputer\MakeDoc\obj\Release\MakeDoc.exe
+D:\Coding\WIP\KSPFlightComputer\MakeDoc\obj\Release\MakeDoc.pdb
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.exe.config
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.exe
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.pdb

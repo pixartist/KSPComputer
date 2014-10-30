@@ -7,6 +7,7 @@ using KSP;
 using UnityEngine;
 using KSPComputer;
 using System.IO;
+using System.IO.Compression;
 namespace KSPComputerModule
 {
     public class FPComputer : PartModule
@@ -143,27 +144,20 @@ namespace KSPComputerModule
         public override void OnLoad(ConfigNode node)
         {
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnLoad: " + node);
-            Log.Write("Loading program " + LastStartState + ", Vessel :" + vessel);
+            Log.Write("Loading program, State: " + LastStartState + ", Vessel: " + vessel);
             if (node.HasValue("FlightProgram"))
             {
                 string v = node.GetValue("FlightProgram");
-                //Log.Write("Node Value found: " + v);
-                v = v.Replace('_', '/');
                 try
                 {
-                    BinaryFormatter f = new BinaryFormatter();
-                    using (MemoryStream fs = new MemoryStream(Convert.FromBase64String(v)))
-                    {
-                        activeProgram = (FlightProgram)f.Deserialize(fs);
-                        Log.Write("Program loaded from file");
-                    }
+                    activeProgram = ProgramSerializer.Load(v, node.HasValue("IsCompressed"));
+                    Log.Write("Program loaded from file");
                 }
                 catch (Exception e)
                 {
-                    Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                     activeProgram = new FlightProgram();
+                    Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                 }
-                
             }
             else
             {
@@ -179,21 +173,13 @@ namespace KSPComputerModule
             {
                 try
                 {
-                    BinaryFormatter f = new BinaryFormatter();
-                    using (MemoryStream fs = new MemoryStream())
-                    {
-                        f.Serialize(fs, activeProgram);
-                        string data = Convert.ToBase64String(fs.ToArray()).Replace('/', '_'); ;
-                        node.AddValue("FlightProgram", data);
-                       // Log.Write("Saved program: " + data + " (State: " + currentState + ")");
-
-                    }
-
-
+                    string data = ProgramSerializer.Save(activeProgram, true);
+                    node.AddValue("FlightProgram", data);
+                    node.AddValue("IsCompressed", "yes");
                 }
                 catch (Exception e)
                 {
-                    Log.Write("Could not save flight program: " + e.Message + " (State: " + LastStartState + ")");
+                    Log.Write("Could not save flight program: " + e.Message + " at " + e.StackTrace + " (State: " + LastStartState + ")");
                 }
             }
         }

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Stage fuel empty</name>
-	<description>Triggers when the fuel in the current stage is used up.</description>
-	<width>160</width>
-</node>

@@ -213,3 +213,5 @@ D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\Defaul
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\Maths\DefaultNodes.NodeDelta.xml
 D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Nodes\FlightStats\DefaultNodes.NodeNavballHeadingTarget.xml
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Ionic.Zip.dll
+D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\Ionic.Zip.xml

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set navball heading</name>
-	<description>Sets the heading of the SAS system according to the navball.</description>
-	<width>160</width>
-</node>

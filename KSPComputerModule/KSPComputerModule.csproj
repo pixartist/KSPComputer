@@ -34,6 +34,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +53,7 @@
     <Compile Include="GUIHelper.cs" />
     <Compile Include="NodeCategories.cs" />
     <Compile Include="ProgramDrawer.cs" />
+    <Compile Include="ProgramSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +79,13 @@
       <Project>{03cf1096-6d0e-4cb5-93fe-40c63f65023f}</Project>
       <Name>KSPComputer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MakeDoc\MakeDoc.csproj">
+      <Project>{f5ce3333-b75b-4f24-9759-8874ac01f50c}</Project>
+      <Name>MakeDoc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -83,6 +94,7 @@ mkdir "$(TargetDir)Plugins\"
 move /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\$(TargetFileName)"
 move /Y "$(TargetDir)KSPComputer.dll" "$(TargetDir)Plugins\KSPComputer.dll"
 move /Y "$(TargetDir)DefaultNodes.dll" "$(TargetDir)Plugins\DefaultNodes.dll"
+move /Y "$(TargetDir)Ionic.Zip.dll" "$(TargetDir)Plugins\Ionic.Zip.dll"
 del "$(TargetDir)*.dll"
 del "$(TargetDir)*.pdb"</PostBuildEvent>
   </PropertyGroup>

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set Value (Number)</name>
-	<description>Sets a numeric value.</description>
-	<width>120</width>
-</node>
