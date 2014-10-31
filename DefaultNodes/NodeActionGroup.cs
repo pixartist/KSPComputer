@@ -50,11 +50,17 @@ namespace DefaultNodes
                 inputID = AGroups.Length;
             }
 
-            if (In("Set").Connected)
-            {
-                Program.Vessel.ActionGroups.SetGroup(AGroups[inputID], In("Set").AsBool());
-            }
+            Program.Vessel.ActionGroups.SetGroup(SelectedGroup(), In("Set").AsBool());
+        }
 
+        private KSPActionGroup SelectedGroup()
+        {
+            int inputID = In("ActionID").AsInt() - 1;
+            if (inputID < 0)
+                inputID = 0;
+            else if (inputID > AGroups.Length)
+                inputID = AGroups.Length;
+            return AGroups[inputID];
         }
 
         protected override void OnUpdateOutputData()
