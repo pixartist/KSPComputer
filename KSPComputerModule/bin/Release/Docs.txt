@@ -1,7 +1,25 @@
 * **Action Groups**
   
     -Action Group  
-     _Sets or gets the status of the selected action group (0-16)_  
+     _Sets or gets the status of the selected action group (1-17). In order:_
+	_Custom01,
+	_Custom02,
+	_Custom03,
+	_Custom04,
+	_Custom05,
+	_Custom06,
+	_Custom07,
+	_Custom08,
+	_Custom09,
+	_Custom10,
+	_Abort,
+	_Brakes,
+	_Gear,
+	_Light,
+	_RCS,
+	_SAS,
+	_Stage
+
   
 * **Actions**
   

@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeStage : Node
+    public class NodeStageCount : Node
     {
         protected override void OnCreate()
         {

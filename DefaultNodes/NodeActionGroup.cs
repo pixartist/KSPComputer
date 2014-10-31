@@ -11,7 +11,7 @@ namespace DefaultNodes
     public class NodeActionGroup : ExecutableNode
     {
         protected int inputID;
-        protected const KSPActionGroup[] AGroups = new KSPActionGroup[]
+        protected readonly KSPActionGroup[] AGroups = new KSPActionGroup[]
         {
             KSPActionGroup.Custom01,
             KSPActionGroup.Custom02,
@@ -36,19 +36,9 @@ namespace DefaultNodes
             In<double>("ActionID");
             In<bool>("Set");
             Out<bool>("Enabled");
+        }
         protected override void OnExecute(ConnectorIn input)
         {
-
-            int inputID = In("ActionID").AsInt();
-            if (inputID < 0)
-            {
-                inputID = 0;
-            }
-            else if (inputID > AGroups.Length)
-            {
-                inputID = AGroups.Length;
-            }
-
             Program.Vessel.ActionGroups.SetGroup(SelectedGroup(), In("Set").AsBool());
         }
 
@@ -64,7 +54,7 @@ namespace DefaultNodes
 
         protected override void OnUpdateOutputData()
         {
-            Out("Enabled", Program.Vessel.ActionGroups[AGroups[inputID]]);
+            Out("Enabled", Program.Vessel.ActionGroups[SelectedGroup()]);
         }
     }
 }
