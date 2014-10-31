@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-  <name>Time to periapsis</name>
-  <description>Returns the time until the periapsis is reached.</description>
-  <width>120</width>
-</node>

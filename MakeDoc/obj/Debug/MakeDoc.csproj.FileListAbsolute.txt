@@ -1,5 +1,0 @@
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.exe.config
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.exe
-D:\Coding\WIP\KSPFlightComputer\KSPComputerModule\bin\Release\MakeDoc.pdb
-D:\Coding\WIP\KSPFlightComputer\MakeDoc\obj\Debug\MakeDoc.exe
-D:\Coding\WIP\KSPFlightComputer\MakeDoc\obj\Debug\MakeDoc.pdb

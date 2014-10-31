@@ -179,6 +179,8 @@
     <Content Include="Nodes\Boolean\DefaultNodes.NodeAnd.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\ActionGroups\category.xml" />
+    <Content Include="Nodes\ActionGroups\DefaultNodes.NodeActionGroup.xml" />
     <Content Include="Nodes\Events\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

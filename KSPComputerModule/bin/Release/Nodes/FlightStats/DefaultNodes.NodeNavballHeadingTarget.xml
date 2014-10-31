@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Navball heading to target</name>
-	<description>Returns the current navball heading towards the target.</description>
-	<width>180</width>
-</node>

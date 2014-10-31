@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set Yaw (direct)</name>
-	<description>Sets the vessel control yaw.</description>
-	<width>120</width>
-</node>

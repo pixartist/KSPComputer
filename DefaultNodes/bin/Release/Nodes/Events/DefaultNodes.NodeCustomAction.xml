@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Custom action</name>
-	<description>Triggers when a custom action button is pressed.</description>
-	<width>120</width>
-</node>

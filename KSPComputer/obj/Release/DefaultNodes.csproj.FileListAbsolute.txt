@@ -1,1 +1,0 @@
-D:\Coding\WIP\KSPFlightPlanner\DefaultNodes\obj\Release\DefaultNodes.csprojResolveAssemblyReference.cache

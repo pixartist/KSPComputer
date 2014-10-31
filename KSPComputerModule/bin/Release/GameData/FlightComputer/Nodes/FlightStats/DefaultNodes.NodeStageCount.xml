@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Stage Number</name>
-	<description>Returns the number of stages remaining (also known as the stage the craft is currently on).</description>
-	<width>120</width>
-</node>

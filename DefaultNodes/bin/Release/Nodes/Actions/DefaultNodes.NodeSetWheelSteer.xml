@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set wheel steer</name>
-	<description>Sets the steering of the vessel wheels.</description>
-	<width>140</width>
-</node>

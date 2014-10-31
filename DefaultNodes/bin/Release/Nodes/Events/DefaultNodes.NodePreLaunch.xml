@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>PreLaunch</name>
-	<description>Triggers when the vessel is placed on the launch pad.</description>
-	<width>120</width>
-</node>

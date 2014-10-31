@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Show value</name>
-	<description>Displays a value for debugging.</description>
-	<width>220</width>
-</node>

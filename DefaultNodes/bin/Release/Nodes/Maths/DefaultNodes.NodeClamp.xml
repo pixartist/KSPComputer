@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Clamp</name>
-	<description>Clamps the value so that it is between Min and Max.</description>
-	<width>120</width>
-</node>

@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Gravity</name>
-	<description>Returns the current gravitational acceleration.</description>
-	<width>120</width>
-</node>

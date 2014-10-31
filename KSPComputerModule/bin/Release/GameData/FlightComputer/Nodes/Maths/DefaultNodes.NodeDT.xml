@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Delta Time</name>
-	<description>Returns the delta time from the last update to the current.</description>
-	<width>140</width>
-</node>
