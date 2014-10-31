@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Delay</name>
+	<description>Delays incoming executions by the given amount.</description>
+	<width>120</width>
+</node>

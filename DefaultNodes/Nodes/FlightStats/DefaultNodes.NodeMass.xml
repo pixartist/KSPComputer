@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Vessel mass</name>
+	<description>Returns the current vessel mass.</description>
+	<width>120</width>
+</node>

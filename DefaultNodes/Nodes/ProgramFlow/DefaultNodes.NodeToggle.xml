@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Toggle</name>
+	<description>Execution node that can be enabled and disabled. Starts disabled.</description>
+	<width>140</width>
+</node>

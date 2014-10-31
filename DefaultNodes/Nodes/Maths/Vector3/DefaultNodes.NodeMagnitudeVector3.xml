@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Magnitude Vector3</name>
+	<description>returns the magnitude of the Vector3.</description>
+	<width>160</width>
+</node>
