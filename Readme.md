@@ -1,7 +1,5 @@
 KSP Flight Computer
 
-Created by Finn 'pixartist' Sohst
-
 Features
 - VPL to program vessel behavior
 - Open design allowing easy addition of custom nodes
@@ -36,7 +34,8 @@ How to add a custom node
 
 Node syntax overview:
 - If you want to add connectors (or other initialization code), override OnCreate() and add connectors via In<type>("name") or Out<type>("name"). Currently all math nodes use double as type, so you best stick to that. Other useful types are bool, vector3 and quaternion. More may be added later.
-- If your node is a data node (inherits from Node), override OnUpdateOutputData() and pass data out via Out("name", data); The data should be the same type as the type defined in OnCreate(). To get input data, use In("name").AsSomeType(). No need to check for null here, a default value will always be provided.
-- If your node can be executed, OnUpdateOutputData will never be called, instead use OnExecute(). To call an execution node, use ExecuteNext() or ExecuteNext("connectorName");
+- To get input data, use In("name").AsSomeType(). No need to check for null here, a default value will always be provided.
+- Execute any active code in (if your node inherits from RootNode or ExecutableNode) OnExecute(). Update output node data in OnUpdateOutputData()
+- To output data use Out("ConnectorName", value)
 - To access game data, use "Program." (for example Program.Vessel, Program.VesselInfo...)
 
