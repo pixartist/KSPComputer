@@ -1,3 +1,8 @@
+* **Action Groups**
+  
+    -Action Group  
+     _Sets or gets the status of the selected action group (0-16)_  
+  
 * **Actions**
   
     -Set Pitch (direct)  
@@ -116,6 +121,9 @@
   
     -Periapses altitude  
      _Returns the periapses altitude._  
+  
+    -Stage Number  
+     _Returns the number of stages remaining (also known as the stage the craft is currently on)._  
   
     -Surface Location  
      _Returns the current vessel postition as latitude and longitude._  

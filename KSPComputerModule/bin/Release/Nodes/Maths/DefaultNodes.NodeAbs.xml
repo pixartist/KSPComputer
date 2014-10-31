@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Absolute</name>
+	<description>Removes the sign from a value.</description>
+	<width>120</width>
+</node>
