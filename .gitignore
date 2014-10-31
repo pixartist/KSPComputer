@@ -1,0 +1,5 @@
+#Ignore build directories
+*/bin/Release
+*/bin/Debug
+*/obj/Release
+*/obj/Debug
