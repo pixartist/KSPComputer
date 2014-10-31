@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Increment</name>
-	<description>Increments the value with each execution.</description>
-	<width>120</width>
-</node>

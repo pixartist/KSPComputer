@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Normalize Vector2</name>
-	<description>Changes the magnitude of a Vector2 to 1.</description>
-	<width>140</width>
-</node>

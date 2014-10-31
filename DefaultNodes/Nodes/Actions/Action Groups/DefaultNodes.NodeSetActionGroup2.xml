@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set ActionGroup 2</name>
-	<description>sets the Action Group 2 to the value specified</description>
-	<width>120</width>
-</node>

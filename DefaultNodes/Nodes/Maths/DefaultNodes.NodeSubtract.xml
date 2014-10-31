@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Subtract</name>
-	<description>Subtracts B from A.</description>
-	<width>120</width>
-</node>

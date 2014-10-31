@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Surface Velocity</name>
-	<description>Returns the current vessel velocity as latitude, longitude and vertical.</description>
-	<width>120</width>
-</node>

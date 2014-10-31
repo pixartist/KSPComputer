@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Touchdown</name>
-	<description>Triggers when the vessel lands.</description>
-	<width>120</width>
-</node>
