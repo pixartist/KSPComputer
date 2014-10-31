@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Altitude</name>
+	<description>Returns the current vessel altitude.</description>
+	<width>120</width>
+</node>

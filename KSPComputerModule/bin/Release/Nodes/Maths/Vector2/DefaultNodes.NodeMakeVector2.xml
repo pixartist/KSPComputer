@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Make Vector2</name>
+	<description>Creates a Vector2.</description>
+	<width>120</width>
+</node>

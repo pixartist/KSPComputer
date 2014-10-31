@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Periapses altitude</name>
+	<description>Returns the periapses altitude.</description>
+	<width>120</width>
+</node>

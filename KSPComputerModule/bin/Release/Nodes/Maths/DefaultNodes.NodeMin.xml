@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Min</name>
+	<description>Returns the lesser of both values.</description>
+	<width>120</width>
+</node>

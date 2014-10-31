@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Toggle SAS Controller</name>
+	<description>Enabled or disables SAS Controller. The SAS Controller maintains the current heading and dampens the SAS rotation.</description>
+	<width>160</width>
+</node>

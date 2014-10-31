@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Branch</name>
+	<description>Branches according to the bool input.</description>
+	<width>140</width>
+</node>
