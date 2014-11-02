@@ -68,6 +68,10 @@ namespace KSPComputer
         {
             return loadedPrograms[id];
         }
+        public static void ClearPrograms()
+        {
+            loadedPrograms.Clear();
+        }
         public static string SaveStateBase64(bool compressed)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -111,6 +115,9 @@ namespace KSPComputer
                     loadedPrograms = (List<FlightProgram>)f.Deserialize(ms);
                 }
             } 
+            //temp
+            if(loadedPrograms.Count > 1)
+                loadedPrograms.RemoveRange(1, loadedPrograms.Count -1);
             InitPrograms();
         }
         public static string[] ListSubRoutines()

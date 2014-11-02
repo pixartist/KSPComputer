@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KSPComputer.Helpers;
 using KSPComputer.Types;
 using KSPComputer.Nodes;
 using KSPComputer.Connectors;
@@ -16,7 +17,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Gravity", new SVector3(VesselController.GravityVector));
+            Out("Gravity", new SVector3(VesselController.WorldToReference(VesselController.GravityVector, VesselController.FrameOfReference.Navball)));
         }
     }
 }

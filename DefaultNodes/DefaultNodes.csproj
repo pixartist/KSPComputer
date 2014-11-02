@@ -47,14 +47,13 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeSqrt.cs" />
     <Compile Include="NodeDotVector3.cs" />
     <Compile Include="NodeDotVector2.cs" />
     <Compile Include="NodeGravityVector.cs" />
-    <Compile Include="NodeHeadingToVector3.cs" />
     <Compile Include="NodeVelocity.cs" />
     <Compile Include="NodeSetHeading.cs" />
     <Compile Include="NodeHasTarget.cs" />
-    <Compile Include="NodeVector3ToHeading.cs" />
     <Compile Include="NodeDT.cs" />
     <Compile Include="NodeDelta.cs" />
     <Compile Include="NodeGravity.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="NodeSetWheelThrottle.cs" />
     <Compile Include="NodeShowValue.cs" />
     <Compile Include="NodeLocation.cs" />
-    <Compile Include="NodeSurfaceVelocity.cs" />
     <Compile Include="NodeNot.cs" />
     <Compile Include="NodeOr.cs" />
     <Compile Include="NodeAnd.cs" />
@@ -112,7 +110,7 @@
     <Compile Include="NodeForwardVelocity.cs" />
     <Compile Include="NodeQuaternionToEuler.cs" />
     <Compile Include="NodeSequence.cs" />
-    <Compile Include="NodeSetNavballHeading.cs" />
+    <Compile Include="NodeSetHeadingRoll.cs" />
     <Compile Include="NodeIncrement.cs" />
     <Compile Include="NodeSetThrottle.cs" />
     <Compile Include="NodeStageFuelEmpty.cs" />
@@ -208,7 +206,7 @@
     <Content Include="Nodes\Events\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Actions\DefaultNodes.NodeSetNavballHeading.xml">
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetHeadingRoll.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetThrottle.xml">
@@ -260,10 +258,6 @@
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeLocation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceLocation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -307,6 +301,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeSqrt.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeDelta.xml">
@@ -406,12 +403,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeScaleVector3.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeHeadingToVector3.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeVector3ToHeading.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeSubtractVector3.xml">

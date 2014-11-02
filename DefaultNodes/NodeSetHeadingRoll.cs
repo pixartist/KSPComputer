@@ -11,11 +11,13 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetHeading : DefaultExecutableNode
+    public class NodeSetHeadingRoll : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
             In<SVector3>("Forward");
+            In<double>("Roll");
+            
         }
         protected override void OnExecute(ConnectorIn input)
         {
@@ -25,15 +27,8 @@ namespace DefaultNodes
             Quaternion rot = Quaternion.LookRotation(v, Vector3.up) * Quaternion.Euler(90, 0, 0);
             Quaternion roll = Quaternion.identity;
             //keep absolute roll ?
-            //get navball horizontal angles
-            float angleC = Mathf.Atan2(VesselController.NavballHeading.z, VesselController.NavballHeading.x);
 
-            float angleT = Mathf.Atan2(v.z, v.x);
-
-            //delta of angles
-            float d = Mathf.DeltaAngle(angleC, angleT) * Mathf.Rad2Deg;
-            //add delta to current angle
-            roll = Quaternion.AngleAxis((float)VesselController.Roll + d, v);
+            roll = Quaternion.AngleAxis(In("Roll").AsFloat(), v);
 
             rot = roll * rot;
             //apply sas target

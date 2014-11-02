@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Vector3 to heading</name>
-	<description>Transforms a direction vector to navball heading coordinates.</description>
-	<width>160</width>
-</node>

@@ -2,5 +2,5 @@
 <node>
 	<name>Set SAS Controller strength</name>
 	<description>Changes how strongly the SAS Controller reacts.</description>
-	<width>160</width>
+	<width>200</width>
 </node>

@@ -383,8 +383,8 @@ namespace KSPComputerModule
                         KSPOperatingSystem.SaveSubRoutine(currentSubroutineName, currentSubroutine, true);
                         currentSubroutine = null;
                         currentSubroutineName = "";
-                        KSPOperatingSystem.InitPrograms();
                         ReloadSubRoutines();
+                        KSPOperatingSystem.InitPrograms();
                     }
                     if (GUILayout.Button("Cancel"))
                     {
@@ -421,6 +421,7 @@ namespace KSPComputerModule
                 }
             }
             connections.Clear();
+            
             foreach (var n in Program.Nodes)
                 DrawNode(n);
 
@@ -459,6 +460,9 @@ namespace KSPComputerModule
             bool drawInputs = true;
             bool drawOutputs = true;
             bool isEditable = false;
+            bool isVariableNode = false;
+            SubRoutine subRoutine = null;
+            string variableName = "";
             //find variable node
             NodeCategories.NodeInfo info = new NodeCategories.NodeInfo();
             var nodeType = node.GetType();
@@ -466,17 +470,21 @@ namespace KSPComputerModule
             {
                 if (nodeType.GetGenericTypeDefinition() == typeof(VariableNode<>))
                 {
+                    isVariableNode = true;
                     Variable v = node.GetType().GetProperty("Variable").GetValue(node, null) as Variable;
                     var n = from va in Program.Variables where va.Value == v select va.Key;
                     if (n.Count() > 0)
                     {
-                        info = new NodeCategories.NodeInfo(n.First(), v.Type, "Variable node", TypeColor(v.Type), 120);
+                        variableName = n.First();
+                        info = new NodeCategories.NodeInfo(variableName, v.Type, "Variable node", TypeColor(v.Type), 120);
                     }
                 }
             }
             else if (node is SubroutineNode)
             {
                 var sr = node as SubroutineNode;
+                subRoutine = sr.SubRoutineInstance;
+                
                 info = new NodeCategories.NodeInfo(sr.SubRoutineBlueprint, typeof(SubRoutine), "Subroutine", Color.cyan, 220);
             }
             else if (node is SubRoutineEntry)
@@ -500,13 +508,24 @@ namespace KSPComputerModule
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
             if (node is BaseExecutableNode)
             {
+                if (subRoutine != null)
+                {
+                    GUI.skin.label.alignment = TextAnchor.LowerCenter;
+                    if(GUI.Button(new Rect(info.width - baseElementHeight * 1.2f, -5f, baseElementHeight, baseElementHeight), "e"))
+                    {
+                        currentSubroutineName = (node as SubroutineNode).SubRoutineBlueprint;
+                        currentSubroutine = subRoutine;
+                    }
+                }
                 float c = Mathf.Max(0, Mathf.Min(1, (Time.time - (node as BaseExecutableNode).LastExecution) * 3f));
                 GUI.skin.label.alignment = TextAnchor.UpperRight;
                 GUI.color = new Color(c, 1 - c, 0);
                 GUI.Label(new Rect(info.width - baseElementHeight, -5f, baseElementHeight, baseElementHeight), "■");
                 GUI.color = Color.white;
                 GUI.skin.label.alignment = TextAnchor.UpperCenter;
-            }
+            } 
+            
+            
             GUI.backgroundColor = info.color;
             GUI.Box(new Rect(0, 0, info.width, height), info.name);
             if (PointerAvailable && mousePressed)
@@ -515,8 +534,32 @@ namespace KSPComputerModule
                 {
                     if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
                     {
-                        draggedNode = node;
-                        dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                        if (Event.current.shift)
+                        {
+                            if (!(node is SubRoutineEntry || node is SubRoutineExit))
+                            {
+                                if(node is SubroutineNode)
+                                {
+                                    draggedNode = Program.AddSubRoutineNode(node.Position.GetVec2(), (node as SubroutineNode).SubRoutineBlueprint);
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                }
+                                else if (isVariableNode)
+                                {
+                                    draggedNode = Program.AddVariableNode(node.Position.GetVec2(), variableName);
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                }
+                                else
+                                {
+                                    draggedNode = Program.AddNode(nodeType, node.Position.GetVec2());
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            draggedNode = node;
+                            dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                        }
                     }
                 }
             }

@@ -19,7 +19,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Direction", new SVector3(VesselController.Heading));
+            Out("Direction", new SVector3(VesselController.NavballHeading));
         }
     }
 }

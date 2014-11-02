@@ -23,7 +23,7 @@ namespace DefaultNodes
             {
                 Vector3 pDelta = Vessel.targetObject.GetTransform().position - VesselController.WorldPosition;
                 pDelta.Normalize();
-                Out("Direction", new SVector3(pDelta));
+                Out("Direction", new SVector3(VesselController.WorldToReference(pDelta, VesselController.FrameOfReference.Navball)));
             }
             else
             {

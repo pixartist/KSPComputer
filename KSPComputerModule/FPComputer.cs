@@ -147,6 +147,8 @@ namespace KSPComputerModule
                 }
                 catch (Exception e)
                 {
+                    KSPOperatingSystem.ClearPrograms();
+                    KSPOperatingSystem.AddProgram();
                     Log.Write("Error loading program: " + e.Message + " (State: " + LastStartState + ")");
                 }
             }

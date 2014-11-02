@@ -12,15 +12,15 @@ namespace DefaultNodes
         protected override void OnCreate()
         {
             Out<SVector3>("Vector3");
-            In<double>("X");
-            In<double>("Y");
-            In<double>("Z");
+            In<double>("X E/W");
+            In<double>("Y U/D");
+            In<double>("Z N/S");
         }
         protected override void OnUpdateOutputData()
         {
-            var x = In("X").AsFloat();
-            var y = In("Y").AsFloat();
-            var z = In("Z").AsFloat();
+            var x = In("X E/W").AsFloat();
+            var y = In("Y U/D").AsFloat();
+            var z = In("Z N/S").AsFloat();
             Out("Vector3", new SVector3(x, y, z));
         }
     }

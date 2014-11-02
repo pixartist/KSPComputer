@@ -10,6 +10,7 @@ namespace KSPComputer.Nodes
     public class SubRoutineExit : BaseExecutableNode
     {
         public delegate void SubroutineEventHandler(string node);
+        [field: NonSerialized]
         public event SubroutineEventHandler OnExecuted;
         public void AddRoutineOuput<T>(string name)
         {

@@ -9,6 +9,7 @@ namespace KSPComputer.Nodes
     public class SubRoutineEntry : BaseExecutableNode
     {
         public delegate void SubroutineEventHandler();
+        [field: NonSerialized]
         public event SubroutineEventHandler OnRequestData;
         public void AddRoutineInput<T>(string name)
         {

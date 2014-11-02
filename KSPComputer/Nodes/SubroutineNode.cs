@@ -12,7 +12,14 @@ namespace KSPComputer.Nodes
         public string SubRoutineBlueprint {get; private set;}
 
         [NonSerialized]
-        private SubRoutine subRoutine;
+        private SubRoutine subRoutineInstance;
+        public SubRoutine SubRoutineInstance
+        {
+            get
+            {
+                return subRoutineInstance;
+            }
+        }
         public void SetSubRoutine(string subRoutine)
         {
             this.SubRoutineBlueprint = subRoutine;
@@ -23,22 +30,23 @@ namespace KSPComputer.Nodes
         }
         private void ReloadSubroutine()
         {
-            //Log.Write("Reloading subroutine");
-            if (this.subRoutine != null)
+            Log.Write("Reloading subroutine " + SubRoutineBlueprint);
+            if (this.subRoutineInstance != null)
             {
-                this.subRoutine.ExitNode.OnExecuted -= ExitNode_OnExecuted;
-                this.subRoutine = null;
+                this.subRoutineInstance.ExitNode.OnExecuted -= ExitNode_OnExecuted;
+                this.subRoutineInstance.EntryNode.OnRequestData -= EntryNode_OnRequestData;
+                this.subRoutineInstance = null;
             }
-            this.subRoutine = KSPOperatingSystem.LoadSubRoutine(SubRoutineBlueprint, true);
-            if (this.subRoutine == null)
+            this.subRoutineInstance = KSPOperatingSystem.LoadSubRoutine(SubRoutineBlueprint, true);
+            if (this.subRoutineInstance == null)
             {
                 Log.Write("Could not load SubRoutine " + SubRoutineBlueprint + ", deleting node");
                 RequestRemoval();
             }
             else
             {
-                this.subRoutine.ExitNode.OnExecuted += ExitNode_OnExecuted;
-                this.subRoutine.EntryNode.OnRequestData += EntryNode_OnRequestData;
+                this.subRoutineInstance.ExitNode.OnExecuted += ExitNode_OnExecuted;
+                this.subRoutineInstance.EntryNode.OnRequestData += EntryNode_OnRequestData;
                 SyncInputs();
                 SyncOutputs();
             }
@@ -49,7 +57,7 @@ namespace KSPComputer.Nodes
         {
             List<string> toRemove = new List<string>(OutputNames);
             ConnectorOut tmp;
-            foreach (var o in subRoutine.ExitNode.inputs)
+            foreach (var o in subRoutineInstance.ExitNode.inputs)
             {
                 if (outputs.TryGetValue(o.Key, out tmp))
                 {
@@ -61,7 +69,7 @@ namespace KSPComputer.Nodes
             {
                 RemoveOutput(t);
             }
-            foreach (var o in subRoutine.ExitNode.inputs)
+            foreach (var o in subRoutineInstance.ExitNode.inputs)
             {
                 if (!outputs.ContainsKey(o.Key))
                 {
@@ -73,7 +81,7 @@ namespace KSPComputer.Nodes
         {
             List<string> toRemove = new List<string>(InputNames);
             ConnectorIn tmp;
-            foreach (var i in subRoutine.EntryNode.outputs)
+            foreach (var i in subRoutineInstance.EntryNode.outputs)
             {
                 if(inputs.TryGetValue(i.Key, out tmp))
                 {
@@ -85,7 +93,7 @@ namespace KSPComputer.Nodes
             {
                 RemoveInput(t);
             }
-            foreach (var i in subRoutine.EntryNode.outputs)
+            foreach (var i in subRoutineInstance.EntryNode.outputs)
             {
                 if (!inputs.ContainsKey(i.Key))
                 {
@@ -96,7 +104,7 @@ namespace KSPComputer.Nodes
         public override void Execute(ConnectorIn input)
         {
             LastExecution = Time.time;
-            subRoutine.EntryNode.Execute(input);
+            subRoutineInstance.EntryNode.Execute(input);
         }
         void ExitNode_OnExecuted(string name)
         {
@@ -111,7 +119,7 @@ namespace KSPComputer.Nodes
             {
                 if (i.Value.DataType != typeof(Connector.Exec))
                 {
-                    if (subRoutine.EntryNode.outputs.TryGetValue(i.Key, out tmp))
+                    if (subRoutineInstance.EntryNode.outputs.TryGetValue(i.Key, out tmp))
                     {
                         tmp.SendData(i.Value.buffer);
                     }
@@ -123,7 +131,7 @@ namespace KSPComputer.Nodes
             //Log.Write("Subroutine " + SubRoutineBlueprint + " requests ouput (" + outputs.Count + " outputs)");
             try
             {
-                subRoutine.ExitNode.UpdateOutputData();
+                subRoutineInstance.ExitNode.UpdateOutputData();
             }
             catch(Exception e)
             {
@@ -135,7 +143,7 @@ namespace KSPComputer.Nodes
             {
                 if (o.Value.DataType != typeof(Connector.Exec))
                 {
-                    if (subRoutine.ExitNode.inputs.TryGetValue(o.Key, out tmp))
+                    if (subRoutineInstance.ExitNode.inputs.TryGetValue(o.Key, out tmp))
                     {
                         Out(o.Key, tmp.buffer);
                     }
@@ -144,11 +152,11 @@ namespace KSPComputer.Nodes
         }
         public override void OnUpdate()
         {
-            subRoutine.Update();
+            subRoutineInstance.Update();
         }
         public override void OnLaunch()
         {
-            subRoutine.Launch();
+            subRoutineInstance.Launch();
         }
     }
 }
