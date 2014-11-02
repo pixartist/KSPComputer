@@ -10,7 +10,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTransformToHeading : Node
+    public class NodeVector3ToHeading : Node
     {
         protected override void OnCreate()
         {

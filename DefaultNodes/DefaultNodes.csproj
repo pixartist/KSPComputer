@@ -47,9 +47,14 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeDotVector3.cs" />
+    <Compile Include="NodeDotVector2.cs" />
+    <Compile Include="NodeGravityVector.cs" />
+    <Compile Include="NodeHeadingToVector3.cs" />
+    <Compile Include="NodeVelocity.cs" />
     <Compile Include="NodeSetHeading.cs" />
     <Compile Include="NodeHasTarget.cs" />
-    <Compile Include="NodeTransformToHeading.cs" />
+    <Compile Include="NodeVector3ToHeading.cs" />
     <Compile Include="NodeDT.cs" />
     <Compile Include="NodeDelta.cs" />
     <Compile Include="NodeGravity.cs" />
@@ -196,6 +201,9 @@
     <Content Include="Nodes\ActionGroups\DefaultNodes.NodeActionGroup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGravityVector.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeStageCount.xml" />
     <Content Include="Nodes\Events\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -240,6 +248,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeVelocity.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeTargetDirection.xml">
@@ -319,6 +331,12 @@
     <Content Include="Nodes\Maths\Vector3\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Maths\Vector2\DefaultNodes.NodeDotVector2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeDotVector3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeAddVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -390,7 +408,10 @@
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeScaleVector3.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeTransformToHeading.xml">
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeHeadingToVector3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeVector3ToHeading.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeSubtractVector3.xml">

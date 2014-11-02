@@ -22,7 +22,15 @@ namespace KSPComputer.Connectors
             //never called on execution nodes
             foreach (var i in connections)
             {
-                i.Node.UpdateOutputData();
+                try
+                {
+                    i.Node.UpdateOutputData();
+                }
+                catch(Exception e)
+                {
+                    Log.Write("Node failed to deliver data from " + i.Name + " in " + i.Node.GetType() + " to " + Name + " in " + Node.GetType() + ", " + e.Message);
+                    throw (new Exception("Node failed to deliver data from " + i.Name + " in " + i.Node.GetType() + " to " + Name + " in " + Node.GetType(), e));
+                }
             }
         }
         public void Set(object data)

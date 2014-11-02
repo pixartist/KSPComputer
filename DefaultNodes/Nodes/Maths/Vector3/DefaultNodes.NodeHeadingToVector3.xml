@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Heading to Vector3</name>
+	<description>Transforms the navball heading to world coordinates.</description>
+	<width>160</width>
+</node>

@@ -8,18 +8,19 @@ using KSPComputer.Types;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeMagnitudeVector3 : Node
+    public class NodeDotVector3 : Node
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Vector3");
-            Out<double>("Magnitude");
+            In<SVector3>("A");
+            In<SVector3>("B");
+            Out<double>("Dot");
         }
         protected override void OnUpdateOutputData()
         {
-            var v = In("Vector3").AsVector3();
-            float m = Mathf.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-            Out("Magnitude", m);
+            var a = In("A").AsVector3().GetVec3();
+            var b = In("B").AsVector3().GetVec3();
+            Out("Dot", (double)Vector3.Dot(a,b));
         }
     }
 }

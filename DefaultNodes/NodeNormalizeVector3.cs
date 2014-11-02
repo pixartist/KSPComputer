@@ -17,7 +17,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            var v = In("Vector2").AsVector3();
+            var v = In("Vector3").AsVector3();
             float m = Mathf.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
             if (m == 0)
                 m = 1;

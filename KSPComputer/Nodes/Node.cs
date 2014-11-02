@@ -207,7 +207,7 @@ namespace KSPComputer.Nodes
             }
             foreach (var i in inputs.Values)
             {
-                if (!i.FreshData)
+                if (!i.FreshData && !(i.DataType == typeof(Connector.Exec)))
                 {
                     i.RequestData();
                 }

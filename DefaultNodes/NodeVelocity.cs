@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using KSPComputer.Nodes;
 using KSPComputer.Types;
+using KSPComputer.Nodes;
+using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeMagnitudeVector3 : Node
+    public class NodeVelocity : Node
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Vector3");
-            Out<double>("Magnitude");
+            Out<SVector3>("Velocity");
         }
         protected override void OnUpdateOutputData()
         {
-            var v = In("Vector3").AsVector3();
-            float m = Mathf.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-            Out("Magnitude", m);
+            Out("Velocity", new SVector3(VesselController.Velocity));
         }
     }
 }

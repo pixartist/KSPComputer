@@ -120,7 +120,16 @@ namespace KSPComputer.Nodes
         }
         public override void UpdateOutputData()
         {
-            subRoutine.ExitNode.UpdateOutputData();
+            //Log.Write("Subroutine " + SubRoutineBlueprint + " requests ouput (" + outputs.Count + " outputs)");
+            try
+            {
+                subRoutine.ExitNode.UpdateOutputData();
+            }
+            catch(Exception e)
+            {
+                Log.Write("Subroutine failed to update output data! " + e.Message);
+                throw (new Exception("Subroutine failed to update output data! " + e.Message, e));
+            }
             ConnectorIn tmp;
             foreach (var o in outputs)
             {
