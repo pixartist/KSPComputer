@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTriggerNextStage : ExecutableNode
+    public class NodeTriggerNextStage : DefaultExecutableNode
     {
         protected override void OnExecute(ConnectorIn input)
         {

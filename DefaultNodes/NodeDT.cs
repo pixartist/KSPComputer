@@ -10,7 +10,6 @@ namespace DefaultNodes
     [Serializable]
     public class NodeDT : Node
     {
-        double lastValue;
         protected override void OnCreate()
         {
             Out<double>("Delta Time");

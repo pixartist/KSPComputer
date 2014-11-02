@@ -16,7 +16,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Thrust", Program.Vessel.CurrentMaxThrust());
+            Out("Thrust", Vessel.CurrentMaxThrust());
         }
     }
 }

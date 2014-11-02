@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetWheelSteer : ExecutableNode
+    public class NodeSetWheelSteer : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ctrlState.wheelSteer = (float)In("Steer").AsDouble();
+            Vessel.ctrlState.wheelSteer = (float)In("Steer").AsDouble();
             ExecuteNext();
         }
     }

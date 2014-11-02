@@ -10,7 +10,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetNavballHeading : ExecutableNode
+    public class NodeSetNavballHeading : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -32,14 +32,14 @@ namespace DefaultNodes
             {
 
                 //get navball horizontal angles
-                float angleC = Mathf.Atan2(Program.VesselInfo.NavballHeading.z, Program.VesselInfo.NavballHeading.x);
+                float angleC = Mathf.Atan2(VesselController.NavballHeading.z, VesselController.NavballHeading.x);
 
                 float angleT = Mathf.Atan2(v.z, v.x);
 
                 //delta of angles
                 float d = Mathf.DeltaAngle(angleC, angleT) * Mathf.Rad2Deg;
                 //add delta to current angle
-                roll = Quaternion.AngleAxis((float)Program.VesselInfo.Roll + d, v);
+                roll = Quaternion.AngleAxis((float)VesselController.Roll + d, v);
             }
             else
             {
@@ -47,7 +47,7 @@ namespace DefaultNodes
             }
             rot = roll * rot;
             //apply sas target
-            Program.SASController.SASTarget = Program.VesselInfo.ReferenceToWorld(rot, VesselInformation.FrameOfReference.Navball);
+            SASController.SASTarget = VesselController.ReferenceToWorld(rot, VesselController.FrameOfReference.Navball);
             ExecuteNext();
         }
     }

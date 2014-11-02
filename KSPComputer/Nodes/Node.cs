@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using KSPComputer.Helpers;
 using KSPComputer.Types;
 using KSPComputer.Connectors;
 namespace KSPComputer.Nodes
@@ -11,12 +12,46 @@ namespace KSPComputer.Nodes
     [Serializable]
     public abstract class Node
     {
+        public static VesselController VesselController
+        {
+            get
+            {
+                return KSPOperatingSystem.VesselController;
+            }
+        }
+        public static Vessel Vessel
+        {
+            get
+            {
+                return KSPOperatingSystem.VesselController.Vessel;
+            }
+        }
+        public static SASController SASController
+        {
+            get
+            {
+                return KSPOperatingSystem.VesselController.SASController;
+            }
+        }
+        public const string DefaultExecName = "Exec";
+        public delegate void RequestRemovalHandler(Node n);
+        public event RequestRemovalHandler OnRequestRemoval;
         public SVector2 Position;
+        
+        internal Dictionary<string, ConnectorIn> inputs;
+        internal Dictionary<string, ConnectorOut> outputs;
         public int InputCount
         {
             get
             {
                 return inputs.Count;
+            }
+        }
+        public int InputExecCount
+        {
+            get
+            {
+                return (from i in inputs where i.Value.DataType == typeof(Connector.Exec) select i).Count();
             }
         }
         public int OutputCount
@@ -26,9 +61,6 @@ namespace KSPComputer.Nodes
                 return outputs.Count;
             }
         }
-        public FlightProgram Program { get; private set; }
-        private Dictionary<string, ConnectorIn> inputs;
-        private Dictionary<string, ConnectorOut> outputs;
         public KeyValuePair<string, ConnectorIn>[] Inputs
         {
             get
@@ -43,28 +75,78 @@ namespace KSPComputer.Nodes
                 return outputs.ToArray();
             }
         }
+        public string[] OutputNames
+        {
+            get
+            {
+                return outputs.Keys.ToArray();
+            }
+        }
+        public string[] InputNames
+        {
+            get
+            {
+                return inputs.Keys.ToArray();
+            }
+        }
         public Node()
         {
             Position = new SVector2();
             inputs = new Dictionary<string, ConnectorIn>();
             outputs = new Dictionary<string, ConnectorOut>();
         }
-        internal virtual void Init(FlightProgram program)
+        internal void Create()
         {
-            Program = program;
             OnCreate();
+        }
+        protected void RequestRemoval()
+        {
+            if (OnRequestRemoval != null)
+                OnRequestRemoval(this);
+        }
+        internal void In(string name, Type t, bool allowMultipleConnections = false)
+        {
+            name = name.Trim();
+            if (!inputs.ContainsKey(name))
+            {
+                var connector = new ConnectorIn(t, name, t.IsValueType ? Activator.CreateInstance(t) : null, allowMultipleConnections);
+                connector.Init(this);
+                inputs.Add(name, connector);
+            }
+        }
+        internal void Out(string name, Type t, bool allowMultipleConnections = true)
+        {
+            name = name.Trim();
+            if (!outputs.ContainsKey(name))
+            {
+                var connector = new ConnectorOut(t, name, allowMultipleConnections);
+                connector.Init(this);
+                outputs.Add(name, connector);
+            }
         }
         protected void In<T>(string name, bool allowMultipleConnections = false)
         {
-            var connector = new ConnectorIn(typeof(T), default(T), allowMultipleConnections);
-            connector.Init(this);
-            inputs.Add(name, connector);
+            In(name, typeof(T), allowMultipleConnections);
         }
         protected void Out<T>(string name, bool allowMultipleConnections = true)
         {
-            var connector = new ConnectorOut(typeof(T), allowMultipleConnections);
-            connector.Init(this);
-            outputs.Add(name, connector);
+            Out(name, typeof(T), allowMultipleConnections);
+        }
+        public void RemoveInput(string name)
+        {
+            if(inputs.ContainsKey(name))
+            {
+                inputs[name].DisconnectAll();
+                inputs.Remove(name);
+            }
+        }
+        public void RemoveOutput(string name)
+        {
+            if (outputs.ContainsKey(name))
+            {
+                outputs[name].DisconnectAll();
+                outputs.Remove(name);
+            }
         }
         protected void Out(string name, object value)
         {
@@ -98,12 +180,19 @@ namespace KSPComputer.Nodes
             }
             return null;
         }
-        public void UpdateOutputData()
+        public virtual void UpdateOutputData()
         {
-            
             RequestInputUpdates();
             OnUpdateOutputData();
         }
+        public virtual void OnInit()
+        { }
+        public virtual void OnLaunch()
+        { }
+        public virtual void OnUpdate()
+        { }
+        public virtual void OnCustomAction(int action)
+        { }
         protected virtual void OnUpdateOutputData()
         { }
         protected virtual void OnCreate()

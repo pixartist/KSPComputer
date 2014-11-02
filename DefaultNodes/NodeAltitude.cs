@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Altitude", Program.Vessel.altitude);
+            Out("Altitude", Vessel.altitude);
         }
     }
 }

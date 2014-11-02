@@ -16,8 +16,8 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Lat", Program.Vessel.mainBody.GetLatitude(Program.VesselInfo.WorldPosition));
-            Out("Long", Program.Vessel.mainBody.GetLongitude(Program.VesselInfo.WorldPosition));
+            Out("Lat", Vessel.mainBody.GetLatitude(VesselController.WorldPosition));
+            Out("Long", Vessel.mainBody.GetLongitude(VesselController.WorldPosition));
         }
     }
 }

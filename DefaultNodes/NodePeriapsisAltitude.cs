@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Periapsis", Program.Vessel.orbit.PeA);
+            Out("Periapsis", Vessel.orbit.PeA);
         }
     }
 }

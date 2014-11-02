@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 namespace KSPComputer.Helpers
 {
-    public class VesselInformation
+    public class VesselController
     {
         public enum FrameOfReference
         {
@@ -24,6 +24,8 @@ namespace KSPComputer.Helpers
         /// East Vector
         /// </summary>
         public Vector3 OrbitalEast { get; private set; }
+        public Vessel Vessel { get; private set; }
+        public SASController SASController { get; private set; }
         public Vector3 Velocity { get; private set; }
         public Vector3 Heading { get; private set; }
         public Vector3 WorldPosition { get; private set; }
@@ -37,24 +39,24 @@ namespace KSPComputer.Helpers
 
         public double Roll { get; private set; }
         public Vector3 Prograde { get; private set; }
-        private FlightProgram program;
         public bool InOrbit { get; private set; }
-        public VesselInformation(FlightProgram program)
+        public VesselController(Vessel vessel)
         {
-            this.program = program;
+            this.Vessel = vessel;
+            this.SASController = new SASController(this);
         }
         public void Update()
         {
-            InOrbit = program.Vessel.altitude > TimeWarp.fetch.GetAltitudeLimit(5, program.Vessel.mainBody);
-            Velocity = InOrbit ? program.Vessel.obt_velocity : program.Vessel.srf_velocity;
-            CenterOfMass = program.Vessel.findWorldCenterOfMass();
-            WorldPosition = program.Vessel.transform.position;
-            OrbitalUp = (CenterOfMass - program.Vessel.mainBody.position).normalized;
-            OrbitalNorth = program.Vessel.mainBody.transform.up.normalized;
+            InOrbit = Vessel.altitude > TimeWarp.fetch.GetAltitudeLimit(5, Vessel.mainBody);
+            Velocity = InOrbit ? Vessel.obt_velocity : Vessel.srf_velocity;
+            CenterOfMass = Vessel.findWorldCenterOfMass();
+            WorldPosition = Vessel.transform.position;
+            OrbitalUp = (CenterOfMass - Vessel.mainBody.position).normalized;
+            OrbitalNorth = Vessel.mainBody.transform.up.normalized;
             OrbitalEast = Vector3.Cross(OrbitalUp, OrbitalNorth).normalized;
             OrbitalOrientation = Quaternion.LookRotation(OrbitalNorth, OrbitalUp);
-            Heading = program.Vessel.transform.up;
-            VesselOrientation = program.Vessel.transform.rotation;
+            Heading = Vessel.transform.up;
+            VesselOrientation = Vessel.transform.rotation;
             NavballOrientation = WorldToReference(VesselOrientation, FrameOfReference.Navball);
             NavballHeading = NavballOrientation * Vector3.up;
             Roll = NavballHeading.SignedAngle((Vector3.up - NavballHeading) * -1, NavballOrientation * Vector3.forward);
@@ -76,6 +78,7 @@ namespace KSPComputer.Helpers
                // DebugHelper.UpdateLine(east, com,OrbitalEast * 500);
                 //DebugHelper.UpdateLine(fw, com, Forward * 500);
             }*/
+            SASController.Update();
         }
         public Quaternion ReferenceToWorld(Quaternion localRotation, FrameOfReference reference)
         {

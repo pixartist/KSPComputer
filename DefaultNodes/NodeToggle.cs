@@ -9,7 +9,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeToggle : ExecutableNode
+    public class NodeToggle : DefaultExecutableNode
     {
         private bool enabled;
         protected override void OnCreate()

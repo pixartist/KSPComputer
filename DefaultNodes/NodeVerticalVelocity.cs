@@ -16,7 +16,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Velocity", Program.Vessel.verticalSpeed);
+            Out("Velocity", Vessel.verticalSpeed);
         }
     }
 }

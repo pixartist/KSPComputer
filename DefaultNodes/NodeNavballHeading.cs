@@ -35,10 +35,10 @@ namespace DefaultNodes
             double roll = -horizontalForward.SignedAngle(verticalUp, Vector3.up);
             Log.Write("Roll: " + roll);*/
             //var h = Program.Module.VesselInfo.Forward;
-            Out("N/S", (double)Program.VesselInfo.NavballHeading.z);
-            Out("E/W", (double)Program.VesselInfo.NavballHeading.x);
-            Out("U/D", (double)Program.VesselInfo.NavballHeading.y);
-            Out("Roll", Program.VesselInfo.Roll);
+            Out("N/S", (double)VesselController.NavballHeading.z);
+            Out("E/W", (double)VesselController.NavballHeading.x);
+            Out("U/D", (double)VesselController.NavballHeading.y);
+            Out("Roll", VesselController.Roll);
         }
     }
 }

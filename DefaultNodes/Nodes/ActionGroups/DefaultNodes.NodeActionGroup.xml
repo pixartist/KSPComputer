@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <node>
 	<name>Action Group</name>
-	<description>Sets or gets the status of the selected action group (0-16)</description>
+	<description>
+    Sets or gets the status of the selected action group.
+    1 -> KSPActionGroup.Custom01,
+    2 -> KSPActionGroup.Custom02,
+    3 -> KSPActionGroup.Custom03,
+    4 -> KSPActionGroup.Custom04,
+    5 -> KSPActionGroup.Custom05,
+    6 -> KSPActionGroup.Custom06,
+    7 -> KSPActionGroup.Custom08,
+    8 -> KSPActionGroup.Custom09,
+    9 -> KSPActionGroup.Custom10,
+    10 -> KSPActionGroup.Abort,
+    11 -> KSPActionGroup.Brakes,
+    12 -> KSPActionGroup.Gear,
+    13 -> KSPActionGroup.Light,
+    14 -> KSPActionGroup.RCS,
+    15 -> KSPActionGroup.SAS,
+    16 -> KSPActionGroup.Stage
+  </description>
 	<width>120</width>
 </node>

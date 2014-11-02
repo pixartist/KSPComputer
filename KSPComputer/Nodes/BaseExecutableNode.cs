@@ -7,28 +7,23 @@ using KSPComputer.Connectors;
 namespace KSPComputer.Nodes
 {
     [Serializable]
-    public abstract class RootNode : Node
+    public abstract class BaseExecutableNode : Node
     {
-        public const string DefaultExecName = "Exec";
-        public RootNode()
-            : base()
+        public float LastExecution { get; protected set; }
+        public virtual void Execute(ConnectorIn input)
         {
-
-            Out<Connector.Exec>(DefaultExecName, false);
-        }
-        public void Execute(ConnectorIn input)
-        {
-
+            LastExecution = Time.time;
             //Log.Write(this.GetType() + " executing");
             try
             {
                 RequestInputUpdates();
                 OnExecute(input);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Log.Write("Node " + this.GetType() + " execution threw exception. Removing node. Exception: " + e.Message);
-                Program.RemoveNode(this);
+                //Program.RemoveNode(this);
+                RequestRemoval();
             }
         }
         protected virtual void OnExecute(ConnectorIn input)
@@ -37,18 +32,11 @@ namespace KSPComputer.Nodes
         }
         protected void ExecuteNext(string name = DefaultExecName)
         {
-            
-           // Log.Write("Trying to execute next node: " + name);
             var c = GetOuput(name);
             if (c != null)
             {
-                //Log.Write("Executing next node");
                 c.Execute();
             }
-            /*else
-            {
-                Log.Write("Next node is null!");
-            }*/
         }
     }
 }

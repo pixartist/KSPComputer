@@ -10,9 +10,9 @@ namespace KSPComputer.Connectors
     public class ConnectorIn : Connector
     {
         internal bool FreshData { get; set; }
-        private object buffer;
-        internal ConnectorIn(Type dataType, object defaultValue, bool allowMultipleConnections = false)
-            : base(dataType, allowMultipleConnections)
+        internal object buffer;
+        internal ConnectorIn(Type dataType, string name, object defaultValue, bool allowMultipleConnections = false)
+            : base(dataType, name, allowMultipleConnections)
         {
             buffer = defaultValue;
         }
@@ -135,5 +135,6 @@ namespace KSPComputer.Connectors
                 return (SQuaternion)buffer;
             return new SQuaternion();
         }
+
     }
 }

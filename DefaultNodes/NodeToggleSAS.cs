@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeToggleSAS : ExecutableNode
+    public class NodeToggleSAS : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -16,7 +16,7 @@ namespace DefaultNodes
         protected override void OnExecute(ConnectorIn input)
         {
             var on = In("On").AsBool();
-            Program.SASController.SASEnabled = on;
+            SASController.SASEnabled = on;
             ExecuteNext();
         }
     }

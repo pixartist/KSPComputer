@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Stage", Staging.GetStageCount(Program.Vessel.parts));
+            Out("Stage", Staging.GetStageCount(Vessel.parts));
         }
     }
 }

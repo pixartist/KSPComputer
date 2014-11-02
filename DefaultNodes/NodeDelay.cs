@@ -9,19 +9,18 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeDelay : ExecutableNode
+    public class NodeDelay : DefaultExecutableNode
     {
         private List<double> triggerTimes;
-        const int maxEntries = 32;
+        const int maxEntries = 128;
         protected override void OnCreate()
         {
             In<double>("Delay");
             Out<bool>("Active");
             triggerTimes = new List<double>();
-            Program.OnTick += Program_OnTick;
         }
 
-        void Program_OnTick()
+        public override void OnUpdate()
         {
             if (triggerTimes.Count > 0)
             {
@@ -53,15 +52,6 @@ namespace DefaultNodes
                 triggerTimes.Add(Planetarium.GetUniversalTime() + d);
                 Out("Active", true);
             }
-            else
-            {
-                throw (new Exception(this.GetType() + ": Entry count exceeded!"));
-            }
         }
-        protected override void OnDestroy()
-        {
-            Program.OnTick -= Program_OnTick;
-        }
-  
     }
 }

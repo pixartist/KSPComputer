@@ -6,20 +6,11 @@ using KSPComputer.Nodes;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTick : RootNode
+    public class NodeTick : DefaultRootNode
     {
-        protected override void OnCreate()
-        {
-            Program.OnTick += Program_OnTick;
-        }
-
-        void Program_OnTick()
+        public override void OnUpdate()
         {
             Execute(null);
-        }
-        protected override void OnDestroy()
-        {
-            Program.OnTick -= Program_OnTick;
         }
     }
 }

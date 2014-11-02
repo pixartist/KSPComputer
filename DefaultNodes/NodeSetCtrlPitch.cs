@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetCtrlPitch : ExecutableNode
+    public class NodeSetCtrlPitch : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ctrlState.pitch = (float)In("Pitch").AsDouble();
+            Vessel.ctrlState.pitch = (float)In("Pitch").AsDouble();
             ExecuteNext();
         }
     }

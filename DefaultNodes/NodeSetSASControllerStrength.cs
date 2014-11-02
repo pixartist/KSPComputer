@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetSASControllerStrength : ExecutableNode
+    public class NodeSetSASControllerStrength : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.SASController.SASControllerStrength = In("Strength").AsFloat();
+            SASController.SASControllerStrength = In("Strength").AsFloat();
             ExecuteNext();
         }
     }

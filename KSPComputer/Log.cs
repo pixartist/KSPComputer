@@ -7,9 +7,12 @@ namespace KSPComputer
 {
     public class Log
     {
+        public static string LogData = "";
         public static void Write(string info)
         {
-            Debug.Log("[FlightComputer]: " + info);
+            string s = "[FlightComputer]: " + info;
+            LogData += Environment.NewLine + s;
+            Debug.Log(s);
         }
     }
 }

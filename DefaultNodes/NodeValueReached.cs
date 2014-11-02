@@ -8,7 +8,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeValueReached : RootNode
+    public class NodeValueReached : DefaultRootNode
     {
         private double lastValue;
         private bool canTrigger;
@@ -18,13 +18,12 @@ namespace DefaultNodes
             In<double>("Value");
             In<double>("TriggerAt");
             In<bool>("Down");
-            Program.OnTick += Program_OnTick;
             lastValue = 0;
             canTrigger = false;
             wasDown = false;
         }
 
-        void Program_OnTick()
+        public override void OnUpdate()
         {
             Execute(null);
         }
@@ -67,10 +66,6 @@ namespace DefaultNodes
                 canTrigger = true;
             }
             lastValue = v;
-        }
-        protected override void OnDestroy()
-        {
-            Program.OnTick -= Program_OnTick;
         }
     }
 }

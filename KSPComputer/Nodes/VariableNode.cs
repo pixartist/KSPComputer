@@ -9,7 +9,7 @@ using KSPComputer.Variables;
 namespace KSPComputer.Nodes
 {
     [Serializable]
-    public class VariableNode<T> : ExecutableNode
+    public class VariableNode<T> : DefaultExecutableNode
     {
         public Variable Variable { get; private set; }
         internal void SetVariable(Variable variable)

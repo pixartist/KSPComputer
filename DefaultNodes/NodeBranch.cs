@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeBranch : ExecutableNode
+    public class NodeBranch : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -20,7 +20,7 @@ namespace DefaultNodes
             bool isTrue = In("Input").AsBool();
             //Log.Write("Checking branch: " + isTrue);
             ExecuteNext();
-            if(In("Input").AsBool())
+            if(isTrue)
                 ExecuteNext("True");
             else
                 ExecuteNext("False");

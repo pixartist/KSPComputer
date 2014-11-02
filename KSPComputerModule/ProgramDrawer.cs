@@ -18,12 +18,32 @@ namespace KSPComputerModule
         private NodeCategories nodeCats;
         private bool inputLocked = false;
         private Vector2 nodeViewScrollPos;
+        private Vector2 menuScrollPos;
         private Dictionary<Connector, Vector2> connections;
-        private FlightProgram program;
+        private int selectedProgram = 0;
+        private SubRoutine currentSubroutine;
+        private string currentSubroutineName = "";
+        private FlightProgram Program
+        {
+            get
+            {
+                if (currentSubroutine != null)
+                    return currentSubroutine;
+                if (KSPOperatingSystem.ProgramCount < 1)
+                    return null;
+                if (selectedProgram < 0)
+                    selectedProgram = 0;
+                if (selectedProgram >= KSPOperatingSystem.ProgramCount)
+                    selectedProgram = KSPOperatingSystem.ProgramCount - 1;
+                return KSPOperatingSystem.GetProgram(selectedProgram);
+            }
+        }
+        private string[] subRoutines;
         private FPComputer computer;
         private Rect windowRect;
+        
         private float baseElementHeight = 26;
-        private float toolbarWidth = 150;
+        private float toolbarWidth = 220;
         private Color defaultColor = Color.white;
         private Node draggedNode;
         private Connector draggedConnection;
@@ -33,8 +53,16 @@ namespace KSPComputerModule
         private bool mouseReleased = false;
         private const float inactiveCol = 0.7f;
         private Type selectedVariableType = typeof(double);
+        private Type selectedParameterType = typeof(double);
         private string currentVarName = "";
-        private Dictionary<string, Type> selectableVariableTypes = new Dictionary<string,Type>
+        private string currentParamName = "";
+        private bool showNodes = true;
+        private bool showVariables = true;
+        private bool showSubRoutines = true;
+        private bool showLog = false;
+        private bool autoScrollLog = true;
+        private Vector2 logScrollPos;
+        private Dictionary<string, Type> selectableVariableTypes = new Dictionary<string, Type>
         {
             {"Number", typeof(double)},
             {"Bool", typeof(bool)},
@@ -58,21 +86,23 @@ namespace KSPComputerModule
                 return windowRect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y));
             }
         }
-        public ProgramDrawer(FPComputer computer, FlightProgram program)
+        public ProgramDrawer(FPComputer computer)
         {
             this.computer = computer;
-            this.program = program;
             Show = false;
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
             nodeCats = NodeCategories.Instance;
-                
-            
+
         }
         public void Draw()
         {
+            var oldPadding = GUI.skin.button.padding;
+            GUI.skin.button.padding = new RectOffset(2, 2, 2, 2);
             if (Show)
             {
+                if (subRoutines == null)
+                    ReloadSubRoutines();
                 mousePos = new Vector2(Input.mousePosition.x, (Screen.height - Input.mousePosition.y));
                 mouseReleased = false;
                 mousePressed = false;
@@ -93,20 +123,22 @@ namespace KSPComputerModule
                     draggedConnection = null;
                 }
                 GUI.skin = HighLogic.Skin;
+
                 GUI.skin.box.alignment = TextAnchor.UpperCenter;
                 GUI.backgroundColor = defaultColor;
 
                 GUI.Window(667, windowRect, OnDrawWindow, "Flight Program");
-
-                DrawNodeConnections();
+                if (Program != null)
+                    DrawNodeConnections();
                 GUI.skin = null;
 
             }
             else
             {
                 GUI.skin = HighLogic.Skin;
-                if (GUI.Button(new Rect(270, 50, 120, 30), "Flight Planner"))
-                    Show = true;
+                KSPOperatingSystem.SmallWindowRect.height = showLog ? 300 : 70;
+                KSPOperatingSystem.SmallWindowRect.width = showLog ? 600 : 300;
+                KSPOperatingSystem.SmallWindowRect = GUI.Window(223, KSPOperatingSystem.SmallWindowRect, OnDrawButtonWindow, "Flight Computer");
                 GUI.skin = null;
                 if (inputLocked)
                 {
@@ -123,6 +155,29 @@ namespace KSPComputerModule
                     }
                 }
             }
+            GUI.skin.button.padding = oldPadding;
+        }
+        private void OnDrawButtonWindow(int id)
+        {
+            GUI.DragWindow(new Rect(0, 0, KSPOperatingSystem.SmallWindowRect.width - 25, 20));
+            if (GUI.Button(new Rect(KSPOperatingSystem.SmallWindowRect.width - 20, 0, 20, 20), "_"))
+            {
+                showLog = !showLog;
+            }
+            GUILayout.BeginVertical();
+            if (GUILayout.Button("Flight Program"))
+                Show = true;
+            if (showLog)
+            {
+                autoScrollLog = GUILayout.Toggle(autoScrollLog, "Autoscroll");
+                if (autoScrollLog)
+                    logScrollPos.y = Mathf.Infinity;
+                logScrollPos = GUILayout.BeginScrollView(logScrollPos, GUILayout.Width(KSPOperatingSystem.SmallWindowRect.width - 20), GUILayout.Height(190));
+                GUILayout.TextArea(Log.LogData);
+                GUILayout.EndScrollView();
+            }
+            GUILayout.EndVertical();
+            
         }
         private void OnDrawWindow(int id)
         {
@@ -136,7 +191,8 @@ namespace KSPComputerModule
             // GUI.Label(new Rect(200, 0, 100, 50), mousePos.ToString());
 
             DrawNodeToolbar();
-            DrawNodes(new Rect(toolbarWidth, 0, windowRect.width - toolbarWidth, windowRect.height));
+            if (Program != null)
+                DrawNodes(new Rect(toolbarWidth + 20, 0, windowRect.width - toolbarWidth, windowRect.height));
 
             if (computer.LastStartState == PartModule.StartState.Editor)
                 PreventEditorClickthrough();
@@ -151,86 +207,196 @@ namespace KSPComputerModule
         }
         private void DrawNodeToolbar()
         {
+
+            menuScrollPos = GUILayout.BeginScrollView(menuScrollPos, GUILayout.Width(toolbarWidth), GUILayout.Height(windowRect.height - 40));
+            GUILayout.BeginVertical();
+            #region back button
             //draw back button
-            float cy = baseElementHeight;
-            GUI.BeginGroup(new Rect(0, 0, toolbarWidth, windowRect.height), "Nodes");
-            if (GUI.Button(new Rect(0, 0 + cy, toolbarWidth, baseElementHeight), "Back"))
+
+            if (GUILayout.Button(nodeCats.TopCategory ? "---- Nodes ----" : "---- Back ----"))
             {
-                nodeCats.CategoryUp();
-                return;
-            }
-            cy += baseElementHeight * 2;
-            //Draw categories
-            var cats = nodeCats.ListSubCategories();
-            foreach(var cat in cats)
-            {
-                GUI.backgroundColor = cat.color;
-                if (GUI.Button(new Rect(0, 0 + cy, toolbarWidth, baseElementHeight), cat.name))
+                if (nodeCats.TopCategory)
                 {
-                    nodeCats.SelectSubCategory(cat.name);
-                    return;
+                    showNodes = !showNodes;
                 }
-                cy += baseElementHeight;
-            }
-            cy += baseElementHeight;
-            //Draw nodes
-            var nodes = nodeCats.ListNodes();
-            foreach (var node in nodes)
-            {
-                GUI.backgroundColor = node.color;
-                if (GUI.Button(new Rect(0, cy, toolbarWidth, baseElementHeight), node.name))
+                else
                 {
-                    Log.Write("Button pressed: " + node.name);
-                    draggedNode = program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
-                    dragInfo = new Vector2(0, 0);
+                    nodeCats.CategoryUp();
                 }
-                cy += baseElementHeight;
             }
-            cy += baseElementHeight;
+
+            #endregion
+            #region nodes
+            if (showNodes)
+            {
+                //Draw categories
+                var cats = nodeCats.ListSubCategories();
+                if (cats.Length > 0)
+                {
+                    foreach (var cat in cats)
+                    {
+                        GUI.backgroundColor = cat.color;
+                        if (GUILayout.Button(cat.name))
+                        {
+                            nodeCats.SelectSubCategory(cat.name);
+                            return;
+                        }
+                    }
+
+                }
+
+                //Draw nodes
+                var nodes = nodeCats.ListNodes();
+                foreach (var node in nodes)
+                {
+                    GUI.backgroundColor = node.color;
+                    if (GUILayout.Button(node.name) && Program != null)
+                    {
+                        Log.Write("Button pressed: " + node.name);
+                        draggedNode = Program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
+                        dragInfo = new Vector2(0, 0);
+                    }
+                }
+            }
+
+
+            #endregion
+            GUILayout.Space(baseElementHeight);
+            #region variables
+            GUI.backgroundColor = defaultColor;
             //Draw add variable
-            MethodInfo addMethod = program.GetType().GetMethod("AddVariable");
-            GUI.backgroundColor = defaultColor;
-            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Add variables");
-            cy += baseElementHeight;
-            foreach(var k in selectableVariableTypes)
+            if (Program != null)
             {
-                GUI.backgroundColor = TypeColor(k.Value);
-                if (GUI.Toggle(new Rect(0, cy, toolbarWidth, baseElementHeight), selectedVariableType == k.Value, k.Key))
-                    selectedVariableType = k.Value;
-                cy += baseElementHeight;
-            }
-            GUI.backgroundColor = defaultColor;
-            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Name");
-            cy += baseElementHeight;
-            currentVarName = GUI.TextField(new Rect(0, cy, toolbarWidth, baseElementHeight), currentVarName);
-            cy += baseElementHeight;
-            if (GUI.Button(new Rect(0, cy, toolbarWidth, baseElementHeight), "Add"))
-            {
-                if(!string.IsNullOrEmpty(currentVarName))
-                    program.AddVariable(selectedVariableType, currentVarName);
-            }
-            cy += baseElementHeight;
-            cy += baseElementHeight;
-            GUI.Label(new Rect(0, cy, toolbarWidth, baseElementHeight), "Variables");
-            cy += baseElementHeight;
-            //draw variables
-            foreach(var v in program.Variables)
-            {
-                GUI.backgroundColor = TypeColor(v.Value.Type);
-                if (GUI.Button(new Rect(0, cy, toolbarWidth -baseElementHeight, baseElementHeight), v.Key))
+                if (GUILayout.Button("---- Variables ----"))
                 {
-                    //add variableNode
-                    draggedNode = program.AddVariableNode(GUIUtility.GUIToScreenPoint(mousePos), v.Key);
-                    dragInfo = new Vector2(0, 0);
+                    showVariables = !showVariables;
                 }
-                if (GUI.Button(new Rect(toolbarWidth - baseElementHeight, cy, baseElementHeight, baseElementHeight), "X"))
+                if (showVariables)
                 {
-                    //remove variable
-                    program.RemoveVariable(v.Key);
+                    MethodInfo addMethod = Program.GetType().GetMethod("AddVariable");
+
+                    GUILayout.Label("Add variables");
+                    foreach (var k in selectableVariableTypes)
+                    {
+                        GUI.backgroundColor = TypeColor(k.Value);
+                        if (GUILayout.Toggle(selectedVariableType == k.Value, k.Key))
+                            selectedVariableType = k.Value;
+                    }
+                    GUI.backgroundColor = defaultColor;
+                    GUILayout.Label("Name");
+                    currentVarName = GUILayout.TextField(currentVarName);
+                    if (GUILayout.Button("Add"))
+                    {
+                        if (!string.IsNullOrEmpty(currentVarName))
+                            Program.AddVariable(selectedVariableType, currentVarName);
+                    }
+                    GUILayout.Label("Variables");
+                    //draw variables
+                    foreach (var v in Program.Variables)
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUI.backgroundColor = TypeColor(v.Value.Type);
+                        if (GUILayout.Button(v.Key))
+                        {
+                            //add variableNode
+                            draggedNode = Program.AddVariableNode(GUIUtility.GUIToScreenPoint(mousePos), v.Key);
+                            dragInfo = new Vector2(0, 0);
+                        }
+                        if (GUILayout.Button("X", GUILayout.MaxWidth(baseElementHeight)))
+                        {
+                            //remove variable
+                            Program.RemoveVariable(v.Key);
+                        }
+                        GUILayout.EndHorizontal();
+                    }
                 }
-                cy += baseElementHeight;
             }
-            GUI.EndGroup();
+            GUI.backgroundColor = defaultColor;
+
+            #endregion
+            GUILayout.Space(baseElementHeight);
+            #region subroutines
+
+            if (GUILayout.Button("---- Subroutines ----"))
+            {
+                showSubRoutines = !showSubRoutines;
+            }
+            if (showSubRoutines)
+            {
+                foreach (var s in subRoutines)
+                {
+                    if (GUILayout.Button(s))
+                    {
+                        draggedNode = Program.AddSubRoutineNode(GUIUtility.GUIToScreenPoint(mousePos), s);
+                        dragInfo = new Vector2(0, 0);
+                    }
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Edit"))
+                    {
+                        currentSubroutine = KSPOperatingSystem.LoadSubRoutine(s, true);
+                        currentSubroutineName = s;
+                    }
+                    GUI.backgroundColor = Color.red;
+                    if (GUILayout.Button("Delete"))
+                    {
+                        KSPOperatingSystem.DeleteSubRoutine(s);
+                        ReloadSubRoutines();
+                    }
+                    GUI.backgroundColor = defaultColor;
+                    GUILayout.EndHorizontal();
+                }
+                if (currentSubroutine == null)
+                {
+                    if (GUILayout.Button("Create Subroutine"))
+                    {
+                        currentSubroutine = new SubRoutine();
+                    }
+                }
+                else
+                {
+                    GUILayout.Label("Add parameter");
+                    if (GUILayout.Toggle(selectedParameterType == typeof(Connector.Exec), "Exec"))
+                        selectedParameterType = typeof(Connector.Exec);
+                    foreach (var k in selectableVariableTypes)
+                    {
+                        GUI.backgroundColor = TypeColor(k.Value);
+                        if (GUILayout.Toggle(selectedParameterType == k.Value, k.Key))
+                            selectedParameterType = k.Value;
+                    }
+                    GUI.backgroundColor = defaultColor;
+                    GUILayout.Label("Name");
+                    currentParamName = GUILayout.TextField(currentParamName);
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Add Input") && !string.IsNullOrEmpty(currentParamName))
+                    {
+                        currentSubroutine.EntryNode.AddRoutineInput(currentParamName, selectedParameterType);
+                    }
+                    if (GUILayout.Button("Add Output") && !string.IsNullOrEmpty(currentParamName))
+                    {
+                        currentSubroutine.ExitNode.AddRoutineOuput(currentParamName, selectedParameterType);
+                    }
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(baseElementHeight);
+                    currentSubroutineName = GUILayout.TextField(currentSubroutineName);
+                    if (GUILayout.Button("Save") && !string.IsNullOrEmpty(currentSubroutineName))
+                    {
+                        KSPOperatingSystem.SaveSubRoutine(currentSubroutineName, currentSubroutine, true);
+                        currentSubroutine = null;
+                        currentSubroutineName = "";
+                        KSPOperatingSystem.InitPrograms();
+                        ReloadSubRoutines();
+                    }
+                    if (GUILayout.Button("Cancel"))
+                    {
+                        currentSubroutine = null;
+                        currentSubroutineName = "";
+                    }
+                }
+            }
+
+            #endregion
+            GUILayout.EndVertical();
+            GUILayout.EndScrollView();
             GUI.backgroundColor = defaultColor;
         }
         private void DrawNodes(Rect area)
@@ -241,10 +407,10 @@ namespace KSPComputerModule
             {
                 if (mouseReleased)
                 {
-                    
-                    if(mousePos.x < 140)
+
+                    if (mousePos.x < 140)
                     {
-                        program.RemoveNode(draggedNode);
+                        Program.RemoveNode(draggedNode);
                     }
                     draggedNode = null;
                 }
@@ -255,7 +421,7 @@ namespace KSPComputerModule
                 }
             }
             connections.Clear();
-            foreach (var n in program.Nodes)
+            foreach (var n in Program.Nodes)
                 DrawNode(n);
 
             GUI.EndScrollView();
@@ -264,7 +430,7 @@ namespace KSPComputerModule
         private void DrawNodeConnections()
         {
             GUI.depth = -150;
-            foreach (var n in program.Nodes)
+            foreach (var n in Program.Nodes)
             {
                 foreach (var c in n.Outputs)
                 {
@@ -290,6 +456,9 @@ namespace KSPComputerModule
         }
         private void DrawNode(Node node)
         {
+            bool drawInputs = true;
+            bool drawOutputs = true;
+            bool isEditable = false;
             //find variable node
             NodeCategories.NodeInfo info = new NodeCategories.NodeInfo();
             var nodeType = node.GetType();
@@ -298,18 +467,46 @@ namespace KSPComputerModule
                 if (nodeType.GetGenericTypeDefinition() == typeof(VariableNode<>))
                 {
                     Variable v = node.GetType().GetProperty("Variable").GetValue(node, null) as Variable;
-                    var n = from va in program.Variables where va.Value == v select va.Key;
+                    var n = from va in Program.Variables where va.Value == v select va.Key;
                     if (n.Count() > 0)
                     {
                         info = new NodeCategories.NodeInfo(n.First(), v.Type, "Variable node", TypeColor(v.Type), 120);
                     }
                 }
             }
+            else if (node is SubroutineNode)
+            {
+                var sr = node as SubroutineNode;
+                info = new NodeCategories.NodeInfo(sr.SubRoutineBlueprint, typeof(SubRoutine), "Subroutine", Color.cyan, 160);
+            }
+            else if (node is SubRoutineEntry)
+            {
+                drawInputs = false;
+                isEditable = true;
+                info = new NodeCategories.NodeInfo("Entry", typeof(SubRoutineEntry), "Entry", Color.cyan, 160);
+            }
+            else if (node is SubRoutineExit)
+            {
+                drawOutputs = false;
+                isEditable = true;
+                info = new NodeCategories.NodeInfo("Exit", typeof(SubRoutineExit), "Exit", Color.cyan, 160);
+            }
             else
                 info = nodeCats.GetNodeInfo(node.GetType());
             //Log.Write("Drawing node " + node + " width: " + info.width);
-            float height = Math.Max(node.InputCount * 2, node.OutputCount) * baseElementHeight + baseElementHeight; 
+            float height = Math.Max(node.InputCount * 2 - node.InputExecCount, node.OutputCount) * baseElementHeight;
+            height += baseElementHeight;
+            
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
+            if (node is BaseExecutableNode)
+            {
+                float c = Mathf.Max(0, Mathf.Min(1, (Time.time - (node as BaseExecutableNode).LastExecution) * 3f));
+                GUI.skin.label.alignment = TextAnchor.UpperRight;
+                GUI.color = new Color(c, 1 - c, 0);
+                GUI.Label(new Rect(info.width - baseElementHeight, -5f, baseElementHeight, baseElementHeight), "■");
+                GUI.color = Color.white;
+                GUI.skin.label.alignment = TextAnchor.UpperCenter;
+            }
             GUI.backgroundColor = info.color;
             GUI.Box(new Rect(0, 0, info.width, height), info.name);
             if (PointerAvailable && mousePressed)
@@ -323,21 +520,32 @@ namespace KSPComputerModule
                     }
                 }
             }
-            DrawNodeInputs(node.Inputs, info.width);
-            DrawNodeOutputs(node.Outputs, info.width);
+
+            if (drawInputs)
+                DrawNodeInputs(node.Inputs, info.width, isEditable);
+            if (drawOutputs)
+                DrawNodeOutputs(node.Outputs, info.width, isEditable);
             GUI.backgroundColor = defaultColor;
             GUI.EndGroup();
 
         }
-        void DrawNodeInputs(KeyValuePair<string, ConnectorIn>[] inputs, float width)
+        void DrawNodeInputs(KeyValuePair<string, ConnectorIn>[] inputs, float width, bool removable)
         {
             float y = baseElementHeight;
             foreach (var inp in inputs)
             {
-                
+
                 bool wasConnected = inp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : inactiveCol);
                 bool buttonPressed = GUI.Button(new Rect(0, y, width / 2, baseElementHeight), inp.Key);
+                if (removable)
+                {
+                    if (GUI.Button(new Rect(width / 2, y, width / 2, baseElementHeight), "Remove"))
+                    {
+                        inp.Value.Node.RemoveInput(inp.Key);
+                        return;
+                    }
+                }
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(0, y, 0));
                 connections.Add(inp.Value, anchor);
                 y += baseElementHeight;
@@ -402,16 +610,24 @@ namespace KSPComputerModule
 
             }
         }
-        void DrawNodeOutputs(KeyValuePair<string, ConnectorOut>[] outputs, float width)
+        void DrawNodeOutputs(KeyValuePair<string, ConnectorOut>[] outputs, float width, bool removable)
         {
             float y = baseElementHeight;
             foreach (var outp in outputs)
             {
-                
+
                 bool wasConnected = outp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : inactiveCol);
-                bool buttonPressed = GUI.Button(new Rect(width/2, y, width / 2, baseElementHeight), outp.Key);
-                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width/2));
+                bool buttonPressed = GUI.Button(new Rect(width / 2, y, width / 2, baseElementHeight), outp.Key);
+                if (removable)
+                {
+                    if (GUI.Button(new Rect(0, y, width / 2, baseElementHeight), "Remove"))
+                    {
+                        outp.Value.Node.RemoveOutput(outp.Key);
+                        return;
+                    }
+                }
+                Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width / 2));
                 connections.Add(outp.Value, anchor);
                 if (buttonPressed && PointerAvailable)
                 {
@@ -430,9 +646,9 @@ namespace KSPComputerModule
                         {
                             if (!outp.Value.AllowMultipleConnections)
                                 outp.Value.DisconnectAll();
-                            dragInfo = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width/2));
+                            dragInfo = GUIUtility.GUIToScreenPoint(GetNodeAnchor(width / 2, y, width / 2));
                             draggedConnection = outp.Value;
-                            
+
                         }
                     }
                 }
@@ -473,7 +689,7 @@ namespace KSPComputerModule
         }
         Vector2 GetNodeAnchor(float x, float y, float addX)
         {
-            return new Vector2(x + addX + (addX > 0 ?  -17 : 17), y + 17);
+            return new Vector2(x + addX + (addX > 0 ? -17 : 17), y + 17);
         }
         Color ConnectionColor(Connector c)
         {
@@ -496,6 +712,10 @@ namespace KSPComputerModule
                 return new Color(1.0f, 1.0f, 0.0f);
             return Color.white;
         }
+        public void ReloadSubRoutines()
+        {
+            subRoutines = KSPOperatingSystem.ListSubRoutines();
+        }
         public static T GetStaticFieldValue<T>(Type t, string fieldName)
         {
             FieldInfo field = t.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
@@ -504,5 +724,6 @@ namespace KSPComputerModule
                 ret = (T)field.GetValue(null);
             return ret;
         }
+
     }
 }

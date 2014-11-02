@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetWheelThrottle : ExecutableNode
+    public class NodeSetWheelThrottle : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ctrlState.wheelThrottle = (float)In("Throttle").AsDouble();
+            Vessel.ctrlState.wheelThrottle = (float)In("Throttle").AsDouble();
             ExecuteNext();
         }
     }

@@ -8,7 +8,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetThrottle : ExecutableNode
+    public class NodeSetThrottle : DefaultExecutableNode
     {
         protected override void OnCreate()
         {

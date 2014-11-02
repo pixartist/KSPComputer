@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeToggleLandingGear : ExecutableNode
+    public class NodeToggleLandingGear : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -16,7 +16,7 @@ namespace DefaultNodes
         protected override void OnExecute(ConnectorIn input)
         {
             var on = In("On").AsBool();
-            Program.Vessel.ActionGroups.SetGroup(KSPActionGroup.Gear, on);
+            Vessel.ActionGroups.SetGroup(KSPActionGroup.Gear, on);
             ExecuteNext();
         }
     }

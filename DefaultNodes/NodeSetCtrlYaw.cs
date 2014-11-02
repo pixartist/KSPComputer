@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetCtrlYaw : ExecutableNode
+    public class NodeSetCtrlYaw : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ctrlState.yaw = (float)In("Yaw").AsDouble();
+            Vessel.ctrlState.yaw = (float)In("Yaw").AsDouble();
             ExecuteNext();
         }
     }

@@ -19,7 +19,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Vector3 dir = Program.VesselInfo.WorldToReference(Program.VesselInfo.Velocity, VesselInformation.FrameOfReference.Navball);
+            Vector3 dir = VesselController.WorldToReference(VesselController.Velocity, VesselController.FrameOfReference.Navball);
             Out("Lat", (double)dir.z);
             Out("Long", (double)dir.x);
             Out("Vert", (double)dir.y);

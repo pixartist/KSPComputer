@@ -102,6 +102,13 @@ namespace KSPComputerModule
         public const string catName = "category";
         public const string nodeName = "node";
         public const string fileType = ".xml";
+        public bool TopCategory
+        {
+            get
+            {
+                return SelectedCategory.Parent == null;
+            }
+        }
         private Dictionary<string, Type> nodeTypes;
         private Dictionary<string, NodeInfo> nodeInfos;
         private XElement root;

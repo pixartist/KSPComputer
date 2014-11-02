@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetCtrlRoll : ExecutableNode
+    public class NodeSetCtrlRoll : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ctrlState.roll = (float)In("Roll").AsDouble();
+            Vessel.ctrlState.roll = (float)In("Roll").AsDouble();
             ExecuteNext();
         }
     }

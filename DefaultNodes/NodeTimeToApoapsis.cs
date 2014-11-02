@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Seconds", Program.Vessel.orbit.timeToAp);
+            Out("Seconds", Vessel.orbit.timeToAp);
         }
     }
 }

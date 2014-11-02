@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Apoapsis", Program.Vessel.orbit.ApA);
+            Out("Apoapsis", Vessel.orbit.ApA);
         }
     }
 }

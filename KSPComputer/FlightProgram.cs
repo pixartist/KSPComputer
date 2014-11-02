@@ -15,38 +15,18 @@ namespace KSPComputer
     [Serializable]
     public class FlightProgram
     {
-        public delegate void FlightEventHandler();
-        public delegate void CustomActionHandler(int action);
-        public event FlightEventHandler OnTick;
-        public event FlightEventHandler OnLaunch;
-        public event CustomActionHandler OnCustomAction;
-
-        [NonSerialized]
-        private Vessel vessel;
-        [NonSerialized]
-        private SASController sasController;
-        [NonSerialized]
-        private VesselInformation vesselInformation;
-        public Vessel Vessel
+        public static Vessel Vessel
         {
             get
             {
-                return vessel;
+                return KSPOperatingSystem.VesselController.Vessel;
             }
         }
-
-        public SASController SASController
+        public static VesselController VesselController
         {
             get
             {
-                return sasController;
-            }
-        }
-        public VesselInformation VesselInfo
-        {
-            get
-            {
-                return vesselInformation;
+                return KSPOperatingSystem.VesselController;
             }
         }
         public Dictionary<string, Variable> Variables { get; private set; }
@@ -56,49 +36,41 @@ namespace KSPComputer
             Nodes = new List<Node>();
             Variables = new Dictionary<string, Variable>();
         }
-        public void Init(Vessel vessel)
-        {
-            
-            this.vessel = vessel;
-            this.sasController= new SASController(this);
-            this.vesselInformation = new VesselInformation(this);
-            Log.Write("Initializing flight program");
-        }
         public void Launch()
         {
-            Log.Write("Vehicle launching");
-            if (SASController == null || Vessel == null)
-            {
-                Log.Write("Something went wrong, was init called ? (FlightProgram)");
-                if (SASController == null)
-                    Log.Write("SASController = null");
-                if (Vessel == null)
-                    Log.Write("Vessel = null");
-            }
-            SASController.SASTarget = Vessel.ReferenceTransform.rotation;
-            if (OnLaunch != null)
-                OnLaunch();
+            foreach (var n in Nodes)
+                n.OnLaunch();
         }
-        public void TriggerAction(int action)
+        public void CustomAction(int action)
         {
-            if (OnCustomAction != null)
-                OnCustomAction(action);
+            foreach (var n in Nodes)
+                n.OnCustomAction(action);
         }
-
+        public T AddNode<T>(Vector2 position) where T : Node
+        {
+            return (T)AddNode(typeof(T), position);
+        }
         public Node AddNode(Type nodeType, Vector2 position)
         {
             if (nodeType.IsSubclassOf(typeof(Node)))
             {
                 Node n = Activator.CreateInstance(nodeType) as Node;
-                n.Init(this);
+                n.OnRequestRemoval += OnNodeRemovalRequest;
                 n.Position = new SVector2(position.x, position.y);
                 Nodes.Add(n);
+                n.Create();
+                n.OnInit();
                 return n;
             }
             else
             {
                 throw (new Exception("Type " + nodeType + " is not a valid node type"));
             }
+        }
+
+        void OnNodeRemovalRequest(Node n)
+        {
+            RemoveNode(n);
         }
         public Node AddVariableNode(Vector2 position, string variable)
         {
@@ -114,7 +86,9 @@ namespace KSPComputer
                 Log.Write("Method: " + mi);
                 mi.Invoke(n, new object[] { var });
                 Log.Write("Init");
-                n.Init(this);
+                n.OnRequestRemoval += OnNodeRemovalRequest;
+                n.Create();
+                n.OnInit();
                 n.Position = new SVector2(position.x, position.y);
                 Nodes.Add(n);
                 return n;
@@ -123,6 +97,18 @@ namespace KSPComputer
             {
                 throw (new Exception("Variable " + variable + " does not exist"));
             }
+        }
+        public Node AddSubRoutineNode(Vector2 position, string subroutine)
+        {
+            SubroutineNode n = Activator.CreateInstance(typeof(SubroutineNode)) as SubroutineNode;
+            n.OnRequestRemoval += OnNodeRemovalRequest;
+            n.Position = new SVector2(position.x, position.y);
+            n.SetSubRoutine(subroutine);
+            Nodes.Add(n);
+            n.Create();
+            n.OnInit();
+            
+            return n;
         }
         public bool AddVariable(Type t, string name)
         {
@@ -167,21 +153,40 @@ namespace KSPComputer
                 throw (new Exception("Variable " + name + " does not exist"));
             }
         }
-        public void RemoveNode(Node node)
+        public void RemoveSubRoutineNodes(string name)
         {
-            
+            SubroutineNode sr;
+            List<Node> toRemove = new List<Node>();
+            foreach (var n in Nodes)
+            {
+                if(n is SubroutineNode)
+                {
+                    sr = n as SubroutineNode;
+                    if(sr.SubRoutineBlueprint == name)
+                    {
+                        toRemove.Add(n);
+                    }
+                }
+            }
+            foreach(var n in toRemove)
+            {
+                RemoveNode(n);
+            }
+        }
+        public virtual void RemoveNode(Node node)
+        {
             Nodes.Remove(node);
             node.Destroy();
-            
-            
         }
         public void Update()
         {
-            //Log.Write("Vessel: " + Vessel.ToString());
-            SASController.Update();
-            VesselInfo.Update();
-            if (OnTick != null)
-                OnTick();
+            foreach (var n in Nodes)
+                n.OnUpdate();
+        }
+        internal void Init()
+        {
+            foreach (var n in Nodes)
+                n.OnInit();
         }
     }
 }

@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetTimewarp : ExecutableNode
+    public class NodeSetTimewarp : DefaultExecutableNode
     {
         protected override void OnCreate()
         {
@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            var m = Math.Max(1, In("Multiplier").AsInt())-1;
+            var m = Math.Min(TimeWarp.fetch.warpRates.Length-1, Math.Max(1, In("Multiplier").AsInt())-1);
             TimeWarp.SetRate(m, true);
             ExecuteNext();
         }

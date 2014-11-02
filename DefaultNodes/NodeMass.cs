@@ -16,7 +16,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Mass", Program.Vessel.GetTotalMass());
+            Out("Mass", Vessel.GetTotalMass());
         }
     }
 }

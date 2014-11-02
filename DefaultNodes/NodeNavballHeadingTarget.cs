@@ -20,11 +20,11 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            if (Program.Vessel.targetObject != null)
+            if (Vessel.targetObject != null)
             {
-                Vector3 pDelta = Program.Vessel.targetObject.GetTransform().position - Program.VesselInfo.WorldPosition;
+                Vector3 pDelta = Vessel.targetObject.GetTransform().position - VesselController.WorldPosition;
                 pDelta.Normalize();
-                Vector3 hRel = Program.VesselInfo.WorldToReference(pDelta, VesselInformation.FrameOfReference.Navball);
+                Vector3 hRel = VesselController.WorldToReference(pDelta, VesselController.FrameOfReference.Navball);
                 Out("N/S", (double)hRel.z);
                 Out("E/W", (double)hRel.x);
                 Out("U/D", (double)hRel.y);

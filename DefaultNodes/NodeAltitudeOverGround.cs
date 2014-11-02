@@ -15,9 +15,9 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            double a = Program.Vessel.heightFromTerrain;
+            double a = Vessel.heightFromTerrain;
             if(a < 0)
-                a = Program.Vessel.altitude;
+                a = Vessel.altitude;
             Out("Altitude", a);
         }
     }

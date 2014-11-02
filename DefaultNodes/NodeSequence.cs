@@ -7,7 +7,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSequence : ExecutableNode
+    public class NodeSequence : DefaultExecutableNode
     {
         protected override void OnCreate()
         {

@@ -12,22 +12,22 @@ namespace KSPComputer.Helpers
         {
             get
             {
-                return program.Vessel.ActionGroups[KSPActionGroup.SAS];
+                return VesselController.Vessel.ActionGroups[KSPActionGroup.SAS];
             }
             set
             {
-                program.Vessel.ActionGroups[KSPActionGroup.SAS] = value;
+                VesselController.Vessel.ActionGroups[KSPActionGroup.SAS] = value;
             }
         }
         public bool RCSEnabled
         {
             get
             {
-                return program.Vessel.ActionGroups[KSPActionGroup.RCS];
+                return VesselController.Vessel.ActionGroups[KSPActionGroup.RCS];
             }
             set
             {
-                program.Vessel.ActionGroups[KSPActionGroup.RCS] = value;
+                VesselController.Vessel.ActionGroups[KSPActionGroup.RCS] = value;
             }
         }
         private Quaternion sasTarget;
@@ -38,7 +38,7 @@ namespace KSPComputer.Helpers
                 if (SASControlEnabled)
                     return sasTarget;
                 else
-                    return program.Vessel.VesselSAS.currentRotation;
+                    return VesselController.Vessel.VesselSAS.currentRotation;
             }
             set
             {
@@ -46,17 +46,17 @@ namespace KSPComputer.Helpers
                     sasTarget = value;
                 else
                 {
-                    program.Vessel.VesselSAS.LockHeading(value);
+                    VesselController.Vessel.VesselSAS.LockHeading(value);
                 }
             }
         }
         public bool SASControlEnabled { get; set; }
         public float SASControllerStrength { get; set; }
-        private FlightProgram program;
-        public SASController(FlightProgram program)
+        public VesselController VesselController { get; private set; }
+        public SASController(VesselController controller)
         {
-            this.program = program;
-            SASControlEnabled = true;
+            VesselController = controller;
+            SASControlEnabled = false;
             SASControllerStrength = 1;
         }
         public void Update()
@@ -64,18 +64,18 @@ namespace KSPComputer.Helpers
             if(SASControlEnabled && SASEnabled)
             {
 
-                Quaternion at = program.VesselInfo.VesselOrientation;
+                Quaternion at = VesselController.VesselOrientation;
                 float angle = Quaternion.Angle(at, SASTarget);
                 if (angle > 10f)
                 {
                     Quaternion t = SASTarget;
                     float angleAm = Mathf.Min(1, 0.005f * SASControllerStrength * (180f / angle));
                     t = Quaternion.Slerp(at, t, angleAm);
-                   
-                    program.Vessel.VesselSAS.LockHeading(t);
+
+                    VesselController.Vessel.VesselSAS.LockHeading(t);
                 }
                 else
-                    program.Vessel.VesselSAS.LockHeading(SASTarget, true);
+                    VesselController.Vessel.VesselSAS.LockHeading(SASTarget, true);
                 
             }
         }

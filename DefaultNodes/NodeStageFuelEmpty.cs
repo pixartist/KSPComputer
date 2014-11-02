@@ -9,36 +9,34 @@ using KSPComputer.Helpers;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeStageFuelEmpty : RootNode
+    public class NodeStageFuelEmpty : DefaultRootNode
     {
         protected override void OnCreate()
         {
             In<bool>("IgnoreLanded");
-            Program.OnTick += Program_OnTick;
         }
 
-        void Program_OnTick()
+        public override void OnUpdate()
         {
             Execute(null);
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            if (!Program.Vessel.Landed || In("IgnoreLanded").AsBool())
+            if (Vessel.currentStage > 0)
             {
-                double maxFuelInStage = Program.Vessel.CurrentStageFuelMax(DefaultResources.LiquidFuel, DefaultResources.Oxidizer, DefaultResources.SolidFuel);
-                if (maxFuelInStage > 0)
+                if (!Vessel.Landed || In("IgnoreLanded").AsBool())
                 {
-
-                    if (!Program.Vessel.CurrentStageHasFuel())
+                    double maxFuelInStage = Vessel.CurrentStageFuelMax(DefaultResources.LiquidFuel, DefaultResources.Oxidizer, DefaultResources.SolidFuel);
+                    if (maxFuelInStage > 0)
                     {
-                        ExecuteNext();
+
+                        if (!Vessel.CurrentStageHasFuel())
+                        {
+                            ExecuteNext();
+                        }
                     }
                 }
             }
-        }
-        protected override void OnDestroy()
-        {
-            Program.OnTick -= Program_OnTick;
         }
     }
 }

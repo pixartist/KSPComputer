@@ -7,18 +7,14 @@ using KSPComputer.Nodes;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTouchdown : RootNode
+    public class NodeTouchdown : DefaultRootNode
     {
         private bool wasLanded = false;
         private bool canTrigger = false;
-        protected override void OnCreate()
-        {
-            Program.OnTick += Program_OnTick;
-        }
 
-        void Program_OnTick()
+        public override void OnUpdate()
         {
-            bool landed = Program.Vessel.checkLanded();
+            bool landed = Vessel.checkLanded();
             if(!canTrigger)
             {
                 canTrigger = true;
@@ -29,10 +25,6 @@ namespace DefaultNodes
                     Execute(null);
             }
             wasLanded = landed;
-        }
-        protected override void OnDestroy()
-        {
-            Program.OnTick -= Program_OnTick;
         }
     }
 }

@@ -38,7 +38,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
@@ -47,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
+    <Compile Include="NodeActionGroup.cs" />
     <Compile Include="NodeDT.cs" />
     <Compile Include="NodeDelta.cs" />
     <Compile Include="NodeGravity.cs" />
@@ -55,6 +55,7 @@
     <Compile Include="NodeNavballHeadingTarget.cs" />
     <Compile Include="NodeScaleVector3.cs" />
     <Compile Include="NodeScaleVector2.cs" />
+    <Compile Include="NodeStageCount.cs" />
     <Compile Include="NodeSubtractVector2.cs" />
     <Compile Include="NodeSubtractVector3.cs" />
     <Compile Include="NodeAddVector3.cs" />
@@ -179,8 +180,13 @@
     <Content Include="Nodes\Boolean\DefaultNodes.NodeAnd.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\ActionGroups\category.xml" />
-    <Content Include="Nodes\ActionGroups\DefaultNodes.NodeActionGroup.xml" />
+    <Content Include="Nodes\ActionGroups\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\ActionGroups\DefaultNodes.NodeActionGroup.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeStageCount.xml" />
     <Content Include="Nodes\Events\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

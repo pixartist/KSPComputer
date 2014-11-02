@@ -15,7 +15,7 @@ namespace DefaultNodes
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Gravity", Program.VesselInfo.CurrentGravity);
+            Out("Gravity", VesselController.CurrentGravity);
         }
     }
 }

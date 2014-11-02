@@ -8,8 +8,8 @@ namespace KSPComputer.Connectors
     [Serializable]
     public class ConnectorOut : Connector
     {
-        internal ConnectorOut(Type dataType, bool allowMultipleConnections = true)
-            : base(dataType, allowMultipleConnections)
+        internal ConnectorOut(Type dataType, string name, bool allowMultipleConnections = true)
+            : base(dataType, name, allowMultipleConnections)
         {
 
         }
@@ -24,11 +24,12 @@ namespace KSPComputer.Connectors
         {
             //Log.Write("Trying to execute next node from connector");
             //Log.Write("Connection count: " + connections.Count);
-            foreach (var c in (from cn in connections where cn.Node is ExecutableNode select cn))
+            foreach (var c in (from cn in connections where cn.Node is BaseExecutableNode select cn))
             {
                 //Log.Write("Executing next node from connector");
-                (c.Node as ExecutableNode).Execute(c as ConnectorIn);
+                (c.Node as BaseExecutableNode).Execute(c as ConnectorIn);
             }
         }
+
     }
 }

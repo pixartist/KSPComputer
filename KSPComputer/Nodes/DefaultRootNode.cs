@@ -7,12 +7,13 @@ using KSPComputer.Connectors;
 namespace KSPComputer.Nodes
 {
     [Serializable]
-    public abstract class ExecutableNode : RootNode
+    public abstract class DefaultRootNode : BaseExecutableNode
     {
-        public ExecutableNode()
+        public DefaultRootNode()
             : base()
         {
-            In<Connector.Exec>(DefaultExecName, true);
-        }
+
+            Out<Connector.Exec>(DefaultExecName, false);
+        } 
     }
 }

@@ -34,11 +34,13 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Spiele\Steamapps\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.3\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
@@ -55,18 +57,27 @@
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Helpers\SASController.cs" />
     <Compile Include="Helpers\VesselHelper.cs" />
-    <Compile Include="Helpers\VesselInformation.cs" />
+    <Compile Include="Helpers\VesselController.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="Nodes\ExecutableNode.cs" />
+    <Compile Include="Nodes\DefaultExecutableNode.cs" />
     <Compile Include="FlightProgram.cs" />
+    <Compile Include="Nodes\BaseExecutableNode.cs" />
     <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\SubRoutineEntry.cs" />
+    <Compile Include="Nodes\SubRoutineExit.cs" />
+    <Compile Include="Nodes\SubroutineNode.cs" />
     <Compile Include="Nodes\VariableNode.cs" />
-    <Compile Include="Nodes\RootNode.cs" />
+    <Compile Include="Nodes\DefaultRootNode.cs" />
+    <Compile Include="KSPOperatingSystem.cs" />
+    <Compile Include="SubRoutine.cs" />
     <Compile Include="Types\SQuaternion.cs" />
     <Compile Include="Types\SVector2.cs" />
     <Compile Include="Types\SVector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables\Variable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

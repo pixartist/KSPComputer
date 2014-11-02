@@ -8,7 +8,7 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeActionGroup : ExecutableNode
+    public class NodeActionGroup : DefaultExecutableNode
     {
         protected int inputID;
         protected readonly KSPActionGroup[] AGroups = new KSPActionGroup[]
@@ -39,7 +39,8 @@ namespace DefaultNodes
         }
         protected override void OnExecute(ConnectorIn input)
         {
-            Program.Vessel.ActionGroups.SetGroup(SelectedGroup(), In("Set").AsBool());
+            Vessel.ActionGroups.SetGroup(SelectedGroup(), In("Set").AsBool());
+            ExecuteNext();
         }
 
         private KSPActionGroup SelectedGroup()
@@ -54,7 +55,7 @@ namespace DefaultNodes
 
         protected override void OnUpdateOutputData()
         {
-            Out("Enabled", Program.Vessel.ActionGroups[SelectedGroup()]);
+            Out("Enabled", Vessel.ActionGroups[SelectedGroup()]);
         }
     }
 }

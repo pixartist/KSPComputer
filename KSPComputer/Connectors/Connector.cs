@@ -27,11 +27,17 @@ namespace KSPComputer.Connectors
                 return connections.ToArray();
             }
         }
+        public string Name
+        {
+            get;
+            private set;
+        }
         public Node Node { get; private set; }
         public bool AllowMultipleConnections { get; private set; }
         public Type DataType { get; private set; }
-        public Connector(Type dataType, bool allowMultipleConnections)
+        public Connector(Type dataType, string name, bool allowMultipleConnections)
         {
+            Name = name;
             connections = new List<Connector>();
             AllowMultipleConnections = allowMultipleConnections;
             DataType = dataType;
