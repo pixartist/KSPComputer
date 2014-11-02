@@ -252,7 +252,7 @@ namespace KSPComputerModule
                     GUI.backgroundColor = node.color;
                     if (GUILayout.Button(node.name) && Program != null)
                     {
-                        Log.Write("Button pressed: " + node.name);
+                        //Log.Write("Button pressed: " + node.name);
                         draggedNode = Program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
                         dragInfo = new Vector2(0, 0);
                     }
@@ -408,7 +408,7 @@ namespace KSPComputerModule
                 if (mouseReleased)
                 {
 
-                    if (mousePos.x < 140)
+                    if (mousePos.x < toolbarWidth)
                     {
                         Program.RemoveNode(draggedNode);
                     }
@@ -477,19 +477,19 @@ namespace KSPComputerModule
             else if (node is SubroutineNode)
             {
                 var sr = node as SubroutineNode;
-                info = new NodeCategories.NodeInfo(sr.SubRoutineBlueprint, typeof(SubRoutine), "Subroutine", Color.cyan, 160);
+                info = new NodeCategories.NodeInfo(sr.SubRoutineBlueprint, typeof(SubRoutine), "Subroutine", Color.cyan, 220);
             }
             else if (node is SubRoutineEntry)
             {
                 drawInputs = false;
                 isEditable = true;
-                info = new NodeCategories.NodeInfo("Entry", typeof(SubRoutineEntry), "Entry", Color.cyan, 160);
+                info = new NodeCategories.NodeInfo("Entry", typeof(SubRoutineEntry), "Entry", Color.cyan, 220);
             }
             else if (node is SubRoutineExit)
             {
                 drawOutputs = false;
                 isEditable = true;
-                info = new NodeCategories.NodeInfo("Exit", typeof(SubRoutineExit), "Exit", Color.cyan, 160);
+                info = new NodeCategories.NodeInfo("Exit", typeof(SubRoutineExit), "Exit", Color.cyan, 220);
             }
             else
                 info = nodeCats.GetNodeInfo(node.GetType());
@@ -573,10 +573,10 @@ namespace KSPComputerModule
                     {
                         if (draggedConnection != null)
                         {
-                            Log.Write("Trying to connect " + draggedConnection.Node + " to " + inp.Value.Node + "(" + draggedConnection.DataType + "==" + inp.Value.DataType + ")");
+                            //Log.Write("Trying to connect " + draggedConnection.Node + " to " + inp.Value.Node + "(" + draggedConnection.DataType + "==" + inp.Value.DataType + ")");
                             if (draggedConnection.DataType == inp.Value.DataType)
                             {
-                                Log.Write("Connected " + draggedConnection.Node + " to " + inp.Value.Node);
+                                //Log.Write("Connected " + draggedConnection.Node + " to " + inp.Value.Node);
                                 draggedConnection.ConnectTo(inp.Value);
                                 draggedConnection = null;
 
@@ -595,10 +595,10 @@ namespace KSPComputerModule
                                 inp.Value.DisconnectAll();
                             if (draggedConnection != null)
                             {
-                                Log.Write("Trying to connect " + draggedConnection.Node + " to " + inp.Value.Node + "(" + draggedConnection.DataType + "==" + inp.Value.DataType + ")");
+                                //Log.Write("Trying to connect " + draggedConnection.Node + " to " + inp.Value.Node + "(" + draggedConnection.DataType + "==" + inp.Value.DataType + ")");
                                 if (draggedConnection.DataType == inp.Value.DataType)
                                 {
-                                    Log.Write("Connected " + draggedConnection.Node + " to " + inp.Value.Node);
+                                    //Log.Write("Connected " + draggedConnection.Node + " to " + inp.Value.Node);
                                     draggedConnection.ConnectTo(inp.Value);
                                     draggedConnection = null;
 

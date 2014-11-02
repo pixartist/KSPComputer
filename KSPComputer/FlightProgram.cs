@@ -77,15 +77,15 @@ namespace KSPComputer
             Variable var;
             if(Variables.TryGetValue(variable, out var))
             {
-                Log.Write("Adding variable node for " + variable);
+                //Log.Write("Adding variable node for " + variable);
                 var type = typeof(VariableNode<>).MakeGenericType(var.Type);
-                Log.Write("Type: " + type);
+                //Log.Write("Type: " + type);
                 Node n = Activator.CreateInstance(type) as Node;
-                Log.Write("Node: " + n);
+               // Log.Write("Node: " + n);
                 var mi = type.GetMethod("SetVariable", BindingFlags.Instance | BindingFlags.NonPublic);
-                Log.Write("Method: " + mi);
+               // Log.Write("Method: " + mi);
                 mi.Invoke(n, new object[] { var });
-                Log.Write("Init");
+               // Log.Write("Init");
                 n.OnRequestRemoval += OnNodeRemovalRequest;
                 n.Create();
                 n.OnInit();

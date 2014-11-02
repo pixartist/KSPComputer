@@ -23,7 +23,7 @@ namespace KSPComputer.Nodes
         }
         private void ReloadSubroutine()
         {
-            Log.Write("Reloading subroutine");
+            //Log.Write("Reloading subroutine");
             if (this.subRoutine != null)
             {
                 this.subRoutine.ExitNode.OnExecuted -= ExitNode_OnExecuted;

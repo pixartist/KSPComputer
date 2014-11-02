@@ -58,7 +58,7 @@ namespace KSPComputer.Helpers
             double maxFuel = 0;
             if (v.currentStage > 0)
             {
-                Log.Write("Checking stage parts");
+                //Log.Write("Checking stage parts");
                 foreach (var part in v.Parts)
                 {
                     if (part.inverseStage == v.currentStage - 1)
@@ -74,7 +74,7 @@ namespace KSPComputer.Helpers
             }
             else
             {
-                Log.Write("Checking all parts");
+               // Log.Write("Checking all parts");
                 maxFuel += v.rootPart.CountMaxResourcesInChildren(resources);
             }
             return maxFuel;

@@ -47,12 +47,15 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeSetHeading.cs" />
+    <Compile Include="NodeHasTarget.cs" />
+    <Compile Include="NodeTransformToHeading.cs" />
     <Compile Include="NodeDT.cs" />
     <Compile Include="NodeDelta.cs" />
     <Compile Include="NodeGravity.cs" />
     <Compile Include="NodeMass.cs" />
     <Compile Include="NodeMaxThrust.cs" />
-    <Compile Include="NodeNavballHeadingTarget.cs" />
+    <Compile Include="NodeTargetDirection.cs" />
     <Compile Include="NodeScaleVector3.cs" />
     <Compile Include="NodeScaleVector2.cs" />
     <Compile Include="NodeStageCount.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="NodeSetWheelSteer.cs" />
     <Compile Include="NodeSetWheelThrottle.cs" />
     <Compile Include="NodeShowValue.cs" />
+    <Compile Include="NodeLocation.cs" />
     <Compile Include="NodeSurfaceVelocity.cs" />
     <Compile Include="NodeNot.cs" />
     <Compile Include="NodeOr.cs" />
@@ -95,9 +99,9 @@
     <Compile Include="NodeEulerToQuaternion.cs" />
     <Compile Include="NodeMakeVector3.cs" />
     <Compile Include="NodeMultiply.cs" />
-    <Compile Include="NodeNavballRetrograde.cs" />
-    <Compile Include="NodeNavballPrograde.cs" />
-    <Compile Include="NodeNavballHeading.cs" />
+    <Compile Include="NodeGetRetrograde.cs" />
+    <Compile Include="NodeGetPrograde.cs" />
+    <Compile Include="NodeGetHeading.cs" />
     <Compile Include="NodePeriapsisAltitude.cs" />
     <Compile Include="NodePreLaunch.cs" />
     <Compile Include="NodeForwardVelocity.cs" />
@@ -144,6 +148,9 @@
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeSetHeading.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -166,6 +173,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Boolean\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Boolean\DefaultNodes.NodeHasTarget.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Boolean\DefaultNodes.NodeLess.xml">
@@ -232,7 +242,10 @@
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballHeadingTarget.xml">
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeTargetDirection.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeLocation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeSurfaceVelocity.xml">
@@ -245,10 +258,10 @@
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeAltitudeOverGround.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballRetrograde.xml">
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetRetrograde.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballPrograde.xml">
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetPrograde.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeForwardVelocity.xml">
@@ -263,7 +276,7 @@
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeVerticalVelocity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeNavballHeading.xml">
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetHeading.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodePeriapsisAltitude.xml">
@@ -375,6 +388,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeScaleVector3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeTransformToHeading.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\Vector3\DefaultNodes.NodeSubtractVector3.xml">

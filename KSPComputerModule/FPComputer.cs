@@ -95,7 +95,7 @@ namespace KSPComputerModule
                 yield return null;
             }
             KSPOperatingSystem.SetVessel(vessel);
-            Log.Write("FPS: " + fps);
+            //Log.Write("FPS: " + fps);
             startTime = Planetarium.GetUniversalTime();
             Log.Write("Start time: " + startTime);
             double t = startTime;
@@ -105,7 +105,7 @@ namespace KSPComputerModule
                 t = Planetarium.GetUniversalTime();
                 yield return null;
             }
-            Log.Write("Vessel ready " + Planetarium.GetUniversalTime());
+            //Log.Write("Vessel ready " + Planetarium.GetUniversalTime());
             
             KSPOperatingSystem.Launch();
         }

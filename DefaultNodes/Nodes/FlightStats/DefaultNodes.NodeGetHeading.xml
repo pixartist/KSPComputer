@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Get heading</name>
+	<description>Returns the current heading direction vector.</description>
+	<width>120</width>
+</node>
