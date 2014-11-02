@@ -11,6 +11,7 @@ namespace DefaultNodes
     [Serializable]
     public class NodeStageFuelEmpty : DefaultRootNode
     {
+        bool hasTriggered = false;
         protected override void OnCreate()
         {
             In<bool>("IgnoreLanded");
@@ -32,11 +33,23 @@ namespace DefaultNodes
 
                         if (!Vessel.CurrentStageHasFuel())
                         {
-                            ExecuteNext();
+                            if (!hasTriggered)
+                            {
+                                hasTriggered = true;
+                                ExecuteNext();
+                            }
                         }
+                        else
+                            hasTriggered = false;
                     }
+                    else
+                        hasTriggered = false;
                 }
+                else
+                    hasTriggered = false;
             }
+            else
+                hasTriggered = false;
         }
     }
 }

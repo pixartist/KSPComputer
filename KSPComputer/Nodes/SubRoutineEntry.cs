@@ -13,11 +13,11 @@ namespace KSPComputer.Nodes
         public event SubroutineEventHandler OnRequestData;
         public void AddRoutineInput<T>(string name)
         {
-            Out<T>(name);
+            Out(name, typeof(T));
         }
         public void AddRoutineInput(string name, Type type)
         {
-            Out(name, type);
+            Out(name, type, type != typeof(Connector.Exec));
         }
         public void RemoveRoutineInput(string name)
         {

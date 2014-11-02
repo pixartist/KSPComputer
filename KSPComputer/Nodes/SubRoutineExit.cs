@@ -14,11 +14,11 @@ namespace KSPComputer.Nodes
         public event SubroutineEventHandler OnExecuted;
         public void AddRoutineOuput<T>(string name)
         {
-            In<T>(name);
+            In(name, typeof(T));
         }
         public void AddRoutineOuput(string name, Type type)
         {
-            In(name, type);
+            In(name, type, type == typeof(Connector.Exec));
         }
         public void RemoveRoutineOutput(string name)
         {
