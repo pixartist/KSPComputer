@@ -210,6 +210,13 @@ namespace KSPComputerModule
 
             menuScrollPos = GUILayout.BeginScrollView(menuScrollPos, GUILayout.Width(toolbarWidth), GUILayout.Height(windowRect.height - 40));
             GUILayout.BeginVertical();
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("<"))
+                selectedProgram--;
+            GUILayout.Label("Program " + selectedProgram + "/" + KSPOperatingSystem.ProgramCount);
+            if (GUILayout.Button(">"))
+                selectedProgram++;
+            GUILayout.EndHorizontal();
             #region back button
             //draw back button
 

@@ -72,7 +72,7 @@ namespace KSPComputerModule
                 startTime = 0;
             }
             drawer = new ProgramDrawer(this);
-            if (KSPOperatingSystem.ProgramCount < 1)
+            if(KSPOperatingSystem.ProgramCount < 1)
                 KSPOperatingSystem.AddProgram();
         }
         private bool CheckVesselReady()

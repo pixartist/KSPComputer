@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeSelectNumber.cs" />
+    <Compile Include="NodeSign.cs" />
     <Compile Include="NodeSqrt.cs" />
     <Compile Include="NodeDotVector3.cs" />
     <Compile Include="NodeDotVector2.cs" />
@@ -301,6 +303,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeAbs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeSelectNumber.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Maths\DefaultNodes.NodeSign.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Maths\DefaultNodes.NodeSqrt.xml">
