@@ -135,6 +135,7 @@ namespace KSPComputerModule
 
         public override void OnLoad(ConfigNode node)
         {
+            KSPOperatingSystem.Boot(Path.Combine(Path.Combine(Environment.CurrentDirectory, "GameData"), "FlightComputer"));
             //Log.Write("TAC Examples-SimplePartModule [" + this.GetInstanceID().ToString("X") + "][" + Time.time.ToString("0.0000") + "]: OnLoad: " + node);
             Log.Write("Loading program, State: " + LastStartState + ", Vessel: " + vessel);
             if (node.HasValue("FlightProgram"))
