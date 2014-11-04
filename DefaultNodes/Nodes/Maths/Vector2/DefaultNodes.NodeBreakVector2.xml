@@ -2,5 +2,5 @@
 <node>
 	<name>Break Vector2</name>
 	<description>Breaks out the components of a Vector2.</description>
-	<width>120</width>
+	<width>160</width>
 </node>

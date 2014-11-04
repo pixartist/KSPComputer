@@ -12,8 +12,8 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector3>("A");
-            In<SVector3>("B");
+            In<SVector3d>("A");
+            In<SVector3d>("B");
             Out<double>("Dot");
         }
         protected override void OnUpdateOutputData()

@@ -6,28 +6,28 @@ using UnityEngine;
 namespace KSPComputer.Types
 {
     [Serializable]
-    public struct SVector3
+    public struct SVector3d
     {
-        public float x, y, z;
-        public SVector3(float x, float y, float z)
+        public double x, y, z;
+        public SVector3d(double x, double y, double z)
         {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-        public SVector3(Vector3 v)
+        public SVector3d(Vector3d v)
         {
             x = v.x;
             y = v.y;
             z = v.z;
         }
-        public Vector3 GetVec3()
+        public Vector3d GetVec3()
         {
-            return new Vector3(x, y, z);
+            return new Vector3d(x, y, z);
         }
         public Color GetColor()
         {
-            return new Color(x, y, z);
+            return new Color((float)x, (float)y, (float)z);
         }
         public override string ToString()
         {

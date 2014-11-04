@@ -6,22 +6,22 @@ using UnityEngine;
 namespace KSPComputer.Types
 {
     [Serializable]
-    public struct SVector2
+    public struct SVector2d
     {
-        public static explicit operator SVector2(SVector2d b)
+        public static explicit operator SVector2d(SVector2 b) 
         {
-            SVector2 v = new SVector2((float)b.x, (float)b.y);
+            SVector2d v = new SVector2d(b.x, b.y);
             return v;
         }
-        public float x, y;
-        public SVector2(float x, float y)
+        public double x, y;
+        public SVector2d(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
-        public Vector2 GetVec2()
+        public Vector2d GetVec2()
         {
-            return new Vector2(x, y);
+            return new Vector2d(x, y);
         }
         public override string ToString()
         {

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Geo Location</name>
+	<description>Returns the current vessel postition as longitude, altitude and latitude.</description>
+	<width>120</width>
+</node>

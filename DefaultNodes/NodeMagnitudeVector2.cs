@@ -12,13 +12,13 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector2>("Vector2");
+            In<SVector2d>("Vector2");
             Out<double>("Magnitude");
         }
         protected override void OnUpdateOutputData()
         {
             var v = In("Vector2").AsVector2();
-            float m = Mathf.Sqrt(v.x * v.x + v.y * v.y);
+            double m = Math.Sqrt(v.x * v.x + v.y * v.y);
             Out("Magnitude", m);
         }
     }

@@ -14,11 +14,11 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            Out<SVector3>("Velocity");
+            Out<SVector3d>("Velocity");
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Velocity", new SVector3(VesselController.WorldToReference(VesselController.Velocity, VesselController.FrameOfReference.Navball)));
+            Out("Velocity", new SVector3d(VesselController.WorldToReference(VesselController.Velocity, VesselController.FrameOfReference.Navball)));
         }
     }
 }

@@ -15,11 +15,11 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            Out<SVector3>("Direction");
+            Out<SVector3d>("Direction");
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Direction", new SVector3(VesselController.NavballHeading));
+            Out("Direction", new SVector3d(VesselController.NavballHeading));
         }
     }
 }

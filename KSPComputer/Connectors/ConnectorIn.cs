@@ -49,9 +49,9 @@ namespace KSPComputer.Connectors
                 return (T)(object)AsInt();
             if(type == typeof(bool))
                 return (T)(object)AsBool();
-            if (type == typeof(SVector3))
+            if (type == typeof(SVector3d))
                 return (T)(object)AsVector3();
-            if (type == typeof(SVector2))
+            if (type == typeof(SVector2d))
                 return (T)(object)AsVector2();
             if (type == typeof(SQuaternion))
                 return (T)(object)AsQuaternion();
@@ -125,17 +125,17 @@ namespace KSPComputer.Connectors
                 return val;
             return false;
         }
-        public SVector3 AsVector3()
+        public SVector3d AsVector3()
         {
-            if (buffer is SVector3)
-                return (SVector3)buffer;
-            return new SVector3();
+            if (buffer is SVector3d)
+                return (SVector3d)buffer;
+            return new SVector3d();
         }
-        public SVector2 AsVector2()
+        public SVector2d AsVector2()
         {
-            if (buffer is SVector2)
-                return (SVector2)buffer;
-            return new SVector2();
+            if (buffer is SVector2d)
+                return (SVector2d)buffer;
+            return new SVector2d();
         }
         public SQuaternion AsQuaternion()
         {

@@ -12,16 +12,16 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Vector3");
-            Out<SVector3>("Vector3");
+            In<SVector3d>("Vector3");
+            Out<SVector3d>("Vector3");
         }
         protected override void OnUpdateOutputData()
         {
             var v = In("Vector3").AsVector3();
-            float m = Mathf.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+            double m = Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
             if (m == 0)
                 m = 1;
-            Out("Vector3", new SVector3(v.x/m, v.y/m, v.z/m));
+            Out("Vector3", new SVector3d(v.x/m, v.y/m, v.z/m));
         }
     }
 }

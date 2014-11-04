@@ -9,15 +9,17 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeGravityVector : Node
+    public class NodeGeoToWorld : Node
     {
         protected override void OnCreate()
         {
-            Out<SVector3d>("Gravity");
+            Out<SVector3d>("WorldLocation");
+            In<SVector3d>("GeoLocation");
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Gravity", new SVector3d(VesselController.WorldToReference(VesselController.GravityVector, VesselController.FrameOfReference.Navball)));
+            var worldLoc = VesselController.GeoToWorld(In("GeoLocation").AsVector3().GetVec3());
+            Out("WorldLocation", new SVector3d(VesselController.WorldToReference(worldLoc, VesselController.FrameOfReference.Navball)));
         }
     }
 }

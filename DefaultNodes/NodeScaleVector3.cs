@@ -12,15 +12,15 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Vector");
+            In<SVector3d>("Vector");
             In<double>("Scale");
-            Out<SVector3>("Result");
+            Out<SVector3d>("Result");
         }
         protected override void OnUpdateOutputData()
         {
             var v = In("Vector").AsVector3();
-            var s = (float)In("Scale").AsDouble();
-            Out("Result", new SVector3(v.x * s, v.y * s, v.z * s));
+            var s = In("Scale").AsDouble();
+            Out("Result", new SVector3d(v.x * s, v.y * s, v.z * s));
         }
     }
 }

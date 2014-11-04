@@ -72,7 +72,8 @@
     <Compile Include="SubRoutine.cs" />
     <Compile Include="Types\SQuaternion.cs" />
     <Compile Include="Types\SVector2.cs" />
-    <Compile Include="Types\SVector3.cs" />
+    <Compile Include="Types\SVector2d.cs" />
+    <Compile Include="Types\SVector3d.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variables\Variable.cs" />
   </ItemGroup>

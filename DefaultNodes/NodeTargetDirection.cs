@@ -15,7 +15,7 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            Out<SVector3>("Direction");
+            Out<SVector3d>("Direction");
         }
         protected override void OnUpdateOutputData()
         {
@@ -23,11 +23,11 @@ namespace DefaultNodes
             {
                 Vector3 pDelta = Vessel.targetObject.GetTransform().position - VesselController.WorldPosition;
                 pDelta.Normalize();
-                Out("Direction", new SVector3(VesselController.WorldToReference(pDelta, VesselController.FrameOfReference.Navball)));
+                Out("Direction", new SVector3d(VesselController.WorldToReference(pDelta, VesselController.FrameOfReference.Navball)));
             }
             else
             {
-                Out("Direction", new SVector3());
+                Out("Direction", new SVector3d());
             }
         }
     }

@@ -15,6 +15,7 @@ namespace KSPComputerModule
 {
     public class ProgramDrawer
     {
+        private GUILayoutOption[] buttonStyle;
         private NodeCategories nodeCats;
         private bool inputLocked = false;
         private Vector2 nodeViewScrollPos;
@@ -66,9 +67,9 @@ namespace KSPComputerModule
         {
             {"Number", typeof(double)},
             {"Bool", typeof(bool)},
-            {"Vector3", typeof(SVector3)},
+            {"Vector3", typeof(SVector3d)},
             {"Quaternion",  typeof(SQuaternion)},
-            {"Vector2", typeof(SVector2)}
+            {"Vector2", typeof(SVector2d)}
         };
         private bool PointerAvailable
         {
@@ -93,7 +94,10 @@ namespace KSPComputerModule
             connections = new Dictionary<Connector, Vector2>();
             windowRect = new Rect(0, 0, Screen.width, Screen.height);
             nodeCats = NodeCategories.Instance;
-
+            buttonStyle = new GUILayoutOption[]
+            {
+                GUILayout.Height(baseElementHeight)
+            };
         }
         public void Draw()
         {
@@ -165,7 +169,7 @@ namespace KSPComputerModule
                 showLog = !showLog;
             }
             GUILayout.BeginVertical();
-            if (GUILayout.Button("Flight Program"))
+            if (GUILayout.Button("Flight Program", buttonStyle))
                 Show = true;
             if (showLog)
             {
@@ -211,16 +215,16 @@ namespace KSPComputerModule
             menuScrollPos = GUILayout.BeginScrollView(menuScrollPos, GUILayout.Width(toolbarWidth), GUILayout.Height(windowRect.height - 40));
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
+            if (GUILayout.Button("<", buttonStyle))
                 selectedProgram--;
-            GUILayout.Label("Program " + selectedProgram + "/" + KSPOperatingSystem.ProgramCount);
-            if (GUILayout.Button(">"))
+            GUILayout.Label("Program " + (selectedProgram+1) + "/" + KSPOperatingSystem.ProgramCount);
+            if (GUILayout.Button(">", buttonStyle))
                 selectedProgram++;
             GUILayout.EndHorizontal();
             #region back button
             //draw back button
 
-            if (GUILayout.Button(nodeCats.TopCategory ? "---- Nodes ----" : "---- Back ----"))
+            if (GUILayout.Button(nodeCats.TopCategory ? "---- Nodes ----" : "---- Back ----", buttonStyle))
             {
                 if (nodeCats.TopCategory)
                 {
@@ -243,7 +247,7 @@ namespace KSPComputerModule
                     foreach (var cat in cats)
                     {
                         GUI.backgroundColor = cat.color;
-                        if (GUILayout.Button(cat.name))
+                        if (GUILayout.Button(cat.name, buttonStyle))
                         {
                             nodeCats.SelectSubCategory(cat.name);
                             return;
@@ -257,7 +261,7 @@ namespace KSPComputerModule
                 foreach (var node in nodes)
                 {
                     GUI.backgroundColor = node.color;
-                    if (GUILayout.Button(node.name) && Program != null)
+                    if (GUILayout.Button(node.name, buttonStyle) && Program != null)
                     {
                         //Log.Write("Button pressed: " + node.name);
                         draggedNode = Program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
@@ -274,7 +278,7 @@ namespace KSPComputerModule
             //Draw add variable
             if (Program != null)
             {
-                if (GUILayout.Button("---- Variables ----"))
+                if (GUILayout.Button("---- Variables ----", buttonStyle))
                 {
                     showVariables = !showVariables;
                 }
@@ -286,13 +290,13 @@ namespace KSPComputerModule
                     foreach (var k in selectableVariableTypes)
                     {
                         GUI.backgroundColor = TypeColor(k.Value);
-                        if (GUILayout.Toggle(selectedVariableType == k.Value, k.Key))
+                        if (GUILayout.Toggle(selectedVariableType == k.Value, k.Key, buttonStyle))
                             selectedVariableType = k.Value;
                     }
                     GUI.backgroundColor = defaultColor;
                     GUILayout.Label("Name");
-                    currentVarName = GUILayout.TextField(currentVarName);
-                    if (GUILayout.Button("Add"))
+                    currentVarName = GUILayout.TextField(currentVarName, buttonStyle);
+                    if (GUILayout.Button("Add", buttonStyle))
                     {
                         if (!string.IsNullOrEmpty(currentVarName))
                             Program.AddVariable(selectedVariableType, currentVarName);
@@ -303,7 +307,7 @@ namespace KSPComputerModule
                     {
                         GUILayout.BeginHorizontal();
                         GUI.backgroundColor = TypeColor(v.Value.Type);
-                        if (GUILayout.Button(v.Key))
+                        if (GUILayout.Button(v.Key, buttonStyle))
                         {
                             //add variableNode
                             draggedNode = Program.AddVariableNode(GUIUtility.GUIToScreenPoint(mousePos), v.Key);
@@ -324,7 +328,7 @@ namespace KSPComputerModule
             GUILayout.Space(baseElementHeight);
             #region subroutines
 
-            if (GUILayout.Button("---- Subroutines ----"))
+            if (GUILayout.Button("---- Subroutines ----", buttonStyle))
             {
                 showSubRoutines = !showSubRoutines;
             }
@@ -332,19 +336,19 @@ namespace KSPComputerModule
             {
                 foreach (var s in subRoutines)
                 {
-                    if (GUILayout.Button(s))
+                    if (GUILayout.Button(s, buttonStyle))
                     {
                         draggedNode = Program.AddSubRoutineNode(GUIUtility.GUIToScreenPoint(mousePos), s);
                         dragInfo = new Vector2(0, 0);
                     }
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Edit"))
+                    if (GUILayout.Button("Edit", buttonStyle))
                     {
                         currentSubroutine = KSPOperatingSystem.LoadSubRoutine(s, true);
                         currentSubroutineName = s;
                     }
                     GUI.backgroundColor = Color.red;
-                    if (GUILayout.Button("Delete"))
+                    if (GUILayout.Button("Delete", buttonStyle))
                     {
                         KSPOperatingSystem.DeleteSubRoutine(s);
                         ReloadSubRoutines();
@@ -354,7 +358,7 @@ namespace KSPComputerModule
                 }
                 if (currentSubroutine == null)
                 {
-                    if (GUILayout.Button("Create Subroutine"))
+                    if (GUILayout.Button("Create Subroutine", buttonStyle))
                     {
                         currentSubroutine = new SubRoutine();
                     }
@@ -362,30 +366,30 @@ namespace KSPComputerModule
                 else
                 {
                     GUILayout.Label("Add parameter");
-                    if (GUILayout.Toggle(selectedParameterType == typeof(Connector.Exec), "Exec"))
+                    if (GUILayout.Toggle(selectedParameterType == typeof(Connector.Exec), "Exec", buttonStyle))
                         selectedParameterType = typeof(Connector.Exec);
                     foreach (var k in selectableVariableTypes)
                     {
                         GUI.backgroundColor = TypeColor(k.Value);
-                        if (GUILayout.Toggle(selectedParameterType == k.Value, k.Key))
+                        if (GUILayout.Toggle(selectedParameterType == k.Value, k.Key, buttonStyle))
                             selectedParameterType = k.Value;
                     }
                     GUI.backgroundColor = defaultColor;
-                    GUILayout.Label("Name");
-                    currentParamName = GUILayout.TextField(currentParamName);
+                    GUILayout.Label("Name", buttonStyle);
+                    currentParamName = GUILayout.TextField(currentParamName, buttonStyle);
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Add Input") && !string.IsNullOrEmpty(currentParamName))
+                    if (GUILayout.Button("Add Input", buttonStyle) && !string.IsNullOrEmpty(currentParamName))
                     {
                         currentSubroutine.EntryNode.AddRoutineInput(currentParamName, selectedParameterType);
                     }
-                    if (GUILayout.Button("Add Output") && !string.IsNullOrEmpty(currentParamName))
+                    if (GUILayout.Button("Add Output", buttonStyle) && !string.IsNullOrEmpty(currentParamName))
                     {
                         currentSubroutine.ExitNode.AddRoutineOuput(currentParamName, selectedParameterType);
                     }
                     GUILayout.EndHorizontal();
                     GUILayout.Space(baseElementHeight);
-                    currentSubroutineName = GUILayout.TextField(currentSubroutineName);
-                    if (GUILayout.Button("Save") && !string.IsNullOrEmpty(currentSubroutineName))
+                    currentSubroutineName = GUILayout.TextField(currentSubroutineName, buttonStyle);
+                    if (GUILayout.Button("Save", buttonStyle) && !string.IsNullOrEmpty(currentSubroutineName))
                     {
                         KSPOperatingSystem.SaveSubRoutine(currentSubroutineName, currentSubroutine, true);
                         currentSubroutine = null;
@@ -393,7 +397,7 @@ namespace KSPComputerModule
                         ReloadSubRoutines();
                         KSPOperatingSystem.InitPrograms();
                     }
-                    if (GUILayout.Button("Cancel"))
+                    if (GUILayout.Button("Cancel", buttonStyle))
                     {
                         currentSubroutine = null;
                         currentSubroutineName = "";
@@ -756,9 +760,9 @@ namespace KSPComputerModule
                 return new Color(0.2f, 0.2f, 1f);
             if (t == typeof(Quaternion))
                 return new Color(0.2f, 1.0f, 1.0f);
-            if (t == typeof(SVector3))
+            if (t == typeof(SVector3d))
                 return new Color(1.0f, 0.7f, 0.0f);
-            if (t == typeof(SVector2))
+            if (t == typeof(SVector2d))
                 return new Color(1.0f, 1.0f, 0.0f);
             return Color.white;
         }

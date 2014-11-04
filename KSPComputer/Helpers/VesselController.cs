@@ -100,25 +100,33 @@ namespace KSPComputer.Helpers
                     return Quaternion.identity;
             }
         }
-        public Vector3 ReferenceToWorld(Vector3 localDirection, FrameOfReference reference)
+        public Vector3d ReferenceToWorld(Vector3d localDirection, FrameOfReference reference)
         {
             switch (reference)
             {
                 case FrameOfReference.Navball:
                     return (OrbitalOrientation * localDirection);
                 default:
-                    return Vector3.zero;
+                    return Vector3d.zero;
             }
         }
-        public Vector3 WorldToReference(Vector3 worldDirection, FrameOfReference reference)
+        public Vector3d WorldToReference(Vector3d worldDirection, FrameOfReference reference)
         {
             switch (reference)
             {
                 case FrameOfReference.Navball:
                     return (Quaternion.Inverse(OrbitalOrientation) * worldDirection);
                 default:
-                    return Vector3.zero;
+                    return Vector3d.zero;
             }
+        }
+        public Vector3d GeoToWorld(Vector3d geo)
+        {
+            return Vessel.mainBody.GetWorldSurfacePosition(geo.z, geo.x, geo.y);
+        }
+        public Vector3d WorldToGeo(Vector3d world)
+        {
+            return new Vector3d(Vessel.mainBody.GetLongitude(world), Vessel.mainBody.GetAltitude(world), Vessel.mainBody.GetLatitude(world));
         }
     }
 }

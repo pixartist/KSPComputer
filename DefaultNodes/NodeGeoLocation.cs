@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KSPComputer.Helpers;
 using KSPComputer.Types;
 using KSPComputer.Nodes;
 using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeLocation : Node
+    public class NodeGeoLocation : Node
     {
         protected override void OnCreate()
         {
-            Out<SVector3>("Location");
+            Out<SVector3d>("GeoLoc");
         }
         protected override void OnUpdateOutputData()
         {
-            Out("Location", new SVector3(VesselController.WorldToReference(VesselController.CenterOfMass, VesselController.FrameOfReference.Navball)));
+            Out("GeoLoc", new SVector3d(VesselController.WorldToGeo(VesselController.CenterOfMass)));
         }
     }
 }

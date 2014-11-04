@@ -11,15 +11,15 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            Out<SVector2>("Vector2");
-            In<double>("X");
-            In<double>("Y");
+            Out<SVector2d>("Vector2");
+            In<double>("X E/W Long");
+            In<double>("Y N/S Lat");
         }
         protected override void OnUpdateOutputData()
         {
-            var x = In("X").AsFloat();
-            var y = In("Y").AsFloat();
-            Out("Vector2", new SVector2(x, y));
+            var x = In("X E/W Long").AsDouble();
+            var y = In("Y N/S Lat").AsDouble();
+            Out("Vector2", new SVector2d(x, y));
         }
     }
 }

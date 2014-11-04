@@ -60,16 +60,19 @@ namespace KSPComputer
         }
         public static void AddProgram()
         {
+            Log.Write("Created empty program");
             var p = new FlightProgram();
             p.Init();
             loadedPrograms.Add(p);
         }
         public static FlightProgram GetProgram(int id)
         {
+
             return loadedPrograms[id];
         }
         public static void ClearPrograms()
         {
+            Log.Write("Cleared programs");
             loadedPrograms.Clear();
         }
         public static string SaveStateBase64(bool compressed)

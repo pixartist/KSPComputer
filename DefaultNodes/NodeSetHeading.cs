@@ -15,7 +15,7 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Forward");
+            In<SVector3d>("Forward");
         }
         protected override void OnExecute(ConnectorIn input)
         {

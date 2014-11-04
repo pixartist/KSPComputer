@@ -11,17 +11,17 @@ namespace DefaultNodes
     {
         protected override void OnCreate()
         {
-            In<SVector3>("Vector3");
-            Out<double>("X E/W");
-            Out<double>("Y U/D");
-            Out<double>("Z N/S");
+            In<SVector3d>("Vector3");
+            Out<double>("X E/W Long");
+            Out<double>("Y U/D Alt");
+            Out<double>("Z N/S Lat");
         }
         protected override void OnUpdateOutputData()
         {
             var v = In("Vector3").AsVector3();
-            Out("X E/W", v.x);
-            Out("Y U/D", v.y);
-            Out("Z N/S", v.z);
+            Out("X E/W Long", v.x);
+            Out("Y U/D Alt", v.y);
+            Out("Z N/S Lat", v.z);
         }
     }
 }

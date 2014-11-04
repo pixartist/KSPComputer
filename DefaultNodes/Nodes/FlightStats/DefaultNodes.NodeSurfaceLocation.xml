@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Surface Location</name>
-	<description>Returns the current vessel postition as latitude and longitude.</description>
-	<width>120</width>
-</node>
