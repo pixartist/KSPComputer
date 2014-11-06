@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Toggle RCS</name>
+	<description>Enabled or disables RCS.</description>
+	<width>120</width>
+</node>

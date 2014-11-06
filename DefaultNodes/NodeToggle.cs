@@ -11,6 +11,7 @@ namespace DefaultNodes
     [Serializable]
     public class NodeToggle : DefaultExecutableNode
     {
+        [NonSerialized]
         private bool enabled;
         protected override void OnCreate()
         {

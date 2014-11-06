@@ -178,6 +178,11 @@ namespace KSPComputer
             Nodes.Remove(node);
             node.Destroy();
         }
+        public void Destroy()
+        {
+            foreach (var n in Nodes)
+                n.Destroy();
+        }
         public void Update()
         {
             foreach (var n in Nodes)
@@ -187,6 +192,11 @@ namespace KSPComputer
         {
             foreach (var n in Nodes)
                 n.OnInit();
+        }
+        internal void Anomaly()
+        {
+            foreach (var n in Nodes)
+                n.OnAnomaly();
         }
     }
 }

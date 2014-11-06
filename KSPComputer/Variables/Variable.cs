@@ -8,7 +8,19 @@ namespace KSPComputer.Variables
     [Serializable]
     public class Variable
     {
-        public object Value { get; set; }
+        [NonSerialized]
+        private object value;
+        public object Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
+            }
+        }
         public Type Type { get; private set; }
         internal Variable(Type valueType)
         {

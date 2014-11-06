@@ -24,6 +24,8 @@ namespace KSPComputer.Helpers
         {
             if (!part.IsEngine())
                 return false;
+            else if (part.IsSepratron())
+                return false;
             else
             {
                 foreach (PartModule m in part.Modules)
@@ -39,7 +41,15 @@ namespace KSPComputer.Helpers
         }
         public static float GetMaxThrust(this Part part)
         {
-            return (from PartModule m in part.Modules where m is ModuleEngines select (m as ModuleEngines).maxThrust).Sum();
+            float t = 0;
+            foreach(PartModule pm in part.Modules)
+            {
+                if (pm is ModuleEngines)
+                   t += (pm as ModuleEngines).maxThrust;
+                if (pm is ModuleEnginesFX)
+                    t += (pm as ModuleEnginesFX).maxThrust;
+            }
+            return t;
         }
         
         public static double CountMaxResourcesInChildren(this Part part, params DefaultResources[] resources)
@@ -70,6 +80,7 @@ namespace KSPComputer.Helpers
         {
             foreach (PartModule m in part.Modules)
             {
+                
                 ModuleDecouple mDecouple = m as ModuleDecouple;
                 if (mDecouple != null)
                 {
@@ -86,6 +97,14 @@ namespace KSPComputer.Helpers
                 }
             }
             return false;
+        }
+        public static bool IsStackSeperator(this Part part)
+        {
+
+            return part.ActivatesEvenIfDisconnected
+                && !part.IsEngine()
+                && part.IsDecoupledInStage(part.inverseStage)
+                && !part.isControlSource;
         }
         public static bool IsSepratron(this Part part)
         {

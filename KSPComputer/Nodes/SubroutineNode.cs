@@ -33,11 +33,19 @@ namespace KSPComputer.Nodes
             Log.Write("Reloading subroutine " + SubRoutineBlueprint);
             if (this.subRoutineInstance != null)
             {
+                this.subRoutineInstance.Destroy();
                 this.subRoutineInstance.ExitNode.OnExecuted -= ExitNode_OnExecuted;
                 this.subRoutineInstance.EntryNode.OnRequestData -= EntryNode_OnRequestData;
                 this.subRoutineInstance = null;
             }
-            this.subRoutineInstance = KSPOperatingSystem.LoadSubRoutine(SubRoutineBlueprint, true);
+            try
+            {
+                this.subRoutineInstance = KSPOperatingSystem.LoadSubRoutine(SubRoutineBlueprint, true);
+            }
+            catch(Exception e)
+            {
+                Log.Write("Failed to load subroutine: " + e.Message);
+            }
             if (this.subRoutineInstance == null)
             {
                 Log.Write("Could not load SubRoutine " + SubRoutineBlueprint + ", deleting node");
@@ -157,6 +165,10 @@ namespace KSPComputer.Nodes
         public override void OnLaunch()
         {
             subRoutineInstance.Launch();
+        }
+        protected override void OnDestroy()
+        {
+            subRoutineInstance.Destroy();
         }
     }
 }

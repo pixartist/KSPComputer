@@ -65,22 +65,27 @@ namespace KSPComputer.Connectors
             }
             connections.Add(other);
         }
-        public void ConnectTo(Connector other)
+        public bool ConnectTo(Connector other)
         {
             if (other != null)
             {
-                if (other.DataType == DataType)
+                if (other.Node != Node)
                 {
-                    if ((this is ConnectorIn || other is ConnectorIn) && (this is ConnectorOut || other is ConnectorOut))
+                    if (other.DataType == DataType || DataType == typeof(string) || other.DataType == typeof(string))
                     {
-                        if (!connections.Contains(other))
+                        if ((this is ConnectorIn || other is ConnectorIn) && (this is ConnectorOut || other is ConnectorOut))
                         {
-                            AddConnection(other);
-                            other.AddConnection(this);
+                            if (!connections.Contains(other))
+                            {
+                                AddConnection(other);
+                                other.AddConnection(this);
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            return false;
         }
         public void DisconnectFrom(Connector other)
         {

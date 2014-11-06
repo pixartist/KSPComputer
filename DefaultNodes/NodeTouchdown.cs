@@ -7,24 +7,27 @@ using KSPComputer.Nodes;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTouchdown : DefaultRootNode
+    public class NodeTouchdown : EventNode
     {
         private bool wasLanded = false;
         private bool canTrigger = false;
 
         public override void OnUpdate()
         {
-            bool landed = Vessel.checkLanded();
-            if(!canTrigger)
+            if (Enabled)
             {
-                canTrigger = true;
+                bool landed = Vessel.checkLanded();
+                if (!canTrigger)
+                {
+                    canTrigger = true;
+                }
+                else if (!wasLanded)
+                {
+                    if (landed)
+                        Execute(null);
+                }
+                wasLanded = landed;
             }
-            else if (!wasLanded)
-            {
-                if (landed)
-                    Execute(null);
-            }
-            wasLanded = landed;
         }
     }
 }

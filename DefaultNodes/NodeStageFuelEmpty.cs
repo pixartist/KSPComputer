@@ -9,7 +9,7 @@ using KSPComputer.Helpers;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeStageFuelEmpty : DefaultRootNode
+    public class NodeStageFuelEmpty : EventNode
     {
         bool hasTriggered = false;
         protected override void OnCreate()
@@ -19,7 +19,8 @@ namespace DefaultNodes
 
         public override void OnUpdate()
         {
-            Execute(null);
+            if(Enabled)
+                Execute(null);
         }
         protected override void OnExecute(ConnectorIn input)
         {

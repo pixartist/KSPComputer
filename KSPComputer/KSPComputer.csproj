@@ -63,6 +63,7 @@
     <Compile Include="FlightProgram.cs" />
     <Compile Include="Nodes\BaseExecutableNode.cs" />
     <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\EventNode.cs" />
     <Compile Include="Nodes\SubRoutineEntry.cs" />
     <Compile Include="Nodes\SubRoutineExit.cs" />
     <Compile Include="Nodes\SubroutineNode.cs" />

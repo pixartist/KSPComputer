@@ -7,11 +7,15 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeShowValue : DefaultExecutableNode
+    public class NodeBodyMass : Node
     {
         protected override void OnCreate()
         {
-            In<double>("Value");
+            Out<double>("Mass");
+        }
+        protected override void OnUpdateOutputData()
+        {
+            Out("Mass", VesselController.Vessel.mainBody.Mass);
         }
     }
 }

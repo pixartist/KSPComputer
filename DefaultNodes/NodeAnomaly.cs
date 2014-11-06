@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KSPComputer;
 using KSPComputer.Nodes;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeTick : EventNode
+    public class NodeAnomaly : DefaultRootNode
     {
-        public override void OnUpdate()
+        public override void OnAnomaly()
         {
-            if(Enabled)
-                Execute(null);
+            Execute(null);
         }
     }
 }

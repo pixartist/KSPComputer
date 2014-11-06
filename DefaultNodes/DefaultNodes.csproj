@@ -47,7 +47,13 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeTime.cs" />
+    <Compile Include="NodeBodyRadius.cs" />
     <Compile Include="NodeGeoToWorld.cs" />
+    <Compile Include="NodeAnomaly.cs" />
+    <Compile Include="NodeGravitationalConstant.cs" />
+    <Compile Include="NodeBodyMass.cs" />
+    <Compile Include="NodeToggleRCS.cs" />
     <Compile Include="NodeWorldToGeo.cs" />
     <Compile Include="NodeSelectNumber.cs" />
     <Compile Include="NodeSign.cs" />
@@ -86,7 +92,7 @@
     <Compile Include="NodeSetCtrlPitch.cs" />
     <Compile Include="NodeSetWheelSteer.cs" />
     <Compile Include="NodeSetWheelThrottle.cs" />
-    <Compile Include="NodeShowValue.cs" />
+    <Compile Include="NodeWatchValue.cs" />
     <Compile Include="NodeWorldLocation.cs" />
     <Compile Include="NodeNot.cs" />
     <Compile Include="NodeOr.cs" />
@@ -167,7 +173,10 @@
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetWheelThrottle.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\Actions\DefaultNodes.NodeShowValue.xml">
+    <Content Include="Nodes\Actions\DefaultNodes.NodeToggleRCS.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Actions\DefaultNodes.NodeWatchValue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeSetTimewarp.xml">
@@ -177,6 +186,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeToggleSASController.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Body\category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Body\DefaultNodes.NodeBodyRadius.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Body\DefaultNodes.NodeBodyMass.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Boolean\category.xml">
@@ -209,8 +227,18 @@
     <Content Include="Nodes\Conversions\DefaultNodes.NodeWorldToGeo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGravityVector.xml">
+    <Content Include="Nodes\Events\DefaultNodes.NodeAnomaly.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Body\DefaultNodes.NodeGravitationalConstant.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Body\DefaultNodes.NodeGravityVector.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeTime.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeStageCount.xml" />
     <Content Include="Nodes\Events\category.xml">
@@ -249,13 +277,17 @@
     <Content Include="Nodes\FlightStats\category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGravity.xml">
+    <Content Include="Nodes\Body\DefaultNodes.NodeGravity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMass.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeOrbitalVelocity.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeVelocity.xml">

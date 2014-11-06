@@ -7,11 +7,12 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeCustomAction : DefaultRootNode
+    public class NodeCustomAction : EventNode
     {
         private int lastAction;
         protected override void OnCreate()
         {
+            base.OnCreate();
             In<double>("Action id");
         }
 

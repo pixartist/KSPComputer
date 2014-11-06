@@ -36,6 +36,13 @@ namespace KSPComputer.Helpers
         public Vector3 GravityVector { get; private set; }
         public Vector3 CenterOfMass { get; private set; }
         public double CurrentGravity { get; private set; }
+        public float G
+        {
+            get
+            {
+                return 6.674E-11f;
+            }
+        }
 
         public double Roll { get; private set; }
         public Vector3 Prograde { get; private set; }
@@ -62,6 +69,7 @@ namespace KSPComputer.Helpers
             Roll = NavballHeading.SignedAngle((Vector3.up - NavballHeading) * -1, NavballOrientation * Vector3.forward);
             //if(program.Vessel.at)
             Prograde = Velocity.normalized;
+            
             GravityVector = FlightGlobals.getGeeForceAtPosition(CenterOfMass);
             CurrentGravity = GravityVector.magnitude;
           /*  if (north == null)

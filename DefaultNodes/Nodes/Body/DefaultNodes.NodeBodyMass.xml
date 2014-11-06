@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<node>
+	<name>Body Mass</name>
+	<description>Returns the mass of the current main body.</description>
+	<width>120</width>
+</node>

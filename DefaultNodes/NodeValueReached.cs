@@ -8,13 +8,14 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeValueReached : DefaultRootNode
+    public class NodeValueReached : EventNode
     {
         private double lastValue;
         private bool canTrigger;
         private bool wasDown;
         protected override void OnCreate()
         {
+            base.OnCreate();
             In<double>("Value");
             In<double>("TriggerAt");
             In<bool>("Down");
@@ -25,7 +26,8 @@ namespace DefaultNodes
 
         public override void OnUpdate()
         {
-            Execute(null);
+            if(Enabled)
+                Execute(null);
         }
         protected override void OnExecute(ConnectorIn input)
         {

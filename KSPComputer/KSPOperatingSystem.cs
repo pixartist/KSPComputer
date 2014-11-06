@@ -8,11 +8,12 @@ using System.Runtime.Serialization;
 using System.IO;
 using Ionic.Zlib;
 using UnityEngine;
+using KSPComputer.Nodes;
 namespace KSPComputer
 {
     public static class KSPOperatingSystem
     {
-        public static Rect SmallWindowRect = new Rect(270, 45, 300, 300);
+        
         public static string PluginPath { get; private set; }
         public static int ProgramCount
         {
@@ -22,13 +23,17 @@ namespace KSPComputer
             }
         }
         private static List<FlightProgram> loadedPrograms = new List<FlightProgram>();
+        private static Dictionary<Node, Func<string>> watchedValues = new Dictionary<Node, Func<string>>();
         public static VesselController VesselController { get; private set; }
         public static void Boot(string pluginPath)
         {
+            KSPOperatingSystem.ClearPrograms();
             PluginPath = pluginPath;
+            SetVessel(null);
         }
         public static void SetVessel(Vessel vessel)
         {
+            
             if (vessel == null)
                 VesselController = null;
             else
@@ -47,11 +52,20 @@ namespace KSPComputer
                 foreach (var p in loadedPrograms)
                     p.Update();
             }
+            else
+            {
+                Log.Write("Error, VesselController is null");
+            }
         }
         public static void CustomAction(int action)
         {
             foreach (var p in loadedPrograms)
                 p.CustomAction(action);
+        }
+        public static void Anomaly()
+        {
+            foreach (var p in loadedPrograms)
+                p.Anomaly();
         }
         public static void InitPrograms()
         {
@@ -67,13 +81,34 @@ namespace KSPComputer
         }
         public static FlightProgram GetProgram(int id)
         {
-
             return loadedPrograms[id];
         }
         public static void ClearPrograms()
         {
             Log.Write("Cleared programs");
+            foreach (var p in loadedPrograms)
+                p.Destroy();
             loadedPrograms.Clear();
+        }
+        public static void AddWatchedValue(Node n, Func<string> getter)
+        {
+            watchedValues.Add(n, getter);
+        }
+        public static void RemoveWatchedValue(Node n)
+        {
+            if (watchedValues.ContainsKey(n))
+                watchedValues.Remove(n);
+        }
+        public static string[] GetWatchedValues()
+        {
+            string[] wv = new string[watchedValues.Count];
+            int i = 0;
+            foreach(var v in watchedValues.Values)
+            {
+                wv[i] = v();
+                i++;
+            }
+            return wv;
         }
         public static string SaveStateBase64(bool compressed)
         {
@@ -117,11 +152,9 @@ namespace KSPComputer
                 {
                     loadedPrograms = (List<FlightProgram>)f.Deserialize(ms);
                 }
-            } 
-            //temp
-            if(loadedPrograms.Count > 1)
-                loadedPrograms.RemoveRange(1, loadedPrograms.Count -1);
+            }
             InitPrograms();
+            //temp
         }
         public static string[] ListSubRoutines()
         {

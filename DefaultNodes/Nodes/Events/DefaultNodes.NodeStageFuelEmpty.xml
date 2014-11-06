@@ -2,5 +2,5 @@
 <node>
 	<name>Stage fuel empty</name>
 	<description>Triggers when the fuel in the current stage is used up.</description>
-	<width>160</width>
+	<width>180</width>
 </node>

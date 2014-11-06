@@ -88,8 +88,9 @@ namespace KSPComputer.Helpers
                 {
                     if (part.inverseStage == v.currentStage - 1)
                     {
-                        if (part.IsUnfiredDecoupler())
+                        if (part.IsUnfiredDecoupler() )
                         {
+
                             thrust += part.CountMaxThrustInChildren();
                         }
                     }

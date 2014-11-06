@@ -199,6 +199,16 @@ namespace KSPComputer.Nodes
         { }
         protected virtual void OnDestroy()
         { }
+        public virtual void OnAnomaly()
+        { }
+        protected void RequestInputUpdate(string node)
+        {
+            ConnectorIn c;
+            if(inputs.TryGetValue(node, out c))
+            {
+                c.RequestData();
+            }
+        }
         protected void RequestInputUpdates()
         {
             foreach (var i in inputs.Values)
@@ -228,7 +238,6 @@ namespace KSPComputer.Nodes
         }
         public void Destroy()
         {
-           
             OnDestroy();
             DisconnectAllInputs();
             DisconnectAllOutputs();
