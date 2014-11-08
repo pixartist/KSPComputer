@@ -7,7 +7,7 @@ using System.Collections;
 using System.Reflection;
 namespace KSPComputerModule
 {
-    class GUIHelper
+    class GUILine
     {
 
 
@@ -123,7 +123,7 @@ namespace KSPComputerModule
             for (int i = 1; i < segments; ++i)
             {
                 Vector2 v = CubeBezier(start, startTangent, end, endTangent, i / (float)segments);
-                GUIHelper.DrawLine(lastV, v, color, width, antiAlias);
+                GUILine.DrawLine(lastV, v, color, width, antiAlias);
                 lastV = v;
             }
         }
@@ -136,7 +136,7 @@ namespace KSPComputerModule
 
         // This static initializer works for runtime, but apparently isn't called when
         // Editor play mode stops, so DrawLine will re-initialize if needed.
-        static GUIHelper()
+        static GUILine()
         {
             Initialize();
         }

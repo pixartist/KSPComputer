@@ -54,6 +54,7 @@
     <Compile Include="NodeGravitationalConstant.cs" />
     <Compile Include="NodeBodyMass.cs" />
     <Compile Include="NodeToggleRCS.cs" />
+    <Compile Include="NodeActionButton.cs" />
     <Compile Include="NodeWorldToGeo.cs" />
     <Compile Include="NodeSelectNumber.cs" />
     <Compile Include="NodeSign.cs" />
@@ -175,6 +176,7 @@
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeToggleRCS.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Nodes\Actions\DefaultNodes.NodeWatchValue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -225,6 +227,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Conversions\DefaultNodes.NodeWorldToGeo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\Events\DefaultNodes.NodeActionButton.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Events\DefaultNodes.NodeAnomaly.xml">
@@ -284,10 +289,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeMaxThrust.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Nodes\FlightStats\DefaultNodes.NodeOrbitalVelocity.xml">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeVelocity.xml">

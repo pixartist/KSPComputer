@@ -9,23 +9,33 @@ using KSPComputer.Types;
 using KSPComputer.Connectors;
 using KSPComputer.Nodes;
 using KSPComputer.Variables;
-using DefaultNodes;
-using System.IO;
-namespace KSPComputerModule
+namespace KSPComputerModule.Windows
 {
-    public class ProgramDrawer
+    public class ProgramEditor : GUIWindow
     {
-        private GUILayoutOption[] buttonStyle;
-        private NodeCategories nodeCats;
-        private bool inputLocked = false;
+        private const float inactiveCol = 0.7f;
+        private Node draggedNode;
+        private Connector draggedConnection;
+        private bool dragging = false;
+        private Vector2 dragInfo;
+        private float toolbarWidth = 220;
+        private Vector2 toolbarScrollPos;
         private Vector2 nodeViewScrollPos;
-        private Vector2 menuScrollPos;
-        private Vector2 smallWindowScrollPos;
-        private Dictionary<Connector, Vector2> connections;
         private int selectedProgram = 0;
+        private NodeCategories nodeCats = NodeCategories.Instance;
+        private Dictionary<Connector, Vector2> connections = new Dictionary<Connector, Vector2>();
+        private Rect programRect = new Rect(0, 0, 4000, 2000);
+        private bool showNodes = true;
+        private bool showVariables = true;
+        private bool showSubRoutines = true;
+        private Type selectedVariableType = typeof(double);
+        private Type selectedParameterType = typeof(double);
+        private string currentVarName = "";
+        private string currentParamName = "";
+        private string[] subRoutines = KSPOperatingSystem.ListSubRoutines();
         private SubRoutine currentSubroutine;
         private string currentSubroutineName = "";
-        private Rect programRect = new Rect(0, 0, 4000, 2000);
+
         private FlightProgram Program
         {
             get
@@ -41,32 +51,6 @@ namespace KSPComputerModule
                 return KSPOperatingSystem.GetProgram(selectedProgram);
             }
         }
-        private string[] subRoutines;
-        private FPComputer computer;
-        public Rect windowRect;
-        public Rect smallWindowRect;
-        private float baseElementHeight = 26;
-        private float toolbarWidth = 220;
-        private Color defaultColor = Color.white;
-        private Node draggedNode;
-        private Connector draggedConnection;
-        private Vector2 dragInfo;
-        private bool mouseDown = false;
-        private bool mousePressed = false;
-        private bool mouseReleased = false;
-        private const float inactiveCol = 0.7f;
-        private Type selectedVariableType = typeof(double);
-        private Type selectedParameterType = typeof(double);
-        private string currentVarName = "";
-        private string currentParamName = "";
-        private bool showNodes = true;
-        private bool showVariables = true;
-        private bool showSubRoutines = true;
-        private bool showLog = false;
-        private bool autoScrollLog = true;
-        private Vector2 logScrollPos;
-        private bool resizingWindow;
-        private Texture2D resizeTex;
         private Dictionary<string, Type> selectableVariableTypes = new Dictionary<string, Type>
         {
             {"Number", typeof(double)},
@@ -82,173 +66,46 @@ namespace KSPComputerModule
                 return draggedNode == null && draggedConnection == null;
             }
         }
-        Vector2 mousePos;
-        public bool Show = false;
-        public bool MouseOver
+        public override string Title
         {
-            get
-            {
-                return windowRect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y));
-            }
+            get { return "Program Editor"; }
         }
-        public ProgramDrawer(FPComputer computer, Rect bigWindow, Rect smallWindow)
+        public override Vector2 MinSize
         {
-            this.computer = computer;
-            Show = false;
-            connections = new Dictionary<Connector, Vector2>();
-            windowRect = bigWindow;
-            smallWindowRect = smallWindow;
-            nodeCats = NodeCategories.Instance;
-            buttonStyle = new GUILayoutOption[]
-            {
-                GUILayout.Height(baseElementHeight)
-            };
-            string p = Path.Combine(KSPOperatingSystem.PluginPath, "resize.png");
-            try
-            {
-                resizeTex = new WWW("file://" + p).texture;
-            }
-            catch(Exception e)
-            {
-                Log.Write("Failed loading " + p + ", " + e.Message);
-            }
+            get { return new Vector2(400, 400); }
         }
-        public void Draw()
+        public override void Start()
         {
-            var oldPadding = GUI.skin.button.padding;
-            GUI.skin.button.padding = new RectOffset(2, 2, 2, 2);
-            mousePos = new Vector2(Input.mousePosition.x, (Screen.height - Input.mousePosition.y));
-            bool isMouseDown = Input.GetMouseButton(0);
-            mouseReleased = false;
-            mousePressed = false;
-            if (!mouseDown && isMouseDown)
-            {
-                mouseDown = true;
-                mousePressed = true;
-            }
-            else if (mouseDown && !isMouseDown)
-            {
-                mouseReleased = true;
-                mouseDown = false;
-            }
-            
-            if (Show)
-            {
-                if (subRoutines == null)
-                    ReloadSubRoutines();
-                if (draggedConnection != null && Event.current.button == 1)
-                {
-                    draggedConnection = null;
-                }
-                GUI.skin = HighLogic.Skin;
-
-                GUI.skin.box.alignment = TextAnchor.UpperCenter;
-                GUI.backgroundColor = defaultColor;
-
-                windowRect = GUI.Window(667, windowRect, OnDrawWindow, "Flight Program");
-                //if (Program != null)
-                    //DrawNodeConnections(new Rect(toolbarWidth + 20, baseElementHeight, windowRect.width - toolbarWidth - baseElementHeight, windowRect.height - baseElementHeight));
-                GUI.skin = null;
-
-            }
-            else
-            {
-                GUI.skin = HighLogic.Skin;
-                smallWindowRect = GUI.Window(223, smallWindowRect, OnDrawButtonWindow, "Flight Computer");
-                GUI.skin = null;
-                if (inputLocked)
-                {
-                    if (computer.LastStartState == PartModule.StartState.Editor)
-                    {
-                        EditorLogic.fetch.Unlock("FlightControl_noclick");
-                        inputLocked = false;
-                    }
-                    else
-                    {
-                        InputLockManager.RemoveControlLock("FlightControl_noclick");
-                        ManeuverGizmo.HasMouseFocus = false;
-                        inputLocked = false;
-                    }
-                }
-            }
-           
-            GUI.skin.button.padding = oldPadding;
+            currentSubroutine = null;
         }
-        private void OnDrawButtonWindow(int id)
+        public override void Draw()
         {
-            GUI.DragWindow(new Rect(0, 0, smallWindowRect.width - 25, 20));
-            smallWindowScrollPos = GUILayout.BeginScrollView(smallWindowScrollPos);
-            GUILayout.BeginVertical();
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Flight Program", buttonStyle))
-                Show = true;
-            if (GUILayout.Button("Show log", buttonStyle))
-                showLog = !showLog;
-            GUILayout.EndHorizontal();
-            if (showLog)
-            {
-                autoScrollLog = GUILayout.Toggle(autoScrollLog, "Autoscroll");
-                if (autoScrollLog)
-                    logScrollPos.y = Mathf.Infinity;
-                logScrollPos = GUILayout.BeginScrollView(logScrollPos, GUILayout.Width(smallWindowRect.width - baseElementHeight * 2), GUILayout.Height(190));
-                GUILayout.TextArea(Log.LogData);
-                GUILayout.EndScrollView();
-            }
-            var values = KSPOperatingSystem.GetWatchedValues();
-            if (values.Length > 0)
-                GUILayout.Label("--- Watched values ---");
-            foreach (var v in values)
-            {
-                GUILayout.TextField(v, buttonStyle);
-            }
-            GUILayout.Space(baseElementHeight);
-            GUILayout.EndVertical();
-            GUILayout.EndScrollView();
-            smallWindowRect = DrawResizeWidged(smallWindowRect, 300, 70);
-        }
-        private void OnDrawWindow(int id)
-        {
-            GUI.DragWindow(new Rect(0, 0, windowRect.width - baseElementHeight, baseElementHeight));
             GUI.depth = 150;
-            if (draggedConnection != null && dragInfo != mousePos)
+            if (draggedConnection != null && dragInfo != GUIController.mousePos)
             {
-                GUIHelper.DrawLine(GUIUtility.ScreenToGUIPoint(dragInfo), GUIUtility.ScreenToGUIPoint(mousePos), Color.red, 2, true);
+                GUILine.DrawLine(GUIUtility.ScreenToGUIPoint(dragInfo), GUIUtility.ScreenToGUIPoint(GUIController.mousePos), Color.red, 2, true);
             }
-
-            // GUI.Label(new Rect(200, 0, 100, 50), mousePos.ToString());
-
-            
             if (Program != null)
-                DrawNodes(new Rect(toolbarWidth + 20, baseElementHeight, windowRect.width - (toolbarWidth + baseElementHeight + 20), windowRect.height - baseElementHeight * 2));
+                DrawNodes(new Rect(toolbarWidth + 20, GUIController.ElSize, WinRect.width - (toolbarWidth + GUIController.ElSize + 20), WinRect.height - GUIController.ElSize * 2));
             DrawNodeToolbar();
-            if (computer.LastStartState == PartModule.StartState.Editor)
-                PreventEditorClickthrough();
-            else
-                PreventInFlightClickthrough();
-            
-            if (GUI.Button(new Rect(windowRect.width - baseElementHeight, 0, baseElementHeight, baseElementHeight), "X"))
-            {
-                Log.Write("Closing window");
-                Show = false;
-            }
-            windowRect = DrawResizeWidged(windowRect, 400, 200);
         }
+
         private void DrawNodeToolbar()
         {
 
-            menuScrollPos = GUILayout.BeginScrollView(menuScrollPos, GUILayout.Width(toolbarWidth), GUILayout.Height(windowRect.height - 40));
+            toolbarScrollPos = GUILayout.BeginScrollView(toolbarScrollPos, GUILayout.Width(toolbarWidth), GUILayout.Height(WinRect.height - 40));
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<", buttonStyle))
+            if (GUILayout.Button("<", GUIController.CustomStyles))
                 selectedProgram--;
-            GUILayout.Label("Program " + (selectedProgram+1) + "/" + KSPOperatingSystem.ProgramCount);
-            if (GUILayout.Button(">", buttonStyle))
+            GUILayout.Label("Program " + (selectedProgram + 1) + "/" + KSPOperatingSystem.ProgramCount);
+            if (GUILayout.Button(">", GUIController.CustomStyles))
                 selectedProgram++;
             GUILayout.EndHorizontal();
             #region back button
             //draw back button
 
-            if (GUILayout.Button(nodeCats.TopCategory ? "---- Nodes ----" : "---- Back ----", buttonStyle))
+            if (GUILayout.Button(nodeCats.TopCategory ? "---- Nodes ----" : "---- Back ----", GUIController.CustomStyles))
             {
                 if (nodeCats.TopCategory)
                 {
@@ -261,6 +118,7 @@ namespace KSPComputerModule
             }
 
             #endregion
+            
             #region nodes
             if (showNodes)
             {
@@ -271,7 +129,7 @@ namespace KSPComputerModule
                     foreach (var cat in cats)
                     {
                         GUI.backgroundColor = cat.color;
-                        if (GUILayout.Button(cat.name, buttonStyle))
+                        if (GUILayout.Button(cat.name, GUIController.CustomStyles))
                         {
                             nodeCats.SelectSubCategory(cat.name);
                             return;
@@ -285,10 +143,10 @@ namespace KSPComputerModule
                 foreach (var node in nodes)
                 {
                     GUI.backgroundColor = node.color;
-                    if (GUILayout.Button(node.name, buttonStyle) && Program != null)
+                    if (GUILayout.Button(node.name, GUIController.CustomStyles) && Program != null)
                     {
                         Log.Write("Adding node: " + node.name);
-                        draggedNode = Program.AddNode(node.type, GUIUtility.GUIToScreenPoint(mousePos));
+                        draggedNode = Program.AddNode(node.type, GUIUtility.GUIToScreenPoint(GUIController.mousePos));
                         dragInfo = new Vector2(0, 0);
                     }
                 }
@@ -296,13 +154,14 @@ namespace KSPComputerModule
 
 
             #endregion
-            GUILayout.Space(baseElementHeight);
+            
+            GUILayout.Space(GUIController.ElSize);
             #region variables
-            GUI.backgroundColor = defaultColor;
+            GUI.backgroundColor = GUIController.DefaultColor;
             //Draw add variable
             if (Program != null)
             {
-                if (GUILayout.Button("---- Variables ----", buttonStyle))
+                if (GUILayout.Button("---- Variables ----", GUIController.CustomStyles))
                 {
                     showVariables = !showVariables;
                 }
@@ -314,13 +173,13 @@ namespace KSPComputerModule
                     foreach (var k in selectableVariableTypes)
                     {
                         GUI.backgroundColor = TypeColor(k.Value);
-                        if (GUILayout.Toggle(selectedVariableType == k.Value, k.Key, buttonStyle))
+                        if (GUILayout.Toggle(selectedVariableType == k.Value, k.Key, GUIController.CustomStyles))
                             selectedVariableType = k.Value;
                     }
-                    GUI.backgroundColor = defaultColor;
+                    GUI.backgroundColor = GUIController.DefaultColor;
                     GUILayout.Label("Name");
-                    currentVarName = GUILayout.TextField(currentVarName, buttonStyle);
-                    if (GUILayout.Button("Add", buttonStyle))
+                    currentVarName = GUILayout.TextField(currentVarName, GUIController.CustomStyles);
+                    if (GUILayout.Button("Add", GUIController.CustomStyles))
                     {
                         if (!string.IsNullOrEmpty(currentVarName))
                             Program.AddVariable(selectedVariableType, currentVarName);
@@ -331,13 +190,13 @@ namespace KSPComputerModule
                     {
                         GUILayout.BeginHorizontal();
                         GUI.backgroundColor = TypeColor(v.Value.Type);
-                        if (GUILayout.Button(v.Key, buttonStyle))
+                        if (GUILayout.Button(v.Key, GUIController.CustomStyles))
                         {
                             //add variableNode
-                            draggedNode = Program.AddVariableNode(GUIUtility.GUIToScreenPoint(mousePos), v.Key);
+                            draggedNode = Program.AddVariableNode(GUIUtility.GUIToScreenPoint(GUIController.mousePos), v.Key);
                             dragInfo = new Vector2(0, 0);
                         }
-                        if (GUILayout.Button("X", GUILayout.MaxWidth(baseElementHeight)))
+                        if (GUILayout.Button("X", GUILayout.MaxWidth(GUIController.ElSize)))
                         {
                             //remove variable
                             Program.RemoveVariable(v.Key);
@@ -346,43 +205,44 @@ namespace KSPComputerModule
                     }
                 }
             }
-            GUI.backgroundColor = defaultColor;
+            GUI.backgroundColor = GUIController.DefaultColor;
 
             #endregion
-            GUILayout.Space(baseElementHeight);
+            
+            GUILayout.Space(GUIController.ElSize);
             #region subroutines
 
-            if (GUILayout.Button("---- Subroutines ----", buttonStyle))
+            if (GUILayout.Button("---- Subroutines ----", GUIController.CustomStyles))
             {
                 showSubRoutines = !showSubRoutines;
             }
-            if (showSubRoutines)
+            if (showSubRoutines && Program != null)
             {
                 foreach (var s in subRoutines)
                 {
-                    if (GUILayout.Button(s, buttonStyle))
+                    if (GUILayout.Button(s, GUIController.CustomStyles))
                     {
-                        draggedNode = Program.AddSubRoutineNode(GUIUtility.GUIToScreenPoint(mousePos), s);
+                        draggedNode = Program.AddSubRoutineNode(GUIUtility.GUIToScreenPoint(GUIController.mousePos), s);
                         dragInfo = new Vector2(0, 0);
                     }
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Edit", buttonStyle))
+                    if (GUILayout.Button("Edit", GUIController.CustomStyles))
                     {
                         currentSubroutine = KSPOperatingSystem.LoadSubRoutine(s, true);
                         currentSubroutineName = s;
                     }
                     GUI.backgroundColor = Color.red;
-                    if (GUILayout.Button("Delete", buttonStyle))
+                    if (GUILayout.Button("Delete", GUIController.CustomStyles))
                     {
                         KSPOperatingSystem.DeleteSubRoutine(s);
                         ReloadSubRoutines();
                     }
-                    GUI.backgroundColor = defaultColor;
+                    GUI.backgroundColor = GUIController.DefaultColor;
                     GUILayout.EndHorizontal();
                 }
                 if (currentSubroutine == null)
                 {
-                    if (GUILayout.Button("Create Subroutine", buttonStyle))
+                    if (GUILayout.Button("Create Subroutine", GUIController.CustomStyles))
                     {
                         currentSubroutine = new SubRoutine();
                     }
@@ -390,30 +250,30 @@ namespace KSPComputerModule
                 else
                 {
                     GUILayout.Label("Add parameter");
-                    if (GUILayout.Toggle(selectedParameterType == typeof(Connector.Exec), "Exec", buttonStyle))
+                    if (GUILayout.Toggle(selectedParameterType == typeof(Connector.Exec), "Exec", GUIController.CustomStyles))
                         selectedParameterType = typeof(Connector.Exec);
                     foreach (var k in selectableVariableTypes)
                     {
                         GUI.backgroundColor = TypeColor(k.Value);
-                        if (GUILayout.Toggle(selectedParameterType == k.Value, k.Key, buttonStyle))
+                        if (GUILayout.Toggle(selectedParameterType == k.Value, k.Key, GUIController.CustomStyles))
                             selectedParameterType = k.Value;
                     }
-                    GUI.backgroundColor = defaultColor;
-                    GUILayout.Label("Name", buttonStyle);
-                    currentParamName = GUILayout.TextField(currentParamName, buttonStyle);
+                    GUI.backgroundColor = GUIController.DefaultColor;
+                    GUILayout.Label("Name", GUIController.CustomStyles);
+                    currentParamName = GUILayout.TextField(currentParamName, GUIController.CustomStyles);
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Add Input", buttonStyle) && !string.IsNullOrEmpty(currentParamName))
+                    if (GUILayout.Button("Add Input", GUIController.CustomStyles) && !string.IsNullOrEmpty(currentParamName))
                     {
                         currentSubroutine.EntryNode.AddRoutineInput(currentParamName, selectedParameterType);
                     }
-                    if (GUILayout.Button("Add Output", buttonStyle) && !string.IsNullOrEmpty(currentParamName))
+                    if (GUILayout.Button("Add Output", GUIController.CustomStyles) && !string.IsNullOrEmpty(currentParamName))
                     {
                         currentSubroutine.ExitNode.AddRoutineOuput(currentParamName, selectedParameterType);
                     }
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(baseElementHeight);
-                    currentSubroutineName = GUILayout.TextField(currentSubroutineName, buttonStyle);
-                    if (GUILayout.Button("Save", buttonStyle) && !string.IsNullOrEmpty(currentSubroutineName))
+                    GUILayout.Space(GUIController.ElSize);
+                    currentSubroutineName = GUILayout.TextField(currentSubroutineName, GUIController.CustomStyles);
+                    if (GUILayout.Button("Save", GUIController.CustomStyles) && !string.IsNullOrEmpty(currentSubroutineName))
                     {
                         KSPOperatingSystem.SaveSubRoutine(currentSubroutineName, currentSubroutine, true);
                         currentSubroutine = null;
@@ -421,28 +281,30 @@ namespace KSPComputerModule
                         ReloadSubRoutines();
                         KSPOperatingSystem.InitPrograms();
                     }
-                    if (GUILayout.Button("Cancel", buttonStyle))
+                    if (GUILayout.Button("Cancel", GUIController.CustomStyles))
                     {
                         currentSubroutine = null;
                         currentSubroutineName = "";
                     }
                 }
             }
-
+                
             #endregion
+            
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
-            GUI.backgroundColor = defaultColor;
+            GUI.backgroundColor = GUIController.DefaultColor;
+            
         }
         private void DrawNodes(Rect area)
         {
-
+            
             nodeViewScrollPos = GUI.BeginScrollView(area, nodeViewScrollPos, programRect);
             if (draggedNode != null)
             {
-                if (mouseReleased)
+                if (GUIController.mouseReleased)
                 {
-                    if (mousePos.x < toolbarWidth)
+                    if (GUIController.mousePos.x < toolbarWidth)
                     {
                         Log.Write("Removing node: " + draggedNode);
                         Program.RemoveNode(draggedNode);
@@ -451,8 +313,8 @@ namespace KSPComputerModule
                 }
                 else
                 {
-                    var vec = GUIUtility.ScreenToGUIPoint(mousePos) - dragInfo;
-                    draggedNode.Position = new SVector2(Mathf.Max(0, Mathf.Min(programRect.width - 120, vec.x)), Mathf.Max(0, Mathf.Min( programRect.height - 120, vec.y)));
+                    var vec = GUIUtility.ScreenToGUIPoint(GUIController.mousePos) - dragInfo;
+                    draggedNode.Position = new SVector2(Mathf.Max(0, Mathf.Min(programRect.width - 120, vec.x)), Mathf.Max(0, Mathf.Min(programRect.height - 120, vec.y)));
                 }
             }
             connections.Clear();
@@ -460,11 +322,32 @@ namespace KSPComputerModule
             GUI.skin.box.padding = new RectOffset(2, 2, 2, 2);
             foreach (var n in Program.Nodes)
                 DrawNode(n);
-            GUI.skin.box.padding = new RectOffset(0,0,0,0);
+            GUI.skin.box.padding = new RectOffset(0, 0, 0, 0);
             GUI.skin.box.alignment = TextAnchor.UpperCenter;
-            DrawNodeConnections(new Rect(toolbarWidth + 20, baseElementHeight, windowRect.width - toolbarWidth - baseElementHeight, windowRect.height - baseElementHeight));
+            DrawNodeConnections(new Rect(toolbarWidth + 20, GUIController.ElSize, WinRect.width - toolbarWidth - GUIController.ElSize, WinRect.height - GUIController.ElSize));
             GUI.EndScrollView();
-            GUI.backgroundColor = defaultColor;
+            if (GUIController.mousePressed)
+            {
+                if (draggedConnection == null && draggedNode == null && !dragging)
+                {
+                    if (area.Contains(GUIUtility.ScreenToGUIPoint(GUIController.mousePos)))
+                    {
+                        dragging = true;
+                        dragInfo = GUIController.mousePos;
+                    }
+                }
+            }
+            if (dragging)
+            {
+                if(GUIController.mouseReleased)
+                    dragging = false;
+                else
+                {
+                    nodeViewScrollPos -= GUIController.mousePos - dragInfo;
+                    dragInfo = GUIController.mousePos;
+                }
+            }
+            GUI.backgroundColor = GUIController.DefaultColor;
         }
         private void DrawNodeConnections(Rect container)
         {
@@ -483,7 +366,7 @@ namespace KSPComputerModule
                                 {
                                     Vector2 a = connections[c.Value];
                                     Vector2 b = connections[c2];
-                                    GUIHelper.DrawLine(GUIUtility.ScreenToGUIPoint(a), GUIUtility.ScreenToGUIPoint(b), ConnectionColor(c.Value), 2, true);
+                                    GUILine.DrawLine(GUIUtility.ScreenToGUIPoint(a), GUIUtility.ScreenToGUIPoint(b), ConnectionColor(c.Value), 2, true);
 
                                 }
                             }
@@ -521,7 +404,7 @@ namespace KSPComputerModule
             {
                 var sr = node as SubroutineNode;
                 subRoutine = sr.SubRoutineInstance;
-                
+
                 info = new NodeCategories.NodeInfo(sr.SubRoutineBlueprint, typeof(SubRoutine), "Subroutine", Color.cyan, 220);
             }
             else if (node is SubRoutineEntry)
@@ -538,13 +421,13 @@ namespace KSPComputerModule
             }
             else
                 info = nodeCats.GetNodeInfo(node.GetType());
-            info.width = Mathf.Max(info.width, GUI.skin.label.CalcSize(new GUIContent(info.name)).x +  baseElementHeight*2);
+            info.width = Mathf.Max(info.width, GUI.skin.label.CalcSize(new GUIContent(info.name)).x + GUIController.ElSize * 2);
             //Log.Write("Drawing node " + node + " width: " + info.width);
-            float height = Math.Max(node.InputCount * 2 - node.InputExecCount, node.OutputCount) * baseElementHeight;
-            height += baseElementHeight;
-            
+            float height = Math.Max(node.InputCount * 2 - node.InputExecCount, node.OutputCount) * GUIController.ElSize;
+            height += GUIController.ElSize;
+
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
-            if (GUI.Button(new Rect(info.width - baseElementHeight * 1.5f, -5f, baseElementHeight, baseElementHeight), "x"))
+            if (GUI.Button(new Rect(info.width - GUIController.ElSize * 1.5f, -5f, GUIController.ElSize, GUIController.ElSize), "x"))
             {
                 Program.RemoveNode(node);
                 return;
@@ -554,7 +437,7 @@ namespace KSPComputerModule
                 if (subRoutine != null)
                 {
                     GUI.skin.label.alignment = TextAnchor.LowerCenter;
-                    if(GUI.Button(new Rect(info.width - baseElementHeight * 2.5f, -5f, baseElementHeight, baseElementHeight), "e"))
+                    if (GUI.Button(new Rect(info.width - GUIController.ElSize * 2.5f, -5f, GUIController.ElSize, GUIController.ElSize), "e"))
                     {
                         currentSubroutineName = (node as SubroutineNode).SubRoutineBlueprint;
                         currentSubroutine = subRoutine;
@@ -563,45 +446,45 @@ namespace KSPComputerModule
                 float c = Mathf.Max(0, Mathf.Min(1, (Time.time - (node as BaseExecutableNode).LastExecution) * 3f));
                 GUI.skin.label.alignment = TextAnchor.UpperRight;
                 GUI.color = new Color(c, 1 - c, 0);
-                GUI.Label(new Rect(info.width - baseElementHeight, -5f, baseElementHeight, baseElementHeight), "■");
+                GUI.Label(new Rect(info.width - GUIController.ElSize, -5f, GUIController.ElSize, GUIController.ElSize), "■");
                 GUI.color = Color.white;
                 GUI.skin.label.alignment = TextAnchor.UpperCenter;
-            } 
-            
-            
+            }
+
+
             GUI.backgroundColor = info.color;
             GUI.Box(new Rect(0, 0, info.width, height), info.name);
-            if (PointerAvailable && mousePressed)
+            if (PointerAvailable && GUIController.mousePressed)
             {
-                if (mousePos.x > toolbarWidth)
+                if (GUIController.mousePos.x > toolbarWidth)
                 {
-                    if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(mousePos)))
+                    if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(GUIController.mousePos)))
                     {
                         if (Event.current.control)
                         {
                             if (!(node is SubRoutineEntry || node is SubRoutineExit))
                             {
-                                if(node is SubroutineNode)
+                                if (node is SubroutineNode)
                                 {
                                     draggedNode = Program.AddSubRoutineNode(node.Position.GetVec2(), (node as SubroutineNode).SubRoutineBlueprint);
-                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(GUIController.mousePos);
                                 }
                                 else if (isVariableNode)
                                 {
                                     draggedNode = Program.AddVariableNode(node.Position.GetVec2(), variableName);
-                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(GUIController.mousePos);
                                 }
                                 else
                                 {
                                     draggedNode = Program.AddNode(nodeType, node.Position.GetVec2());
-                                    dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                                    dragInfo = GUIUtility.ScreenToGUIPoint(GUIController.mousePos);
                                 }
                             }
                         }
                         else
                         {
                             draggedNode = node;
-                            dragInfo = GUIUtility.ScreenToGUIPoint(mousePos);
+                            dragInfo = GUIUtility.ScreenToGUIPoint(GUIController.mousePos);
                         }
                     }
                 }
@@ -611,22 +494,22 @@ namespace KSPComputerModule
                 DrawNodeInputs(node.Inputs, info.width, isEditable);
             if (drawOutputs)
                 DrawNodeOutputs(node.Outputs, info.width, isEditable);
-            GUI.backgroundColor = defaultColor;
+            GUI.backgroundColor = GUIController.DefaultColor;
             GUI.EndGroup();
 
         }
         void DrawNodeInputs(KeyValuePair<string, ConnectorIn>[] inputs, float width, bool removable)
         {
-            float y = baseElementHeight;
+            float y = GUIController.ElSize;
             foreach (var inp in inputs)
             {
 
                 bool wasConnected = inp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(inp.Value) * (wasConnected ? 1f : inactiveCol);
-                bool buttonPressed = GUI.Button(new Rect(0, y, width / 2, baseElementHeight), inp.Key);
+                bool buttonPressed = GUI.Button(new Rect(0, y, width / 2, GUIController.ElSize), inp.Key);
                 if (removable)
                 {
-                    if (GUI.Button(new Rect(width / 2, y, width / 2, baseElementHeight), "Remove"))
+                    if (GUI.Button(new Rect(width / 2, y, width / 2, GUIController.ElSize), "Remove"))
                     {
                         inp.Value.Node.RemoveInput(inp.Key);
                         return;
@@ -634,32 +517,32 @@ namespace KSPComputerModule
                 }
                 Vector2 anchor = GUIUtility.GUIToScreenPoint(GetNodeAnchor(0, y, 0));
                 connections.Add(inp.Value, anchor);
-                y += baseElementHeight;
-                var infoRect = new Rect(0, y, width / 2, baseElementHeight);
+                y += GUIController.ElSize;
+                var infoRect = new Rect(0, y, width / 2, GUIController.ElSize);
                 if (inp.Value.DataType == typeof(double))
                 {
                     inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
-                    y += baseElementHeight;
+                    y += GUIController.ElSize;
                 }
                 else if (inp.Value.DataType == typeof(float))
                 {
 
                     inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
-                    y += baseElementHeight;
+                    y += GUIController.ElSize;
                 }
                 else if (inp.Value.DataType == typeof(string))
                 {
 
                     inp.Value.Set(GUI.TextField(infoRect, inp.Value.AsString()));
-                    y += baseElementHeight;
+                    y += GUIController.ElSize;
                 }
                 else if (inp.Value.DataType == typeof(bool))
                 {
                     inp.Value.Set(GUI.Toggle(infoRect, (bool)inp.Value.AsBool(), inp.Value.AsBool().ToString()));
-                    y += baseElementHeight;
+                    y += GUIController.ElSize;
                 }
 
-                
+
                 if (buttonPressed)
                 {
                     if (!wasConnected)
@@ -703,16 +586,16 @@ namespace KSPComputerModule
         }
         void DrawNodeOutputs(KeyValuePair<string, ConnectorOut>[] outputs, float width, bool removable)
         {
-            float y = baseElementHeight;
+            float y = GUIController.ElSize;
             foreach (var outp in outputs)
             {
 
                 bool wasConnected = outp.Value.Connected;
                 GUI.backgroundColor = ConnectionColor(outp.Value) * (wasConnected ? 1f : inactiveCol);
-                bool buttonPressed = GUI.Button(new Rect(width / 2, y, width / 2, baseElementHeight), outp.Key);
+                bool buttonPressed = GUI.Button(new Rect(width / 2, y, width / 2, GUIController.ElSize), outp.Key);
                 if (removable)
                 {
-                    if (GUI.Button(new Rect(0, y, width / 2, baseElementHeight), "Remove"))
+                    if (GUI.Button(new Rect(0, y, width / 2, GUIController.ElSize), "Remove"))
                     {
                         outp.Value.Node.RemoveOutput(outp.Key);
                         return;
@@ -743,43 +626,8 @@ namespace KSPComputerModule
                         }
                     }
                 }
-                y += baseElementHeight;
+                y += GUIController.ElSize;
             }
-        }
-        void PreventEditorClickthrough()
-        {
-            if (!inputLocked && MouseOver)
-            {
-
-                EditorLogic.fetch.Lock(true, true, true, "FlightControl_noclick");
-                inputLocked = true;
-
-            }
-            if (inputLocked && !MouseOver)
-            {
-                EditorLogic.fetch.Unlock("FlightControl_noclick");
-                inputLocked = false;
-            }
-        }
-        void PreventInFlightClickthrough()
-        {
-            if (!inputLocked && MouseOver)
-            {
-                InputLockManager.SetControlLock(ControlTypes.CAMERACONTROLS | ControlTypes.MAP | ControlTypes.ACTIONS_ALL, "FlightControl_noclick");
-                // Setting this prevents the mouse wheel to zoom in/out while in map mode
-                ManeuverGizmo.HasMouseFocus = true;
-                inputLocked = true;
-            }
-            if (inputLocked && !MouseOver)
-            {
-                InputLockManager.RemoveControlLock("FlightControl_noclick");
-                ManeuverGizmo.HasMouseFocus = false;
-                inputLocked = false;
-            }
-        }
-        Vector2 GetNodeAnchor(float x, float y, float addX)
-        {
-            return new Vector2(x + addX + (addX > 0 ? -5 : 5), y + baseElementHeight / 2);
         }
         Color ConnectionColor(Connector c)
         {
@@ -800,7 +648,7 @@ namespace KSPComputerModule
                 return new Color(1.0f, 0.7f, 0.0f);
             if (t == typeof(SVector2d))
                 return new Color(1.0f, 1.0f, 0.0f);
-            if(t == typeof(string))
+            if (t == typeof(string))
                 return new Color(0.5f, 0.7f, 0.95f);
             return Color.white;
         }
@@ -808,39 +656,9 @@ namespace KSPComputerModule
         {
             subRoutines = KSPOperatingSystem.ListSubRoutines();
         }
-        public static T GetStaticFieldValue<T>(Type t, string fieldName)
+        Vector2 GetNodeAnchor(float x, float y, float addX)
         {
-            FieldInfo field = t.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
-            T ret = default(T);
-            if (field != null)
-                ret = (T)field.GetValue(null);
-            return ret;
+            return new Vector2(x + addX + (addX > 0 ? -5 : 5), y + GUIController.ElSize / 2);
         }
-        private Rect DrawResizeWidged(Rect rectWindow, float minWidth, float minHeight)
-        {
-            Rect rect = new Rect(rectWindow.width - baseElementHeight, rectWindow.height - baseElementHeight, baseElementHeight, baseElementHeight);
-            Vector2 mp = GUIUtility.ScreenToGUIPoint(mousePos);
-            GUI.DrawTexture(rect, resizeTex);
-            if (mouseDown)
-            {
-                //Log.Write("Checking resize, rect: " + rect + ", mouse: " + mp);
-                if (mousePressed)
-                {
-                    if (rect.Contains(mp))
-                    {
-                        resizingWindow = true;
-                    }
-                }
-                if (resizingWindow)
-                {
-                    rectWindow.width = Math.Max(minWidth, mp.x);
-                    rectWindow.height = Math.Max(minHeight, mp.y);
-                }
-            }
-            else if (resizingWindow)
-                resizingWindow = false;
-            return rectWindow;
-        }
-
     }
 }

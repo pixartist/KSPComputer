@@ -24,6 +24,7 @@ namespace KSPComputer
         }
         private static List<FlightProgram> loadedPrograms = new List<FlightProgram>();
         private static Dictionary<Node, Func<string>> watchedValues = new Dictionary<Node, Func<string>>();
+        private static Dictionary<Action, Func<string>> actionButtons = new Dictionary<Action, Func<string>>();
         public static VesselController VesselController { get; private set; }
         public static void Boot(string pluginPath)
         {
@@ -92,7 +93,8 @@ namespace KSPComputer
         }
         public static void AddWatchedValue(Node n, Func<string> getter)
         {
-            watchedValues.Add(n, getter);
+            if(!watchedValues.ContainsKey(n))
+                watchedValues.Add(n, getter);
         }
         public static void RemoveWatchedValue(Node n)
         {
@@ -109,6 +111,20 @@ namespace KSPComputer
                 i++;
             }
             return wv;
+        }
+        public static void AddActionButton(Action onClick, Func<string> nameGetter)
+        {
+            if (!actionButtons.ContainsKey(onClick))
+                actionButtons.Add(onClick, nameGetter);
+        }
+        public static void RemoveActionButton(Action onClick)
+        {
+            if (actionButtons.ContainsKey(onClick))
+                actionButtons.Remove(onClick);
+        }
+        public static Dictionary<Action, Func<string>> GetActionButtons()
+        {
+            return actionButtons;
         }
         public static string SaveStateBase64(bool compressed)
         {

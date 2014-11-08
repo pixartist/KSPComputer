@@ -38,7 +38,7 @@ namespace DefaultNodes
         }
         private string DisplayValue()
         {
-            RequestInputUpdate("Value");
+            RequestInputUpdates();
             return In("Name").AsString() + ": " + In("Value").AsString();
         }
     }

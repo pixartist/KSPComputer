@@ -81,7 +81,7 @@ namespace KSPComputer.Nodes
             {
                 if (!outputs.ContainsKey(o.Key))
                 {
-                    Out(o.Key, o.Value.DataType, true);
+                    Out(o.Key, o.Value.DataType, o.Value.DataType != typeof(Connector.Exec));
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace KSPComputer.Nodes
             {
                 if (!inputs.ContainsKey(i.Key))
                 {
-                    In(i.Key, i.Value.DataType, false);
+                    In(i.Key, i.Value.DataType, i.Value.DataType == typeof(Connector.Exec));
                 }
             }
         }
@@ -170,5 +170,6 @@ namespace KSPComputer.Nodes
         {
             subRoutineInstance.Destroy();
         }
+        
     }
 }
