@@ -7,17 +7,15 @@ using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeAltitudeOverGround : Node
+    public class NodeGetCtrlPitch : Node
     {
         protected override void OnCreate()
         {
-            Out<double>("Altitude");
+            Out<double>("Pitch");
         }
         protected override void OnUpdateOutputData()
         {
-            double a = Math.Min(Vessel.heightFromTerrain, Vessel.altitude);
-            
-            Out("Altitude", a);
+            Out("Pitch", Vessel.ctrlState.pitch);
         }
     }
 }

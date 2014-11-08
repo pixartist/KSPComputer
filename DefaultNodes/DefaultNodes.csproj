@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Include="NodeAbs.cs" />
     <Compile Include="NodeActionGroup.cs" />
+    <Compile Include="NodeGetCtrlPitch.cs" />
+    <Compile Include="NodeGetCtrlRoll.cs" />
+    <Compile Include="NodeGetCtrlYaw.cs" />
     <Compile Include="NodeTime.cs" />
     <Compile Include="NodeBodyRadius.cs" />
     <Compile Include="NodeGeoToWorld.cs" />
@@ -239,6 +242,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\Body\DefaultNodes.NodeGravityVector.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetCtrlPitch.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetCtrlRoll.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Nodes\FlightStats\DefaultNodes.NodeGetCtrlYaw.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Nodes\FlightStats\DefaultNodes.NodeTime.xml">

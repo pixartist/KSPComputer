@@ -429,6 +429,9 @@ namespace KSPComputerModule.Windows
             GUI.BeginGroup(new Rect(node.Position.x, node.Position.y, info.width, height));
             if (GUI.Button(new Rect(info.width - GUIController.ElSize * 1.5f, -5f, GUIController.ElSize, GUIController.ElSize), "x"))
             {
+                if (draggedConnection != null)
+                    if (draggedConnection.Node == node)
+                        draggedConnection = null;
                 Program.RemoveNode(node);
                 return;
             }

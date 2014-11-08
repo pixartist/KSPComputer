@@ -66,6 +66,7 @@ namespace KSPComputerModule
         #endregion
         public override void OnStart(PartModule.StartState state)
         {
+            
             KSPOperatingSystem.Boot(Path.Combine(Path.Combine(Environment.CurrentDirectory, "GameData"), "FlightComputer"));
             GameEvents.onPartDie.Add(OnExplosion);
             LastStartState = state;
