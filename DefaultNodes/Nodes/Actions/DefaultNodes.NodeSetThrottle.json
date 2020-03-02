@@ -1,0 +1,5 @@
+{
+  "name": "Set throttle",
+  "description": "Sets the throttle amount (0-1).",
+  "width": "120"
+}

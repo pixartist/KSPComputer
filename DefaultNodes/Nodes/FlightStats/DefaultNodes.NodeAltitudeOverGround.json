@@ -1,0 +1,5 @@
+{
+  "name": "Altitude over ground",
+  "description": "Returns the current vessel altitude over the ground.",
+  "width": "160"
+}

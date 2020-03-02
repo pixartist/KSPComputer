@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using KSPComputer.Connectors;
 using KSPComputer.Nodes;
-using KSPComputer.Connectors;
-namespace DefaultNodes
-{
+using System;
+namespace DefaultNodes {
     [Serializable]
-    public class NodeTriggerNextStage : DefaultExecutableNode
-    {
-        protected override void OnExecute(ConnectorIn input)
-        {
-            Staging.ActivateNextStage();
+    public class NodeTriggerNextStage : DefaultExecutableNode {
+        protected override void OnExecute(ConnectorIn input) {
+            KSP.UI.Screens.StageManager.ActivateNextStage();
             ExecuteNext();
         }
     }

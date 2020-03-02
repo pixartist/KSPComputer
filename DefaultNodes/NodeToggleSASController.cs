@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using KSPComputer.Connectors;
 using KSPComputer.Nodes;
-using KSPComputer.Connectors;
-namespace DefaultNodes
-{
+using System;
+namespace DefaultNodes {
     [Serializable]
-    public class NodeToggleSASController : DefaultExecutableNode
-    {
-        protected override void OnCreate()
-        {
+    public class NodeToggleSASController : DefaultExecutableNode {
+        protected override void OnCreate() {
             In<bool>("Enabled");
         }
-        protected override void OnExecute(ConnectorIn input)
-        {
-            SASController.SASControlEnabled = In("Enabled").AsBool();
+        protected override void OnExecute(ConnectorIn input) {
+            SASController.SASEnabled = In("Enabled").AsBool();
             ExecuteNext();
         }
     }

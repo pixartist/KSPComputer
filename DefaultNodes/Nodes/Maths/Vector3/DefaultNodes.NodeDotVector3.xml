@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<node>
-  <name>Dot Vector3</name>
-  <description>Calculates the dot product.</description>
-  <width>120</width>
-</node>

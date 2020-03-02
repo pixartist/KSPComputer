@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Set Roll (direct)</name>
-	<description>Sets the vessel control roll.</description>
-	<width>120</width>
-</node>

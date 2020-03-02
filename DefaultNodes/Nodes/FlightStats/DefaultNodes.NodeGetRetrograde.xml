@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Get retrograde</name>
-	<description>Returns the current retrograde vector.</description>
-	<width>120</width>
-</node>

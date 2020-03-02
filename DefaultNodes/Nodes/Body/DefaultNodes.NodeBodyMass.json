@@ -1,0 +1,5 @@
+{
+  "name": "Body Mass",
+  "description": "Returns the mass of the current main body.",
+  "width": "120"
+}

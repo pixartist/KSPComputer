@@ -1,0 +1,5 @@
+{
+  "name": "Get Pitch (direct)",
+  "description": "Gets the vessel control pitch.",
+  "width": "120"
+}

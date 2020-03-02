@@ -1,0 +1,5 @@
+{
+  "name": "Stage Number",
+  "description": "Returns the number of stages remaining (also known as the stage the craft is currently on).",
+  "width": "120"
+}

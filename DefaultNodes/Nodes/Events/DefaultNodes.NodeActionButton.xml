@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Action button</name>
-	<description>Triggers when the corresponing button is pressed.</description>
-	<width>120</width>
-</node>

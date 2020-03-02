@@ -1,0 +1,5 @@
+{
+  "name": "Gravity Vector",
+  "description": "Returns the current gravitational vector.",
+  "width": "120"
+}

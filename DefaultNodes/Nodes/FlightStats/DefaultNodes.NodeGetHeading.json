@@ -1,0 +1,5 @@
+{
+  "name": "Get heading",
+  "description": "Returns the current heading direction vector.",
+  "width": "120"
+}

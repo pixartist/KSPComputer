@@ -1,0 +1,5 @@
+{
+  "name": "Action Group",
+  "description": "Sets or gets the status of the selected action group.\n    1 -> KSPActionGroup.Custom01,\n    2 -> KSPActionGroup.Custom02,\n    3 -> KSPActionGroup.Custom03,\n    4 -> KSPActionGroup.Custom04,\n    5 -> KSPActionGroup.Custom05,\n    6 -> KSPActionGroup.Custom06,\n    7 -> KSPActionGroup.Custom08,\n    8 -> KSPActionGroup.Custom09,\n    9 -> KSPActionGroup.Custom10,\n    10 -> KSPActionGroup.Abort,\n    11 -> KSPActionGroup.Brakes,\n    12 -> KSPActionGroup.Gear,\n    13 -> KSPActionGroup.Light,\n    14 -> KSPActionGroup.RCS,\n    15 -> KSPActionGroup.SAS,\n    16 -> KSPActionGroup.Stage",
+  "width": "120"
+}

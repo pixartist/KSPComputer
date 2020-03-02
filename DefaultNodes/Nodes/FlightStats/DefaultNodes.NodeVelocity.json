@@ -1,0 +1,5 @@
+{
+  "name": "Velocity",
+  "description": "Returns the current vessel velocity in world coordinate.",
+  "width": "120"
+}

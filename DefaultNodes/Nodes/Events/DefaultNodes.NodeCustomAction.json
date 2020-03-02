@@ -1,0 +1,5 @@
+{
+  "name": "Custom action",
+  "description": "Triggers when a custom action button is pressed.",
+  "width": "120"
+}

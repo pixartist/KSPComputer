@@ -1,0 +1,5 @@
+{
+  "name": "Scale Vector3",
+  "description": "Multiplies all components of the Vector by the given value.",
+  "width": "120"
+}

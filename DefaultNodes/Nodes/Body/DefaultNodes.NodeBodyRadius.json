@@ -1,0 +1,5 @@
+{
+  "name": "Body Radius",
+  "description": "Returns the radius of the current main body.",
+  "width": "120"
+}

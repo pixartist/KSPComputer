@@ -1,0 +1,5 @@
+{
+  "name": "Delta",
+  "description": "Returns the delta of the input node.",
+  "width": "120"
+}

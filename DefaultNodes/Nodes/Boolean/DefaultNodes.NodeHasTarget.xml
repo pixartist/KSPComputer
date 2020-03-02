@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Has target</name>
-	<description>Checks if a target is selected.</description>
-	<width>120</width>
-</node>

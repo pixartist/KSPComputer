@@ -1,0 +1,5 @@
+{
+  "name": "Clamp",
+  "description": "Clamps the value so that it is between Min and Max.",
+  "width": "120"
+}

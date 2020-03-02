@@ -1,0 +1,5 @@
+{
+  "name": "Normalize Vector2",
+  "description": "Changes the magnitude of a Vector2 to 1.",
+  "width": "140"
+}

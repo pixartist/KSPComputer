@@ -1,0 +1,5 @@
+{
+  "name": "Action button",
+  "description": "Triggers when the corresponing button is pressed.",
+  "width": "120"
+}

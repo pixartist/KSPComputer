@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Break Vector2</name>
-	<description>Breaks out the components of a Vector2.</description>
-	<width>160</width>
-</node>

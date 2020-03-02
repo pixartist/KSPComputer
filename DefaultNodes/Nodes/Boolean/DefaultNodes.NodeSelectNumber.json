@@ -1,0 +1,5 @@
+{
+  "name": "Select Number",
+  "description": "Selects a value depending on the boolean input.",
+  "width": "160"
+}

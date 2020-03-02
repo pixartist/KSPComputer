@@ -1,0 +1,5 @@
+{
+  "name": "Get Roll (direct)",
+  "description": "Gets the vessel control roll.",
+  "width": "120"
+}

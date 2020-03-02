@@ -1,0 +1,5 @@
+{
+  "name": "Max thrust",
+  "description": "Returns the current maximum thrust.",
+  "width": "120"
+}

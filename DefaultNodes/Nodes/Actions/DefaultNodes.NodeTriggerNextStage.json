@@ -1,0 +1,5 @@
+{
+  "name": "Trigger next stage",
+  "description": "Triggers the stage seperation for the next stage.",
+  "width": "120"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Value reached",
+  "description": "Triggers when the value reaches the trigger value.",
+  "width": "140"
+}

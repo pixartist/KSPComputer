@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Select Number</name>
-	<description>Selects a value depending on the boolean input.</description>
-	<width>160</width>
-</node>

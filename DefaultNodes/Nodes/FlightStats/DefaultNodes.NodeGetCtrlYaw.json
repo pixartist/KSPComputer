@@ -1,0 +1,5 @@
+{
+  "name": "Get Yaw (direct)",
+  "description": "Gets the vessel control yaw.",
+  "width": "120"
+}

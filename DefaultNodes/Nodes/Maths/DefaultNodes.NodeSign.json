@@ -1,0 +1,5 @@
+{
+  "name": "Sign",
+  "description": "Returns the sign of the input value.",
+  "width": "120"
+}

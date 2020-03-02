@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-namespace KSPComputer.Helpers
-{
-    static class DebugHelper
-    {
-        public static LineRenderer AddLine(Vessel v, Color c)
-        {
+﻿using UnityEngine;
+namespace KSPComputer.Helpers {
+    static class DebugHelper {
+        public static LineRenderer AddLine(Vessel v, Color c) {
             var obj = new GameObject("line");
             obj.transform.parent = v.gameObject.transform;
             var line = obj.AddComponent<LineRenderer>();
@@ -20,8 +13,7 @@ namespace KSPComputer.Helpers
             line.SetVertexCount(2);
             return line;
         }
-        public static void UpdateLine(LineRenderer line, Vector3 origin, Vector3 direction)
-        {
+        public static void UpdateLine(LineRenderer line, Vector3 origin, Vector3 direction) {
             line.SetPosition(0, origin);
             line.SetPosition(1, origin + direction);
         }

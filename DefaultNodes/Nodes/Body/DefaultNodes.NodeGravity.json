@@ -1,0 +1,5 @@
+{
+  "name": "Gravity",
+  "description": "Returns the current gravitational acceleration.",
+  "width": "120"
+}

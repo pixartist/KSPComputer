@@ -1,0 +1,5 @@
+{
+  "name": "Vessel mass",
+  "description": "Returns the current vessel mass.",
+  "width": "120"
+}

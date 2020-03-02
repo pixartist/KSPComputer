@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Velocity</name>
-	<description>Returns the current vessel velocity in world coordinate.</description>
-	<width>120</width>
-</node>

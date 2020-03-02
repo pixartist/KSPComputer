@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Flight anomaly</name>
-	<description>Triggers something explodes.</description>
-	<width>120</width>
-</node>

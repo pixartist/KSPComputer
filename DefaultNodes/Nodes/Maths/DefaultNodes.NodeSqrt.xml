@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Sqrt</name>
-	<description>Calculates the square root.</description>
-	<width>120</width>
-</node>

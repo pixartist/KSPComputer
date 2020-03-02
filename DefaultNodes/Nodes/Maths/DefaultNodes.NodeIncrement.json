@@ -1,0 +1,5 @@
+{
+  "name": "Increment",
+  "description": "Increments the value with each execution.",
+  "width": "120"
+}

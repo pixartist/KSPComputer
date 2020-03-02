@@ -1,0 +1,5 @@
+{
+  "name": "Geo Location",
+  "description": "Returns the current vessel postition as longitude, altitude and latitude.",
+  "width": "120"
+}

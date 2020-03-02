@@ -1,0 +1,5 @@
+{
+  "name": "Forward velocity",
+  "description": "Returns the vessel velocity along the forward vector.",
+  "width": 120
+}

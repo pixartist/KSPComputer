@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using KSPComputer.Nodes;
-using KSPComputer.Connectors;
-namespace DefaultNodes
-{
+﻿using KSPComputer.Nodes;
+using System;
+namespace DefaultNodes {
     [Serializable]
-    public class NodeStageCount : Node
-    {
-        protected override void OnCreate()
-        {
+    public class NodeStageCount : Node {
+        protected override void OnCreate() {
             Out<double>("Stage");
         }
-        protected override void OnUpdateOutputData()
-        {
-            Out("Stage", Staging.GetStageCount(Vessel.parts));
+        protected override void OnUpdateOutputData() {
+            Out("Stage", KSP.UI.Screens.StageManager.GetStageCount(Vessel.parts));
         }
     }
 }

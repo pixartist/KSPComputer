@@ -1,0 +1,5 @@
+{
+  "name": "Vertical velocity",
+  "description": "Returns the velocity along the up vector.",
+  "width": "120"
+}

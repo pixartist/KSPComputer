@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>World Location</name>
-	<description>Returns the current vessel postition in world space.</description>
-	<width>120</width>
-</node>

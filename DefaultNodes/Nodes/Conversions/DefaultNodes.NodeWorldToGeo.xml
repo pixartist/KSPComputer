@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>World to Geo</name>
-	<description>Converts world coordinates to geographic coordinates.</description>
-	<width>180</width>
-</node>

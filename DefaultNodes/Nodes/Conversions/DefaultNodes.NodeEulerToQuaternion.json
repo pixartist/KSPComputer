@@ -1,0 +1,5 @@
+{
+  "name": "Euler to Quaternion",
+  "description": "Creates a Quaternion from euler angles.",
+  "width": "160"
+}

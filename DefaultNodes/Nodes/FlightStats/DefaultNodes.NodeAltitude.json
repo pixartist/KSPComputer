@@ -1,0 +1,5 @@
+{
+  "name": "Altitude",
+  "description": "Returns the current vessel altitude.",
+  "width": "120"
+}

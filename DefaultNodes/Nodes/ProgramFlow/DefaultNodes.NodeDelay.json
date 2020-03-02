@@ -1,0 +1,5 @@
+{
+  "name": "Delay",
+  "description": "Delays incoming executions by the given amount.",
+  "width": "120"
+}

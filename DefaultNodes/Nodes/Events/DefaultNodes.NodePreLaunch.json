@@ -1,0 +1,5 @@
+{
+  "name": "PreLaunch",
+  "description": "Triggers when the vessel is placed on the launch pad.",
+  "width": "120"
+}

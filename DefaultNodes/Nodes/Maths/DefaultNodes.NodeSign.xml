@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Sign</name>
-	<description>Returns the sign of the input value.</description>
-	<width>120</width>
-</node>

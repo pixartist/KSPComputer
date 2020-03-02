@@ -1,0 +1,5 @@
+{
+  "name": "World Location",
+  "description": "Returns the current vessel postition in world space.",
+  "width": "120"
+}

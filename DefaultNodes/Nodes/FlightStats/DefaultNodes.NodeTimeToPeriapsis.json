@@ -1,0 +1,5 @@
+{
+  "name": "Time to periapsis",
+  "description": "Returns the time until the periapsis is reached.",
+  "width": "120"
+}

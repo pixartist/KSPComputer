@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<node>
-	<name>Toggle SAS</name>
-	<description>Enabled or disables SAS.</description>
-	<width>120</width>
-</node>

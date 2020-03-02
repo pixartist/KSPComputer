@@ -1,0 +1,5 @@
+{
+  "name": "Toggle",
+  "description": "Execution node that can be enabled and disabled. Starts disabled.",
+  "width": "140"
+}

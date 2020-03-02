@@ -1,0 +1,5 @@
+{
+  "name": "Delta /s",
+  "description": "Returns the delta of the input node per second.",
+  "width": "120"
+}

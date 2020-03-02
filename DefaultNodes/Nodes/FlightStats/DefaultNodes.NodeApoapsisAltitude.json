@@ -1,0 +1,5 @@
+{
+  "name": "Apoapsis altitude",
+  "description": "Returns the apoapsis altitude.",
+  "width": "120"
+}
