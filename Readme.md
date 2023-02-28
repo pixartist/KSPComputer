@@ -20,7 +20,7 @@ How to add a custom node
   - Node: Data node, no execution. Provides data in OnUpdateOutputData()
   - RootNode: A node without an incoming execution connector. Base class for "Event-Type" nodes. Needs to call "Execute()" on itself
   - ExecutableNode: A node which will be executed via an incoming connector and has at least one outgoing connector. Create executable nodes via In/Out<Connector.Exec>("Name", true/false); (true/false -> for exec connectors, multiple outputs is reverted)
-- When done, create an XML file, named after your node, including the namespace. E.g. "MyNodeNamespace.NodeMyNode.xml"
+- When done, create an json file, named after your node, including the namespace. E.g. "MyNodeNamespace.NodeMyNode.json"
 - Place the .dll in the Plugins folder and the node xml in one of the category folders (or create your own category)
 - Your node MUST be [Serializable]
 - Done
