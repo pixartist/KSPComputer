@@ -1,5 +1,0 @@
-{
-  "name": "Toggle SAS Controller",
-  "description": "Enabled or disables SAS Controller. The SAS Controller maintains the current heading and dampens the SAS rotation.",
-  "width": "160"
-}

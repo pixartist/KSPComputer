@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 namespace KSPComputer.Helpers {
     public class SASController {
         public bool SASEnabled {
@@ -18,37 +19,25 @@ namespace KSPComputer.Helpers {
                 VesselController.Vessel.ActionGroups[KSPActionGroup.RCS] = value;
             }
         }
-        private Quaternion sasTarget;
-        public Quaternion SASTarget {
-            get {
-                return sasTarget;
-            }
-            set {
-                sasTarget = value;
-            }
-        }
-        public float SASControllerStrength { get; set; }
         public VesselController VesselController { get; private set; }
         public SASController(VesselController controller) {
             VesselController = controller;
-            SASControllerStrength = 1;
         }
-        public void Update() {
-            if (SASEnabled) {
-
-                Quaternion at = VesselController.VesselOrientation;
-                float angle = Quaternion.Angle(at, SASTarget);
-                if (angle > 10f) {
-                    Quaternion t = SASTarget;
-                    float angleAm = Mathf.Min(1, 0.005f * SASControllerStrength * (180f / angle));
-                    t = Quaternion.Slerp(at, t, angleAm);
-
-                    VesselController.Vessel.Autopilot.SAS.SetTargetOrientation(t.eulerAngles, true);
-                } else
-                    VesselController.Vessel.Autopilot.SAS.SetTargetOrientation(SASTarget.eulerAngles, false);
-
-            }
+        public void SetSASTarget(double lat, double lon) {
+            var v = new Vector3d(Math.Sin(lon), 0, Math.Cos(lon));
+            v = Quaternion.AngleAxis((float)lat, new Vector3d(-v.z, 0, v.x)) * v;
+            var t = VesselController.ReferenceToWorld(v, VesselController.FrameOfReference.Navball);
+            SASEnabled = true;
+            VesselController.Vessel.Autopilot.SetMode(VesselAutopilot.AutopilotMode.StabilityAssist);
+            VesselController.Vessel.Autopilot.SAS.lockedMode = false;
+            VesselController.Vessel.Autopilot.SAS.SetTargetOrientation(t, false);
         }
-
+        public void SetSASTarget(Quaternion orientation) {
+            var t = VesselController.ReferenceToWorld(orientation, VesselController.FrameOfReference.Navball);
+            SASEnabled = true;
+            VesselController.Vessel.Autopilot.SetMode(VesselAutopilot.AutopilotMode.StabilityAssist);
+            VesselController.Vessel.Autopilot.SAS.lockedMode = false;
+            VesselController.Vessel.Autopilot.SAS.LockRotation(t);
+        }
     }
 }

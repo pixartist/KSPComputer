@@ -92,8 +92,8 @@ namespace KSPComputerModule {
             rect.x += window.WinRect.x;
             rect.y += window.WinRect.y;
             //Log.Write("IsMouseDown: " + mousePressed + ", WasMouseDown: " + mouseWasDown);
-            if (window.MouseDown) {
-                if (window.MousePressed && resizingWindow < 0) {
+            if (window.LmbDown) {
+                if (window.LmbPressed && resizingWindow < 0) {
                     // Log.Write("Checking resize, rect: " + rect + ", mouse: " + mousePos);
                     if (rect.Contains(window.MouseLocation)) {
                         resizingWindow = id;
@@ -104,7 +104,7 @@ namespace KSPComputerModule {
                     window.WinRect.width = Math.Max(window.MinSize.x, ElSize / 2 + window.MouseLocation.x - window.WinRect.x);
                     window.WinRect.height = Math.Max(window.MinSize.y, ElSize / 2 + window.MouseLocation.y - window.WinRect.y);
                 }
-            } else if (window.MouseReleased && resizingWindow >= 0) {
+            } else if (window.LmbReleased && resizingWindow >= 0) {
                 resizingWindow = -1;
             }
             if (GUI.Button(new Rect(window.WinRect.width - GUIController.ElSize, 0, GUIController.ElSize, GUIController.ElSize), "X"))
@@ -185,7 +185,7 @@ namespace KSPComputerModule {
         }
         static void PreventInFlightClickthrough() {
             if (!inputLocked && mouseOver) {
-                InputLockManager.SetControlLock(ControlTypes.CAMERACONTROLS | ControlTypes.MAP | ControlTypes.ACTIONS_ALL, "FlightControl_noclick");
+                InputLockManager.SetControlLock(ControlTypes.CAMERACONTROLS | ControlTypes.MAP | ControlTypes.ACTIONS_ALL | ControlTypes.MAIN_MENU, "FlightControl_noclick");
                 // Setting this prevents the mouse wheel to zoom in/out while in map mode
                 ManeuverGizmo.HasMouseFocus = true;
                 inputLocked = true;

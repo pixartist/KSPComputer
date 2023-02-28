@@ -11,13 +11,6 @@ Features
 - Action groups
 - Variables
 
-Planned features
-- Savable programs
-- Subroutines
-
-
-
-
 
 How to add a custom node
 - Create a class library.

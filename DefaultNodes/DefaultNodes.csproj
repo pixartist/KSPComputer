@@ -32,23 +32,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="UnityEngine">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +73,7 @@
     <Compile Include="NodeDotVector2.cs" />
     <Compile Include="NodeGravityVector.cs" />
     <Compile Include="NodeVelocity.cs" />
-    <Compile Include="NodeSetHeading.cs" />
+    <Compile Include="NodeSetNavballHeading.cs" />
     <Compile Include="NodeHasTarget.cs" />
     <Compile Include="NodeDT.cs" />
     <Compile Include="NodeDelta.cs" />
@@ -137,7 +137,6 @@
     <Compile Include="NodeStageFuelEmpty.cs" />
     <Compile Include="NodeSubtract.cs" />
     <Compile Include="NodeCustomAction.cs" />
-    <Compile Include="NodeSetSASControllerStrength.cs" />
     <Compile Include="NodeTouchdown.cs" />
     <Compile Include="NodeTick.cs" />
     <Compile Include="NodeTimeToApoapsis.cs" />
@@ -146,11 +145,20 @@
     <Compile Include="NodeSetTimewarp.cs" />
     <Compile Include="NodeToggleLandingGear.cs" />
     <Compile Include="NodeToggleSAS.cs" />
-    <Compile Include="NodeToggleSASController.cs" />
     <Compile Include="NodeTriggerNextStage.cs" />
     <Compile Include="NodeValueReached.cs" />
     <Compile Include="NodeVerticalVelocity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NodeSASModePrograde.cs" />
+    <Compile Include="NodeSASModeAntinormal.cs" />
+    <Compile Include="NodeSASModeStabilityAssist.cs" />
+    <Content Include="NodeSASModeRadialOut.cs" />
+    <Compile Include="NodeSASModeTarget.cs" />
+    <Compile Include="NodeSASModeRetrograde.cs" />
+    <Compile Include="NodeSASModeRadialIn.cs" />
+    <Compile Include="NodeSASModeNormal.cs" />
+    <Compile Include="NodeSASModeManeuver.cs" />
+    <Compile Include="NodeStageFuel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KSPComputer\KSPComputer.csproj">
@@ -165,7 +173,7 @@
     <None Include="Nodes\Actions\DefaultNodes.NodeSetCtrlPitch.json" />
     <None Include="Nodes\Actions\DefaultNodes.NodeSetCtrlRoll.json" />
     <None Include="Nodes\Actions\DefaultNodes.NodeSetCtrlYaw.json" />
-    <None Include="Nodes\Actions\DefaultNodes.NodeSetHeading.json" />
+    <None Include="Nodes\Actions\DefaultNodes.NodeSetNavballHeading.json" />
     <None Include="Nodes\Actions\DefaultNodes.NodeSetHeadingRoll.json" />
     <None Include="Nodes\Actions\DefaultNodes.NodeSetSASControllerStrength.json" />
     <None Include="Nodes\Actions\DefaultNodes.NodeSetThrottle.json" />
@@ -268,6 +276,20 @@
     <None Include="Nodes\ProgramFlow\DefaultNodes.NodeDelay.json" />
     <None Include="Nodes\ProgramFlow\DefaultNodes.NodeSequence.json" />
     <None Include="Nodes\ProgramFlow\DefaultNodes.NodeToggle.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeTarget.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeRetrograde.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeRadialIn.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeRadialOut.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeNormal.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeAntinormal.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeManeuver.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModePrograde.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSASModeStabilityAssist.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSetHeadingRoll.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeSetNavballHeading.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeToggleRCS.json" />
+    <None Include="Nodes\Actions\Autopilot\DefaultNodes.NodeToggleSAS.json" />
+    <None Include="Nodes\FlightStats\DefaultNodes.NodeStageFuel.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

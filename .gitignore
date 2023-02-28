@@ -3,3 +3,6 @@
 */bin/Debug
 */obj/Release
 */obj/Debug
+*/bin/*
+/bin
+*/bin

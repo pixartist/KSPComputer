@@ -6,7 +6,7 @@ using KSPComputer.Variables;
 using KSPComputerAddon;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Reflection;
 using UnityEngine;
 
@@ -76,6 +76,9 @@ namespace KSPComputerModule.Windows {
             GUI.depth = 150;
             if (draggedConnection != null && dragInfo != this.MouseLocation) {
                 GUILine.DrawLine(GUIUtility.ScreenToGUIPoint(dragInfo), GUIUtility.ScreenToGUIPoint(this.MouseLocation), Color.red, 2, true);
+                if(draggedConnection != null && RmbReleased) {
+                    draggedConnection = null;
+                }
             }
             if (Program != null)
                 DrawNodes(new Rect(toolbarWidth + 20, GUIController.ElSize, WinRect.width - (toolbarWidth + GUIController.ElSize + 20), WinRect.height - GUIController.ElSize * 2));
@@ -257,7 +260,7 @@ namespace KSPComputerModule.Windows {
         private void DrawNodes(Rect area) {
             nodeViewScrollPos = GUI.BeginScrollView(area, nodeViewScrollPos, programRect);
             if (draggedNode != null) {
-                if (this.MouseReleased) {
+                if (this.LmbReleased) {
                     if (this.MouseLocation.x < toolbarWidth) {
                         Log.Write("Removing node: " + draggedNode);
                         Program.RemoveNode(draggedNode);
@@ -277,7 +280,7 @@ namespace KSPComputerModule.Windows {
             GUI.skin.box.alignment = TextAnchor.UpperCenter;
             DrawNodeConnections(new Rect(toolbarWidth + 20, GUIController.ElSize, WinRect.width - toolbarWidth - GUIController.ElSize, WinRect.height - GUIController.ElSize));
             GUI.EndScrollView();
-            if (this.MousePressed) {
+            if (this.LmbPressed) {
                 if (draggedConnection == null && draggedNode == null && !dragging) {
                     if (area.Contains(this.GuiMouseLocation)) {
                         dragging = true;
@@ -286,7 +289,7 @@ namespace KSPComputerModule.Windows {
                 }
             }
             if (dragging) {
-                if (this.MouseReleased)
+                if (this.LmbReleased)
                     dragging = false;
                 else {
                     nodeViewScrollPos -= this.MouseLocation - dragInfo;
@@ -328,10 +331,11 @@ namespace KSPComputerModule.Windows {
                 if (nodeType.GetGenericTypeDefinition() == typeof(VariableNode<>)) {
                     isVariableNode = true;
                     Variable v = node.GetType().GetProperty("Variable").GetValue(node, null) as Variable;
-                    var n = from va in Program.Variables where va.Value == v select va.Key;
-                    if (n.Count() > 0) {
-                        variableName = n.First();
-                        info = new NodeInfo(variableName, v.Type, "Variable node", TypeColor(v.Type), 120);
+                    foreach(var va in Program.Variables) {
+                        if (va.Value == v) {
+                            variableName = va.Key;
+                            info = new NodeInfo(variableName, v.Type, "Variable node", TypeColor(v.Type), 120);
+                        }
                     }
                 }
             } else if (node is SubroutineNode) {
@@ -381,7 +385,7 @@ namespace KSPComputerModule.Windows {
 
             GUI.backgroundColor = info.color;
             GUI.Box(new Rect(0, 0, info.width, height), info.name);
-            if (PointerAvailable && this.MouseDown) {
+            if (PointerAvailable && this.LmbDown) {
                 if (this.MouseLocation.x > toolbarWidth) {
                     if (new Rect(0, 0, info.width, 20).Contains(GUIUtility.ScreenToGUIPoint(this.MouseLocation))) {
                         if (Event.current.control) {

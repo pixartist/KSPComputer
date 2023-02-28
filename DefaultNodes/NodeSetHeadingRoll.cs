@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using UnityEngine;
 using KSPComputer;
@@ -32,7 +32,7 @@ namespace DefaultNodes
 
             rot = roll * rot;
             //apply sas target
-            SASController.SASTarget = VesselController.ReferenceToWorld(rot, VesselController.FrameOfReference.Navball);
+            SASController.SetSASTarget(rot);
             ExecuteNext();
         }
     }

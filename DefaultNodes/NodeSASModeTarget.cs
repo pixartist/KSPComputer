@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using KSPComputer.Nodes;
 using KSPComputer.Connectors;
 namespace DefaultNodes
 {
     [Serializable]
-    public class NodeSetSASControllerStrength : DefaultExecutableNode
+    public class NodeSASModeTarget : DefaultExecutableNode
     {
-        protected override void OnCreate()
-        {
-            In<double>("Strength");
-        }
         protected override void OnExecute(ConnectorIn input)
         {
-            SASController.SASControllerStrength = In("Strength").AsFloat();
+            SASController.SASEnabled = true;
+            VesselController.Vessel.Autopilot.SetMode(VesselAutopilot.AutopilotMode.Target);
             ExecuteNext();
         }
     }

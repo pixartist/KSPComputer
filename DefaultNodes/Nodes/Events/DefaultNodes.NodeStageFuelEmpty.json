@@ -1,5 +1,5 @@
 {
   "name": "Stage fuel empty",
   "description": "Triggers when the fuel in the current stage is used up.",
-  "width": "180"
+  "width": "210"
 }

@@ -4,7 +4,6 @@ using KSPComputerAddon;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace KSPComputerModule {
     [Serializable]
@@ -85,17 +84,31 @@ namespace KSPComputerModule {
                 SelectedCategory = SelectedCategory.parent;
         }
         public void SelectSubCategory(string cat) {
-            var cats = from c in SelectedCategory.children where (c is CategoryModel && (c as CategoryModel).name == cat) select (c as CategoryModel);
-            if (cats.Count() > 0)
-                SelectedCategory = cats.First();
+            foreach (var c in SelectedCategory.children) {
+                if(c is CategoryModel && (c as CategoryModel).name == cat) {
+                    SelectedCategory = (c as CategoryModel);
+                    break;
+                }
+            }
         }
         public CatInfo[] ListSubCategories() {
-            return (from c in SelectedCategory.children where c is CategoryModel select new CatInfo(c as CategoryModel)).ToArray<CatInfo>();
+            List<CatInfo> result = new List<CatInfo>();
+            foreach (var c in SelectedCategory.children) {
+                if(c is CategoryModel) {
+                    result.Add(new CatInfo(c as CategoryModel));
+                }
+            }
+            return result.ToArray();
         }
 
         public NodeInfo[] ListNodes() {
-            return (from c in SelectedCategory.children where (c is NodeModel && (c as NodeModel).className != null ? nodeInfos.ContainsKey((c as NodeModel).className) : false) select nodeInfos[(c as NodeModel).className]).ToArray();
-
+            List<NodeInfo> result = new List<NodeInfo>();
+            foreach (var c in SelectedCategory.children) {
+                if(c is NodeModel && (c as NodeModel).className != null ? nodeInfos.ContainsKey((c as NodeModel).className) : false) {
+                    result.Add(nodeInfos[(c as NodeModel).className]);
+                }
+            }
+            return result.ToArray();
         }
         public NodeInfo GetNodeInfo(Type t) {
             return GetNodeInfo(t.ToString());
@@ -113,8 +126,10 @@ namespace KSPComputerModule {
             nodeTypes = new Dictionary<string, Type>();
             var types = FindAllDerivedTypes(typeof(Node));
             foreach (var t in types) {
-                nodeTypes.Add(t.ToString(), t);
-                nodeInfos.Add(t.ToString(), new NodeInfo());
+                if(!nodeTypes.ContainsKey(t.ToString())) {
+                    nodeTypes.Add(t.ToString(), t);
+                    nodeInfos.Add(t.ToString(), new NodeInfo());
+                }
             }
             /* JObject temp = new JObject();
              JObject typeNode = new JObject();
@@ -166,12 +181,12 @@ namespace KSPComputerModule {
             foreach (var assembly in assemblies) {
                 try {
                     //Log.Write("Looking for " + baseType + " in " + assembly);
-                    var aTypes = assembly
-                     .GetTypes()
-                     .Where(t =>
-                         baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType
-                         );
-                    types.AddRange(aTypes);
+                    var aTypes = assembly.GetTypes();
+                    foreach(var t in aTypes) {
+                        if(baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType) {
+                            types.AddRange(aTypes);
+                        }
+                    }
                 } catch (Exception e) {
                     Log.Write("Error, could not load types from assembly \"" + assembly + "\": " + e.Message);
                 }

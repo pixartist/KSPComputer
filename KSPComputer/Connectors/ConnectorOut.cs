@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using KSPComputer.Nodes;
 namespace KSPComputer.Connectors
@@ -24,10 +24,12 @@ namespace KSPComputer.Connectors
         {
             //Log.Write("Trying to execute next node from connector");
             //Log.Write("Connection count: " + connections.Count);
-            foreach (var c in (from cn in connections where cn.Node is BaseExecutableNode select cn))
+            foreach (var c in connections)
             {
-                //Log.Write("Executing next node from connector");
-                (c.Node as BaseExecutableNode).Execute(c as ConnectorIn);
+                if(c.Node is BaseExecutableNode) {
+                    //Log.Write("Executing next node from connector");
+                    (c.Node as BaseExecutableNode).Execute(c as ConnectorIn);
+                }
             }
         }
 

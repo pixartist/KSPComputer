@@ -1,17 +1,28 @@
-﻿using System.Linq;
+﻿
 
 namespace KSPComputer.Helpers {
     public static class PartHelper {
         public static double CountMaxResources(this Part part, params DefaultResources[] resources) {
             if (part.IsUnfiredDecoupler() || part.IsSepratron())
                 return 0.0;
-
-            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) select r.maxAmount).Sum();
+            double sum = 0;
+            foreach(var r in part.Resources) {
+                if(resources.IndexOf((DefaultResources)r.info.id) >= 0) {
+                    sum += r.maxAmount;
+                }
+            }
+            return sum;
         }
         public static double CountRemainingResources(this Part part, params DefaultResources[] resources) {
             if (part.IsUnfiredDecoupler() || part.IsSepratron())
                 return 0.0;
-            return (from PartResource r in part.Resources where resources.Contains((DefaultResources)r.info.id) && r.amount > 0.01 select r.amount).Sum();
+            double sum = 0;
+            foreach(var r in part.Resources) {
+                if(resources.IndexOf((DefaultResources)r.info.id) >= 0 && r.amount > 0.01) {
+                    sum += r.maxAmount;
+                }
+            }
+            return sum;
         }
         public static bool CheckEngineHasFuel(this Part part) {
             if (!part.IsEngine())
@@ -41,10 +52,18 @@ namespace KSPComputer.Helpers {
         }
 
         public static double CountMaxResourcesInChildren(this Part part, params DefaultResources[] resources) {
-            return CountMaxResources(part, resources) + (from Part p in part.children select p.CountMaxResourcesInChildren(resources)).Sum();
+            var sum = CountMaxResources(part, resources);
+            foreach(var p in part.children) {
+                sum += p.CountMaxResourcesInChildren(resources);
+            }
+            return sum;
         }
         public static double CountRemainingResourcesInChildren(this Part part, params DefaultResources[] resources) {
-            return CountRemainingResources(part, resources) + (from Part p in part.children select p.CountRemainingResourcesInChildren(resources)).Sum();
+            var sum = CountRemainingResources(part, resources);
+            foreach(var p in part.children) {
+                sum += p.CountRemainingResourcesInChildren(resources);
+            }
+            return sum;
         }
         public static bool CheckEnginesHaveFuelInChildren(this Part part) {
             if (part.CheckEngineHasFuel())
@@ -56,7 +75,11 @@ namespace KSPComputer.Helpers {
             return false;
         }
         public static float CountMaxThrustInChildren(this Part part) {
-            return part.GetMaxThrust() + (from Part p in part.children select p.CountMaxThrustInChildren()).Sum();
+            var sum = part.GetMaxThrust();
+            foreach(var p in part.children) {
+                sum += p.CountMaxThrustInChildren();
+            }
+            return sum;
         }
 
         public static bool IsUnfiredDecoupler(this Part part) {

@@ -32,35 +32,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="UnityEngine">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>D:\Steam\steamapps\common\Kerbal Space Program\KSP_x64_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>/mnt/SSD2TB1/games/SteamLibrary/steamapps/common/Kerbal Space Program/KSP_Data/Managed/UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,14 +114,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo on
-mkdir "$(TargetDir)Plugins\"
-move /Y "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\$(TargetFileName)"
-move /Y "$(TargetDir)KSPComputer.dll" "$(TargetDir)Plugins\KSPComputer.dll"
-move /Y "$(TargetDir)DefaultNodes.dll" "$(TargetDir)Plugins\DefaultNodes.dll"
-move /Y "$(TargetDir)Ionic.Zip.dll" "$(TargetDir)Plugins\Ionic.Zip.dll"
-del "$(TargetDir)*.dll"
-del "$(TargetDir)*.pdb"</PostBuildEvent>
+    <PostBuildEvent>rm -rf "$(TargetDir)Plugins\" 
+    mkdir -p "$(TargetDir)Plugins\" 
+cp "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\$(TargetFileName)" 
+cp "$(TargetDir)KSPComputer.dll" "$(TargetDir)Plugins\+KSPComputer.dll" 
+cp "$(TargetDir)DefaultNodes.dll" "$(TargetDir)Plugins\DefaultNodes.dll" 
+cp "$(TargetDir)Ionic.Zip.dll" "$(TargetDir)Plugins\Ionic.Zip.dll"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

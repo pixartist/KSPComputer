@@ -1,0 +1,5 @@
+{
+  "name": "Stage Fuel",
+  "description": "Returns the current stages remaining fuel.",
+  "width": "120"
+}

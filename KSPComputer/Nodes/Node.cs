@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using System.Text;
 using UnityEngine;
 using KSPComputer.Helpers;
@@ -51,7 +51,13 @@ namespace KSPComputer.Nodes
         {
             get
             {
-                return (from i in inputs where i.Value.DataType == typeof(Connector.Exec) select i).Count();
+                int k = 0;
+                foreach(var i in inputs) {
+                    if(i.Value.DataType == typeof(Connector.Exec)) {
+                        k++;
+                    }
+                }
+                return k;
             }
         }
         public int OutputCount
@@ -65,28 +71,28 @@ namespace KSPComputer.Nodes
         {
             get
             {
-                return inputs.ToArray();
+                return ToArray(inputs);
             }
         }
         public KeyValuePair<string, ConnectorOut>[] Outputs
         {
             get
             {
-                return outputs.ToArray();
+                return ToArray(outputs);
             }
         }
         public string[] OutputNames
         {
             get
             {
-                return outputs.Keys.ToArray();
+                return ToArray(outputs.Keys);
             }
         }
         public string[] InputNames
         {
             get
             {
-                return inputs.Keys.ToArray();
+                return ToArray(inputs.Keys);
             }
         }
         public Node()
@@ -244,15 +250,47 @@ namespace KSPComputer.Nodes
         }
         public IEnumerable<Connector> GetConnectedConnectors()
         {
-            return (from c in inputs.Values where c.Connected select c as Connector).Concat(from c in outputs.Values where c.Connected select c as Connector);
+            List<Connector> result = new List<Connector>();
+            result.AddRange(GetConnectedConnectorsIn());
+            result.AddRange(GetConnectedConnectorsOut());
+            return result;
         }
         public IEnumerable<Connector> GetConnectedConnectorsIn()
         {
-            return (from c in inputs.Values where c.Connected select c as Connector);
+            List<Connector> result = new List<Connector>();
+            foreach(var c in inputs.Values) {
+                if(c.Connected) {
+                    result.Add(c);
+                }
+            }
+            return result;
         }
         public IEnumerable<Connector> GetConnectedConnectorsOut()
         {
-            return (from c in outputs.Values where c.Connected select c as Connector);
+            List<Connector> result = new List<Connector>();
+            foreach(var c in outputs.Values) {
+                if(c.Connected) {
+                    result.Add(c);
+                }
+            }
+            return result;
+        }
+
+        private static KeyValuePair<A,B>[] ToArray<A, B>(Dictionary<A,B> input) {
+            var keys = input.Keys;
+            var output = new List<KeyValuePair<A,B>>();
+            foreach(var key in keys) {
+                output.Add(new KeyValuePair<A, B>(key, input[key]));
+            }
+            return output.ToArray();
+        }
+
+        private static T[] ToArray<T>(ICollection<T> input) {
+            var output = new List<T>();
+            foreach(var entry in input) {
+                output.Add(entry);
+            }
+            return output.ToArray();
         }
     }
 }

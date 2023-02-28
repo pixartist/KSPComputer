@@ -61,21 +61,6 @@ namespace KSPComputer.Helpers {
 
             GravityVector = FlightGlobals.getGeeForceAtPosition(CenterOfMass);
             CurrentGravity = GravityVector.magnitude;
-            /*  if (north == null)
-              {
-                  //up = DebugHelper.AddLine(v, Color.red);
-                  north = DebugHelper.AddLine(program.Vessel, Color.blue);
-                  //east = DebugHelper.AddLine(v, Color.green);
-                  //fw = DebugHelper.AddLine(v, Color.magenta);
-              }
-              else
-              {
-                 // DebugHelper.UpdateLine(up, com, OrbitalUp * 500);
-                  DebugHelper.UpdateLine(north, com, Prograde * 500);
-                 // DebugHelper.UpdateLine(east, com,OrbitalEast * 500);
-                  //DebugHelper.UpdateLine(fw, com, Forward * 500);
-              }*/
-            SASController.Update();
         }
         public Quaternion ReferenceToWorld(Quaternion localRotation, FrameOfReference reference) {
             switch (reference) {
